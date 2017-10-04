@@ -1,0 +1,40 @@
+body {
+    background-color: #373c42;
+}
+
+
+.container {
+    text-align: center;
+    padding: 2px;
+}
+
+#formulario input {
+    background-color: white;
+    border-radius: 5px;
+    width: 100%;
+    border: 1px solid rgba(4, 99, 201, 0.9);
+    padding: 12px 0;
+    margin: 5px;
+}
+
+
+nav {
+    margin-bottom: 100px;
+}
+
+
+form {
+    padding: 5%;
+    background-color: white;
+    border-radius: 15px;
+}
+
+#formulario .acao {
+    background: rgba(4, 99, 201, 0.9);
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 12px 0;
+    float: left;
+    margin-right: 5%;
+}

@@ -1,0 +1,214 @@
+/********************/
+/*      ALL         */
+/********************/
+html,
+body {
+    height: 100%;
+    font-family: 'Varela Round', sans-serif;
+}
+
+h1 {
+    font-family: 'Anton', sans-serif;
+    text-transform: uppercase;
+}
+/********************/
+/*      HEADER      */
+/********************/
+header {
+    background: #222 url('../img/img-banner.png') center center no-repeat;
+    background-size: cover;
+    color: white;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+#item-menu:hover{
+    color: #7aa9de;
+}
+
+header h1 {
+    text-shadow: 2px 2px 2px black;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 55px;
+}
+/********************/
+/*      FOOTER       */
+/********************/
+footer {
+    background-color: #343a40;
+    padding: 80px 50px;
+    color: white;
+    text-align: center;
+}
+/********************/
+/*      ABOUT       */
+/********************/
+#sobre {
+    text-align: center;
+    color: white;
+    background-color: #343a40;
+    padding: 30px;
+}
+
+#sobre img {
+    border-radius: 150px;
+    margin: 5px;
+}
+
+#sobre p {
+    margin-bottom: 2em;
+}
+
+#servico {
+    text-align: center;
+}
+/********************/
+/*     REGISTER     */
+/********************/
+#register {
+    min-height: 100%;
+    background: linear-gradient(rgba(4, 99, 201, 0.9), rgba(9, 79, 157, 0.9));
+    padding: 5px;
+}
+
+#form {
+    width: 85%;
+    margin: 50px auto;
+    text-align: center;
+    position: relative;
+}
+
+#form h2 {
+    font-size: 22px;
+    color: grey;
+    width: 100%;
+    float: left;
+    text-align: left;
+    margin-bottom: 5%;
+}
+
+#form fieldset:not(:first-of-type){
+    display: none;
+}
+
+#form fieldset {
+    background: white;
+    border: 0 none;
+    border-radius: 5px;
+    box-shadow: 0 0 15px 1px rgba(0,0,0,0.4);
+    padding: 20px 30px;
+    box-sizing: border-box;
+    width: 80%;
+    margin: 0 10%;
+}
+
+#form input, #form textarea {
+    padding: 10px;
+    border: 1px solid rgba(4, 99, 201, 0.9);
+    border-radius: 4px;
+    outline: none;
+    box-sizing: border-box;
+    width: 100%;
+    color: gray;
+    margin-bottom: 10px;
+}
+
+#form .acao {
+    width: 100px;
+    background: rgba(4, 99, 201, 0.9);
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 12px 0;
+    float: left;
+    margin-right: 5%;
+}
+
+#form .acao:hover {
+    background: rgba(9, 79, 157, 0.9);
+}
+
+#form #progress {
+    margin-bottom: 30px;
+    overflow: hidden;
+    counter-reset: step;
+}
+
+#form #progress li {
+    list-style-type: none;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 20px;
+    float: left;
+    width: 33.33%;
+    position: relative;
+}
+
+#form #progress li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 30px;
+    height: 30px;
+    display: block;
+    line-height: 30px;
+    background: white;
+    color: gray;
+    border-radius: 15px;
+    margin: 0 auto 10px auto;
+}
+
+#form #progress li:after {
+    content: '';
+    width: 100%;
+    background: white;
+    height: 3px;
+    position: absolute;
+    top: 15px;
+    left: -50%;
+    z-index: -1;
+}
+
+#form #progress li:first-child:after{
+    content: none;
+}
+
+#form #progress li.ativo:before, #form #progress li.ativo:after {
+    background: #0a5cb7;
+    color: white;
+    text-shadow: 0 1px 0;
+}
+/********************/
+/*     ERROS        */
+/********************/
+.erros, .ok{
+    text-align: center;
+    width: 65%;
+    background-color: #38b879;
+    margin: 0 auto;
+    border-radius: 10px;
+    color: white;
+    margin-top: 5px;
+}
+
+/********************/
+/*     Botão ADD    */
+/********************/
+#form .add {
+    width: 100%;
+}
+
+/********************/
+/*CAMPO OBRIGATÓRIO */
+/********************/
+#form .add {
+    width: 100%;
+}
+
+
+#register > h1{
+    text-align: center;
+    color: #ffffff;
+}
