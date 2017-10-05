@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Antipragas</title>
+    <title>Antipragas - Login</title>
 
     <link href="https://fonts.googleapis.com/css?family=Catamaran|Varela+Round" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet"/>
@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
 
     <link th:href="@{css/style_login.css}" rel="stylesheet" />
-
+    <link th:href="@{css/style_home.css}" rel="stylesheet" />
 
 </head>
 <body>
@@ -28,23 +28,25 @@
     </div>
 </nav>
 
-<div class="row">
+<div class="row" id="painel" >
     <div class="col-12 col-md-2">
     </div>
 
-    <div class="col-12 col-md-6 container" id="container">
-        <h1>Login</h1>
-        <form id="formulario" th:action="@{/login}" method="post">
+    <div class="col-12 col-md-6 container">
+        <img src="img/logo.png" alt="logo antipragas"/>
+        <form id="formulario" th:action="@{/login}" method="post" name="form-login">
             <div class="row">
                 <div class="col-12 col-md-12">
                     Email
                     <input type="text" name="username" />
+                    <p class="error-email"></p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-12">
                     Senha
                     <input type="password" name="password" />
+                    <p class="error-senha"></p>
                 </div>
             </div>
             <div class="row">
@@ -68,7 +70,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Falha na Autenticação</h5>
-                <a class="close" th:href="@{/}" role="button" aria-label="Close">
+                <a class="close" th:href="@{/login}" role="button" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
             </div>
@@ -76,7 +78,7 @@
                 Não existe um cadastro com o e-mail informado ou o cadastro não foi ativado.
             </div>
             <div class="modal-footer">
-                <a class="btn btn-secondary" th:href="@{/}" role="button">Fechar</a>
+                <a class="btn btn-secondary" th:href="@{/login}" role="button">Fechar</a>
             </div>
         </div>
     </div>
@@ -85,9 +87,15 @@
 <!-- JQUERY -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
 <!-- JAVASCRIPT REGISTER -->
-<script type="text/javascript" src="js/function.js" ></script>
-<script type="text/javascript" src="js/cel.js" ></script>
-<script type="text/javascript" src="js/phone.js" ></script>
-<script type="text/javascript" src="js/cpf.js" ></script>
+<script type="text/javascript" src="js/login.js" ></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+<script th:if="${resp == 'error'}" >
+    $(function(){
+        $('#myModal').modal('show');
+    });
+</script>
 </body>
 </html>
