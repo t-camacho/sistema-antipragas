@@ -18,10 +18,6 @@ public class NavegacaoController {
     @RequestMapping("/")
     public ModelAndView goHome(){
 
-        if(LOGGER.isInfoEnabled()){
-            LOGGER.info("solicitação para home");
-        }
-
         return new ModelAndView("home", "resp", "normal");
     }
 
@@ -33,6 +29,7 @@ public class NavegacaoController {
 
     @RequestMapping(value = "/login")
     public String goLogin(){
+
         return "login";
     }
 
@@ -40,4 +37,5 @@ public class NavegacaoController {
     public String goPainel(){
         return "/usuario/painel";
     }
+
 }

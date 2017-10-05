@@ -45,7 +45,7 @@ public class UsuarioController {
                                      @RequestParam String endereco){
 
         if(LOGGER.isInfoEnabled()){
-            LOGGER.info("Creating User");
+            LOGGER.info("creating User");
         }
 
         String resp = "register";

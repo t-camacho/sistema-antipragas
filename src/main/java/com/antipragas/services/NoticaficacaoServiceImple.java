@@ -17,7 +17,6 @@ public class NoticaficacaoServiceImple implements NotificacaoService {
 
     @Autowired
     public NoticaficacaoServiceImple(JavaMailSender javaMailSender){
-
         this.javaMailSender = javaMailSender;
     }
 
