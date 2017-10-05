@@ -1,6 +1,7 @@
 package com.antipragas.models;
 
-import com.antipragas.models.enums.Role;
+import com.antipragas.models.enums.Nivel;
+import com.antipragas.models.enums.Sexo;
 import com.antipragas.models.enums.Status;
 
 import javax.persistence.*;
@@ -30,7 +31,10 @@ public class Usuario {
     private String dataDeNascimento;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Nivel nivel;
+
+    @Enumerated(EnumType.STRING)
+    private Sexo sexo;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -48,15 +52,29 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String nome, String email, String senha, String dataDeNascimento, Role role, Status status, String CPF, Telefone telefone) {
+    public Usuario(String nome, String email, String senha, String dataDeNascimento, Nivel nivel, Sexo sexo, Status status, String CPF, Telefone telefone, Set<Endereco> enderecos) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.dataDeNascimento = dataDeNascimento;
+        this.nivel = nivel;
+        this.sexo = sexo;
         this.status = status;
         this.CPF = CPF;
         this.telefone = telefone;
-        this.role = role;
+        this.enderecos = enderecos;
+    }
+
+    public Usuario(String nome, String email, String senha, String dataDeNascimento, Nivel nivel, Sexo sexo, Status status, String CPF, Telefone telefone) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.dataDeNascimento = dataDeNascimento;
+        this.nivel = nivel;
+        this.sexo = sexo;
+        this.status = status;
+        this.CPF = CPF;
+        this.telefone = telefone;
     }
 
     public Long getId() {
@@ -99,6 +117,22 @@ public class Usuario {
         this.dataDeNascimento = dataDeNascimento;
     }
 
+    public Nivel getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(Nivel nivel) {
+        this.nivel = nivel;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
+    }
+
     public Status getStatus() {
         return status;
     }
@@ -129,13 +163,5 @@ public class Usuario {
 
     public void setEnderecos(Set<Endereco> enderecos) {
         this.enderecos = enderecos;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 }

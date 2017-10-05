@@ -1,7 +1,8 @@
 package com.antipragas.controllers;
 
 import com.antipragas.models.*;
-import com.antipragas.models.enums.Role;
+import com.antipragas.models.enums.Nivel;
+import com.antipragas.models.enums.Sexo;
 import com.antipragas.models.enums.Status;
 import com.antipragas.services.ChaveDeConfirmacaoService;
 import com.antipragas.services.NoticaficacaoServiceImple;
@@ -38,9 +39,10 @@ public class UsuarioController {
 
     @RequestMapping(value ="/usuario/registrar", method = RequestMethod.POST)
     public ModelAndView registerUser(@RequestParam String nome, @RequestParam String email,
-                                     @RequestParam String dnascimento, @RequestParam String cpf,
-                                     @RequestParam String senha, @RequestParam String telefone,
-                                     @RequestParam String cell, @RequestParam String endereco){
+                                     @RequestParam String dnascimento, @RequestParam Sexo sexo,
+                                     @RequestParam String cpf, @RequestParam String senha,
+                                     @RequestParam String telefone, @RequestParam String cell,
+                                     @RequestParam String endereco){
 
         if(LOGGER.isInfoEnabled()){
             LOGGER.info("Creating User");
@@ -48,7 +50,7 @@ public class UsuarioController {
 
         String resp = "register";
 
-        Usuario usuario = new Usuario(nome, email, new BCryptPasswordEncoder().encode(senha), dnascimento, Role.ROLE_NORMAL, Status.STATUS_DESATIVADA, cpf, new Telefone(telefone, cell));
+        Usuario usuario = new Usuario(nome, email, new BCryptPasswordEncoder().encode(senha), dnascimento, Nivel.NIVEL_CLIENTE, sexo, Status.STATUS_DESATIVADA, cpf, new Telefone(telefone, cell));
 
         Set enderecos = new HashSet<Endereco>();
 

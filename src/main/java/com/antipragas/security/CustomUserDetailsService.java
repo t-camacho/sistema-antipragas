@@ -45,7 +45,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     private Collection<? extends GrantedAuthority> getPermissao(Usuario usuario) {
         Set<SimpleGrantedAuthority> authority = new HashSet<SimpleGrantedAuthority>();
-        authority.add(new SimpleGrantedAuthority(usuario.getRole().toString().toUpperCase()));
+        authority.add(new SimpleGrantedAuthority(usuario.getNivel().toString().toUpperCase()));
         return authority;
     }
 
