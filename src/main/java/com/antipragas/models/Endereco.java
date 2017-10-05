@@ -3,8 +3,12 @@ package com.antipragas.models;
 
 import javax.persistence.*;
 
+/**
+ * @author Thais Camacho
+ */
+
 @Entity
-@Table(name = "encerecos")
+@Table(name = "enderecos")
 public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

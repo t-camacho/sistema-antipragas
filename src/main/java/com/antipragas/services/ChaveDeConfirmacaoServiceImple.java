@@ -6,6 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Thais Camacho
+ */
+
 @Service
 @Primary
 public class ChaveDeConfirmacaoServiceImple implements ChaveDeConfirmacaoService {

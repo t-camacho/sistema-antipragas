@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * @author Thais Camacho
+ */
+
 @Controller
 public class NavegacaoController {
     private Logger LOGGER = Logger.getLogger(NavegacaoController.class);

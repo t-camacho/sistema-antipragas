@@ -2,6 +2,10 @@ package com.antipragas.models;
 
 import javax.persistence.*;
 
+/**
+ * @author Thais Camacho
+ */
+
 @Entity
 @Table(name = "chaves_de_confirmacao")
 public class ChaveDeConfirmacao {
@@ -18,8 +22,8 @@ public class ChaveDeConfirmacao {
     public ChaveDeConfirmacao() {
     }
 
-    public ChaveDeConfirmacao(Long idUser, String chaveCrip) {
-        this.idUsuario = idUser;
+    public ChaveDeConfirmacao(Long idUsuario, String chaveCrip) {
+        this.idUsuario = idUsuario;
         this.idCriptografado = chaveCrip;
     }
 

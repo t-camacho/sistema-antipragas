@@ -1,9 +1,8 @@
 package com.antipragas.controllers;
 
-import com.antipragas.models.ChaveDeConfirmacao;
-import com.antipragas.models.Endereco;
-import com.antipragas.models.Telefone;
-import com.antipragas.models.Usuario;
+import com.antipragas.models.*;
+import com.antipragas.models.enums.Role;
+import com.antipragas.models.enums.Status;
 import com.antipragas.services.ChaveDeConfirmacaoService;
 import com.antipragas.services.NoticaficacaoServiceImple;
 import com.antipragas.services.UsuarioService;
@@ -19,6 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashSet;
 import java.util.Set;
+
+/**
+ * @author Thais Camacho
+ */
 
 @Controller
 public class UsuarioController {
@@ -45,7 +48,7 @@ public class UsuarioController {
 
         String resp = "register";
 
-        Usuario usuario = new Usuario(nome, email, new BCryptPasswordEncoder().encode(senha), dnascimento, 'U', 'D', cpf, new Telefone(telefone, cell));
+        Usuario usuario = new Usuario(nome, email, new BCryptPasswordEncoder().encode(senha), dnascimento, Role.ROLE_NORMAL, Status.STATUS_DESATIVADA, cpf, new Telefone(telefone, cell));
 
         Set enderecos = new HashSet<Endereco>();
 
@@ -83,7 +86,7 @@ public class UsuarioController {
 
         if(chaveCrip != null){
             Usuario usuario = usuarioService.findById(chaveCrip.getIdUsuario());
-            usuario.setStatus('E');
+            usuario.setStatus(Status.STATUS_ATIVADA);
             usuarioService.edit(usuario);
         }
 

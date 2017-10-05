@@ -1,7 +1,14 @@
 package com.antipragas.models;
 
+import com.antipragas.models.enums.Role;
+import com.antipragas.models.enums.Status;
+
 import javax.persistence.*;
 import java.util.Set;
+
+/**
+ * @author Thais Camacho
+ */
 
 @Entity
 @Table(name = "usuarios")
@@ -22,11 +29,11 @@ public class Usuario {
     @Column(length = 10)
     private String dataDeNascimento;
 
-    @Column(length = 1)
-    private Character tipo;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    @Column(length = 1)
-    private Character status; //A - Ativado D - Desativado
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     @Column(length = 14)
     private String CPF;
@@ -41,15 +48,15 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String nome, String email, String senha, String dataDeNascimento, Character tipo, Character status, String CPF, Telefone telefone) {
+    public Usuario(String nome, String email, String senha, String dataDeNascimento, Role role, Status status, String CPF, Telefone telefone) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.dataDeNascimento = dataDeNascimento;
-        this.tipo = tipo;
         this.status = status;
         this.CPF = CPF;
         this.telefone = telefone;
+        this.role = role;
     }
 
     public Long getId() {
@@ -92,19 +99,11 @@ public class Usuario {
         this.dataDeNascimento = dataDeNascimento;
     }
 
-    public Character getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(Character tipo) {
-        this.tipo = tipo;
-    }
-
-    public Character getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(Character status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -130,5 +129,13 @@ public class Usuario {
 
     public void setEnderecos(Set<Endereco> enderecos) {
         this.enderecos = enderecos;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
