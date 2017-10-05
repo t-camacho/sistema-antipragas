@@ -7,6 +7,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Thais Camacho
+ */
+
 @Service
 public class NoticaficacaoServiceImple implements NotificacaoService {
     private JavaMailSender javaMailSender;
@@ -24,7 +28,7 @@ public class NoticaficacaoServiceImple implements NotificacaoService {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(usuario.getEmail());
         mail.setFrom("empresaantipragas@gmail.com");
-        mail.setSubject("Confirmar seu Cadastro na Empresa Antipragas");
+        mail.setSubject("Confirme seu Cadastro na Empresa Antipragas");
         mail.setText(msg);
         javaMailSender.send(mail);
     }

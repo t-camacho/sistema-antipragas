@@ -32,7 +32,8 @@
     <div class="col-12 col-md-2">
     </div>
 
-    <div class="col-12 col-md-6 container">
+    <div class="col-12 col-md-6 container" id="container">
+        <h1>Login</h1>
         <form id="formulario" th:action="@{/login}" method="post">
             <div class="row">
                 <div class="col-12 col-md-12">
@@ -52,12 +53,35 @@
                 </div>
             </div>
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <div id="esqueceu-senha">
+                <a href="#" >Esqueceu a senha?</a>
+            </div>
         </form>
     </div>
 
     <div class="col-12 col-md-2">
     </div>
 </div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Falha na Autenticação</h5>
+                <a class="close" th:href="@{/}" role="button" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                Não existe um cadastro com o e-mail informado ou o cadastro não foi ativado.
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" th:href="@{/}" role="button">Fechar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- JQUERY -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
 <!-- JAVASCRIPT REGISTER -->

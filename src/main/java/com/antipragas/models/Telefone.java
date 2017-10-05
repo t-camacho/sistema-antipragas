@@ -2,6 +2,10 @@ package com.antipragas.models;
 
 import javax.persistence.*;
 
+/**
+ * @author Thais Camacho
+ */
+
 @Entity
 @Table(name = "telefones")
 public class Telefone {

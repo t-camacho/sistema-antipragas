@@ -15,6 +15,7 @@ body {
     border: 1px solid rgba(4, 99, 201, 0.9);
     padding: 12px 0;
     margin: 5px;
+    padding-left: 10px;
 }
 
 
@@ -23,8 +24,8 @@ nav {
 }
 
 
-form {
-    padding: 5%;
+#container {
+    padding: 0 5% 5% 5%;
     background-color: white;
     border-radius: 15px;
 }
@@ -37,4 +38,13 @@ form {
     padding: 12px 0;
     float: left;
     margin-right: 5%;
+}
+
+#item-menu:hover{
+    color: #7aa9de;
+}
+
+#container > h1 {
+    text-align: center;
+    color: #373c42;
 }
