@@ -86,6 +86,16 @@ public class UsuarioController {
         return new ModelAndView("redirect:/registrar", "resp", resp);
     }
 
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/login?logout"; // retornar para login é uma boa prática
+    }
+
+
     @RequestMapping(value = "/usuario/confirmar", method = RequestMethod.GET)
     public ModelAndView confirmRegister(@RequestParam String id){
 
