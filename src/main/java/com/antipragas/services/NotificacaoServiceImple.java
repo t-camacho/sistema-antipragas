@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class NoticaficacaoServiceImple implements NotificacaoService {
+public class NotificacaoServiceImple implements NotificacaoService {
     private JavaMailSender javaMailSender;
 
     @Autowired
-    public NoticaficacaoServiceImple(JavaMailSender javaMailSender){
+    public NotificacaoServiceImple(JavaMailSender javaMailSender){
         this.javaMailSender = javaMailSender;
     }
 

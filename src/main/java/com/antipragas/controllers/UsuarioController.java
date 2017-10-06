@@ -1,7 +1,6 @@
 package com.antipragas.controllers;
 
 import com.antipragas.models.*;
-import com.antipragas.models.enums.Acao;
 import com.antipragas.models.enums.Nivel;
 import com.antipragas.models.enums.Sexo;
 import com.antipragas.models.enums.Status;
@@ -11,7 +10,6 @@ import com.antipragas.services.UsuarioService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -86,6 +84,7 @@ public class UsuarioController {
         }else{
             resp = "exists";
         }
+
         return new ModelAndView("redirect:/registrar", "resp", resp);
     }
 
