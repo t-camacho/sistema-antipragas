@@ -5,18 +5,23 @@ import com.antipragas.models.enums.Nivel;
 import com.antipragas.models.enums.Sexo;
 import com.antipragas.models.enums.Status;
 import com.antipragas.services.ChaveDeConfirmacaoService;
-import com.antipragas.services.NoticaficacaoServiceImple;
+import com.antipragas.services.NotificacaoServiceImple;
 import com.antipragas.services.UsuarioService;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,7 +40,7 @@ public class UsuarioController {
     private ChaveDeConfirmacaoService chaveDeConfirmacaoService;
 
     @Autowired
-    private NoticaficacaoServiceImple notificcacaoService;
+    private NotificacaoServiceImple notificacaoService;
 
     @RequestMapping(value ="/usuario/registrar", method = RequestMethod.POST)
     public ModelAndView registerUser(@RequestParam String nome, @RequestParam String email,
@@ -71,7 +76,7 @@ public class UsuarioController {
             ChaveDeConfirmacao chaveCrip= new ChaveDeConfirmacao(usuario.getId(), new BCryptPasswordEncoder().encode(usuario.getId().toString()));
             chaveDeConfirmacaoService.create(chaveCrip);
             try{
-                notificcacaoService.sendNotification(usuario, chaveCrip);
+                notificacaoService.sendNotification(usuario, chaveCrip);
             }catch (MailException e){
             }
         }else{
