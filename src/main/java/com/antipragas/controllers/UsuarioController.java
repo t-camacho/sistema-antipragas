@@ -1,11 +1,12 @@
 package com.antipragas.controllers;
 
 import com.antipragas.models.*;
+import com.antipragas.models.enums.Acao;
 import com.antipragas.models.enums.Nivel;
 import com.antipragas.models.enums.Sexo;
 import com.antipragas.models.enums.Status;
 import com.antipragas.services.ChaveDeConfirmacaoService;
-import com.antipragas.services.NoticaficacaoServiceImple;
+import com.antipragas.services.NotificacaoServiceImple;
 import com.antipragas.services.UsuarioService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,7 @@ public class UsuarioController {
     private ChaveDeConfirmacaoService chaveDeConfirmacaoService;
 
     @Autowired
-    private NoticaficacaoServiceImple notificacaoService;
+    private NotificacaoServiceImple notificacaoService;
 
     @RequestMapping(value ="/registrar", method = RequestMethod.POST)
     public ModelAndView registrarUsuario(@RequestParam String nome, @RequestParam String email,
