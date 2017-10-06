@@ -24,7 +24,7 @@ public class ChaveDeConfirmacaoServiceImple implements ChaveDeConfirmacaoService
     }
 
     @Override
-    public ChaveDeConfirmacao findByIdEncode(String id) {
+    public ChaveDeConfirmacao findByIdCriptografado(String id) {
 
         return chaveDeConfirmacaoRepository.findByIdCriptografado(id);
     }

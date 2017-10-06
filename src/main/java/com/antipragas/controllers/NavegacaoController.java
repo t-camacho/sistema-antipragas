@@ -27,15 +27,15 @@ public class NavegacaoController {
         return new ModelAndView("home", "resp", resp);
     }
 
+    @RequestMapping(value = "/resetar", method = RequestMethod.GET)
+    public ModelAndView goHLogin(@RequestParam String resp){
+
+        return new ModelAndView("login", "resp", resp);
+    }
+
     @RequestMapping(value = "/login")
     public String goLogin(){
 
         return "login";
     }
-
-    @RequestMapping("/usuario/painel")
-    public String goPainel(){
-        return "/usuario/painel";
-    }
-
 }

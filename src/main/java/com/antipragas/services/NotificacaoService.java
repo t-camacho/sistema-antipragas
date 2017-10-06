@@ -8,5 +8,6 @@ import com.antipragas.models.Usuario;
  */
 
 public interface NotificacaoService {
-    public void sendNotification(Usuario usuario, ChaveDeConfirmacao encodeId);
+    public void enviarNotificacaoDeCadastro(Usuario usuario, ChaveDeConfirmacao chaveCrip);
+    public void enviarNotificacaoDeSenha(Usuario usuario, ChaveDeConfirmacao chaveCrip);
 }

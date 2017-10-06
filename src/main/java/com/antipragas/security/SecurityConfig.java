@@ -43,7 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/",
                         "/usuario/registrar",
                         "/usuario/confirmar",
-                        "/registrar").permitAll()
+                        "/registrar",
+                        "/usuario/resetar/novasenha",
+                        "/usuario/resetar",
+                        "/resetar").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
                 .loginPage("/login").permitAll()

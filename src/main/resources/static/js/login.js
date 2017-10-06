@@ -31,36 +31,47 @@ $(function () {
 
     $('input[type=submit]').click(function (evento) {
         var array_campos = formulario.serializeArray();
-
-        if(array_campos[0].value == '' || array_campos[1].value == ''){
-            if(array_campos[0].value == ''){
-                $('.error-email').html('<p class="error-email"><span style="color: red">Informe um email</span></p>');
-            }else{
-                $('.error-email').html('<p class="error-email"></p>');
-            }
-            if(array_campos[1].value == ''){
-                $('.error-senha').html('<p class="error-senha"><span style="color: red">Informe uma senha(pelo menos 8 caracteres)</span></p>');
-            }else{
-                $('.error-senha').html('<p class="error-senha"></span></p>');
-            }
-            return false;
-        }else{
-            $('.error-email').html('<p class="error-email"></span></p>');
-            $('.error-senha').html('<p class="error-senha"></span></p>');
-
-            if(!validaEmail(array_campos[0])){
-                $('.error-email').html('<p class="error-email"><span style="color: red">Informe um email válido</span></p>');
+        if(this.value == "Entrar"){
+            if(array_campos[0].value == '' || array_campos[1].value == ''){
+                if(array_campos[0].value == ''){
+                    $('.error-email').html('<p class="error-email"><span style="color: red">Informe um email</span></p>');
+                }else{
+                    $('.error-email').html('<p class="error-email"></p>');
+                }
+                if(array_campos[1].value == ''){
+                    $('.error-senha').html('<p class="error-senha"><span style="color: red">Informe uma senha(pelo menos 8 caracteres)</span></p>');
+                }else{
+                    $('.error-senha').html('<p class="error-senha"></span></p>');
+                }
                 return false;
             }else{
                 $('.error-email').html('<p class="error-email"></span></p>');
-            }
-
-            if(!validaSenha(array_campos[1])){
-                $('.error-senha').html('<p class="error-senha"><span style="color: red">Informe uma senha válida</span></p>');
-                return false;
-            }else{
                 $('.error-senha').html('<p class="error-senha"></span></p>');
+
+                if(!validaEmail(array_campos[0])){
+                    $('.error-email').html('<p class="error-email"><span style="color: red">Informe um email válido</span></p>');
+                    return false;
+                }else{
+                    $('.error-email').html('<p class="error-email"></span></p>');
+                }
+
+                if(!validaSenha(array_campos[1])){
+                    $('.error-senha').html('<p class="error-senha"><span style="color: red">Informe uma senha válida</span></p>');
+                    return false;
+                }else{
+                    $('.error-senha').html('<p class="error-senha"></span></p>');
+                }
             }
+        }else{
+            var email = document.getElementById("recipient-name");
+            if(email.value == '' || !validaEmail(email)){
+                $('.error-emailS').html('<p class="error-emailS"><span style="color: red">Informe um email válido</span></p>');
+                return false;
+            }
+            $('.error-emailS').html('<p class="error-emailS"></span></p>');
+            evento.submit();
         }
+
+
     });
 });

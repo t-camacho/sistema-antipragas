@@ -96,7 +96,7 @@ $(function(){
     $('input[name=next1]').click(function(){
         var array = formu.serializeArray();
 
-        if(array[0].value == '' || array[3].value == '' || array[4].value == ''){
+        if(array[0].value == '' || array[3].value == '' || array[4].value == '' || array[5].value == ''){
             if(array[0].value == ''){
                 $('.error-name').html('<p class="error-name"><span style="color: red">Seu nome é obrigatório</span></p>');
             }else{
@@ -129,18 +129,18 @@ $(function(){
     $('input[name=next2]').click(function(){
         var array = formu.serializeArray();
 
-        if(array[5].value == '' || array[6].value == '' || array[7].value == ''){
-            if(array[5].value == ''){
+        if(array[6].value == '' || array[7].value == '' || array[8].value == ''){
+            if(array[6].value == ''){
                 $('.error-email').html('<p class="error-email"><span style="color: red">Seu email é obrigatório</span></p>');
             }else{
                 $('.error-email').html('<p class="error-email"></p>');
             }
-            if(array[6].value == ''){
+            if(array[7].value == ''){
                 $('.error-senha').html('<p class="error-senha"><span style="color: red">Escolha uma senha</span></p>');
             }else{
                 $('.error-senha').html('<p class="error-senha"></p>');
             }
-            if(array[7].value == ''){
+            if(array[8].value == ''){
                 $('.error-csenha').html('<p class="error-csenha"><span style="color: red">Confirme sua senha</span></p>');
             }else{
                 $('.error-csenha').html('<p class="error-csenha"></p>');
@@ -149,21 +149,21 @@ $(function(){
 
             $('.error-senha').html('<p class="error-senha"></p>');
 
-            if(!validaEmail(array[5])){
-                $('.error-email').html('<p class="error-email"><span style="color: red">Inform um email válido</span></p>');
+            if(!validaEmail(array[6])){
+                $('.error-email').html('<p class="error-email"><span style="color: red">Informe um email válido</span></p>');
                 return;
             }else{
                 $('.error-email').html('<p class="error-email"></p>');
             }
 
-            if((array[6].value).length < 8){
+            if((array[7].value).length < 8){
                 $('.error-senha').html('<p class="error-senha"><span style="color: red">Informe uma senha com pelo menos 8 dígitos</span></p>');
                 return;
             }else{
                 $('.error-senha').html('<p class="error-senha"></p>');
             }
 
-            if(!(array[6].value === array[7].value)){
+            if(!(array[8].value === array[7].value)){
                 $('.error-csenha').html('<p class="error-csenha"><span style="color: red">Não corresponde com a senha</span></p>');
                 return;
             }else{
@@ -187,26 +187,26 @@ $(function(){
 
     $('.add').click(function(){
         var array = formu.serializeArray();
-        if(array[8].value == '' || array[9].value == '...'){
+        if(array[9].value == '' || array[10].value == '...'){
             $('.error-cep').html('<p class="error-cep"><span style="color: red">Informe o CEP do endereço</span></p>');
         }else{
             $('.error-cep').html('<p class="error-cep"></p>');
-            var address = array[8].value + "/" + array[9].value + "/" + array[10].value + "/" + array[11].value + "/" +
-                array[12].value + "/" + array[13].value + "/" + array[14].value;
-            var address_display = array[8].value;
+            var address = array[9].value + "/" + array[10].value + "/" + array[11].value + "/" + array[12].value + "/" +
+                array[13].value + "/" + array[14].value + "/" + array[15].value;
+            var address_display = array[9].value;
             //criando os objetos a serem adicionados na tela
             var div_address = document.createElement('div');
             var btn_delete = document.createElement('input');
             var input_hidden = document.createElement('input');
             //configuração da div
-            var content = "<p><strong>CEP:</strong> " + array[8].value + " <strong>Rua:</strong> " + array[9].value + " <strong>Número:</strong> " + array[10].value + "</p>" +
-            "<p><strong>Bairro: </strong>" + array[11].value + " <strong> Cidade: </strong>" + array[12].value +
-                "<strong> UF: </strong>" + array[13].value;
+            var content = "<p><strong>CEP:</strong> " + array[9].value + " <strong>Rua:</strong> " + array[10].value + " <strong>Número:</strong> " + array[11].value + "</p>" +
+            "<p><strong>Bairro: </strong>" + array[12].value + " <strong> Cidade: </strong>" + array[13].value +
+                "<strong> UF: </strong>" + array[14].value;
 
-            if(array[14].value == ''){
+            if(array[15].value == ''){
                 content = content + "</p>";
             }else{
-                content = content + "<strong> Complemento: </strong>"+ array[14].value +"</p>";
+                content = content + "<strong> Complemento: </strong>"+ array[15].value +"</p>";
             }
 
             div_address.innerHTML = content;
