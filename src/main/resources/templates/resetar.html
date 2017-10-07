@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Title</title>
+    <title>Antipragas - Login</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Catamaran|Varela+Round" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
+
+    <link th:href="@{../../css/style_login.css}" rel="stylesheet" />
+    <link th:href="@{../../css/style_home.css}" rel="stylesheet" />
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-full " id="nav-main">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/}" id="item-menu">Home <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="row" id="painel" >
+    <div class="col-12 col-md-2">
+    </div>
+
+    <div class="col-12 col-md-6 container">
+        <h1>Redefinir Senha</h1>
+        <form id="formulario" th:action="@{/usuario/resetar/novasenha}" method="post" name="form-senha">
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    Senha
+                    <input type="password" name="senha" />
+                    <p class="error-senha"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    Confirmar Senha
+                    <input type="password" name="csenha" />
+                    <p class="error-csenha"></p>
+                </div>
+            </div>
+            <input type="hidden" id="id" name="id" value="" />
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <input class="acao" type="submit" value="Resetar" />
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-12 col-md-2">
+    </div>
+</div>
+
+<script th:inline="javascript">
+    //guarda o id do usuário no input hidden
+    var id = [[${usuario}]];
+    document.getElementById("id").value = id;
+</script>
+
+</body>
+</html>

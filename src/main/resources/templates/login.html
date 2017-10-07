@@ -55,8 +55,8 @@
                 </div>
             </div>
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            <div id="esqueceu-senha">
-                <a href="#" >Esqueceu a senha?</a>
+            <div id="esqueceu_senha">
+                <a data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap" >Esqueceu a senha?</a>
             </div>
         </form>
     </div>
@@ -75,7 +75,52 @@
                 </a>
             </div>
             <div class="modal-body">
-                Não existe um cadastro com o e-mail informado ou o cadastro não foi ativado.
+                E-mail ou senha incorreto, ou o cadastro com o e-mail informado não foi confirmado.
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" th:href="@{/login}" role="button">Fechar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Redefinir Senha</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form th:action="@{/usuario/resetar}" method="post">
+            <div class="modal-body">
+                    <div class="form-group">
+                        <label for="recipient-name" class="form-control-label">Informe seu email</label>
+                        <input type="email" class="form-control" id="recipient-name" name="emailResetarSenha" />
+                        <p class="error-emailS"></p>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <input class="btn btn-primary" type="submit" value="Resetar" />
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Redefinir senha</h5>
+                <a class="close" th:href="@{/login}" role="button" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                Se existe um cadastro com esse email, então enviamos para o email o link para redefir a nova senha.
             </div>
             <div class="modal-footer">
                 <a class="btn btn-secondary" th:href="@{/login}" role="button">Fechar</a>
@@ -92,9 +137,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
-<script th:if="${resp == 'error'}" >
+<script th:if="${param.error}" >
     $(function(){
         $('#myModal').modal('show');
+    });
+</script>
+
+
+<script th:if="${resp == 'concluido'}" >
+    $(function(){
+        $('#myModal3').modal('show');
     });
 </script>
 </body>

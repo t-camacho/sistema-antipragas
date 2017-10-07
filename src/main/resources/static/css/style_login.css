@@ -2,7 +2,6 @@ body {
     background-color: #373c42;
 }
 
-
 .container {
     text-align: center;
     padding: 2px;
@@ -18,9 +17,8 @@ body {
     padding-left: 10px;
 }
 
-
 .container {
-    padding: 0 5% 5% 5%;
+    padding: 15px 25px 10px 15px;
     background-color: white;
     border-radius: 15px;
 }
@@ -49,7 +47,20 @@ body {
 }
 
 #painel {
-    height: 100%;
     display: flex;
     align-items: center;
+    height: 95%;
+}
+
+
+form #esqueceu_senha > a {
+    cursor: pointer;
+}
+
+form {
+    width: 100%;
+}
+
+#option2 {
+    padding: 12px 0;
 }

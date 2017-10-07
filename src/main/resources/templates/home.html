@@ -140,15 +140,26 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-4">
                     Data de Nascimento<span style="color: red;">*</span>
                     <input type="date" name="dnascimento" />
                     <p class="error-data"></p>
                 </div>
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-4">
                     CPF<span style="color: red;">*</span>
                     <input type="text" name="cpf" placeholder="CPF" maxlength="14" onkeypress='mascaraMutuario(this,cpfCnpj)' onblur='clearTimeout()' />
                     <p class="error-cpf"></p>
+                </div>
+                <div class="col-12 col-md-4">
+                    Sexo<span style="color: red;">*</span><br/>
+                    <div data-toggle="buttons" class="btn-group btn-sexo">
+                        <label class="btn btn-primary active">
+                            <input type="radio" name="sexo" id="option2" autocomplete="off" value="fem" checked="checked" /> Feminino
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="sexo" id="option3" autocomplete="off" value="masc" /> Masculino
+                        </label>
+                    </div>
                 </div>
             </div>
             <input type="button" name="next1" class="next acao" value="Próximo" />
@@ -300,6 +311,46 @@
                 Agradecemos por escolher nossos serviços. Para começar a negociação basta entrar no sistema.
             </div>
             <div class="modal-footer">
+                <a class="btn btn-primary" th:href="@{/login}" role="button">Entrar</a>
+                <a class="btn btn-secondary" th:href="@{/}" role="button">Fechar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Senha alterada com Sucesso</h5>
+                <a class="close" th:href="@{/}" role="button" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                Para começar a negociação basta entrar no sistema.
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" th:href="@{/login}" role="button">Entrar</a>
+                <a class="btn btn-secondary" th:href="@{/}" role="button">Fechar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Redefinir Senha</h5>
+                <a class="close" th:href="@{/}" role="button" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                Sua senha foi redefinida com sucesso.
+            </div>
+            <div class="modal-footer">
                 <a class="btn btn-secondary" th:href="@{/}" role="button">Fechar</a>
             </div>
         </div>
@@ -332,5 +383,20 @@
     });
 </script>
 
+<script th:if="${resp == 'reset'}" >
+    $(function(){
+        $('#myModal4').modal('show');
+    });
+</script>
+
+<script>
+$(document).ready(function () {
+$('input').keypress(function (e) {
+var code = null;
+code = (e.keyCode ? e.keyCode : e.which);
+return (code == 13) ? false : true;
+});
+});
+</script>
 </body>
 </html>

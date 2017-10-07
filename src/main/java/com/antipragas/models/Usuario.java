@@ -65,13 +65,13 @@ public class Usuario {
         this.enderecos = enderecos;
     }
 
-    public Usuario(String nome, String email, String senha, String dataDeNascimento, Nivel nivel, Sexo sexo, Status status, String CPF, Telefone telefone) {
+    public Usuario(String nome, String email, String senha, String dataDeNascimento, Nivel nivel, /*Sexo sexo,*/ Status status, String CPF, Telefone telefone) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.dataDeNascimento = dataDeNascimento;
         this.nivel = nivel;
-        this.sexo = sexo;
+        //this.sexo = sexo;
         this.status = status;
         this.CPF = CPF;
         this.telefone = telefone;

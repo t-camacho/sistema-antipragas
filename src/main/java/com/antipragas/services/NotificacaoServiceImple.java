@@ -21,8 +21,13 @@ public class NotificacaoServiceImple implements NotificacaoService {
     }
 
     @Override
-    public void sendNotification(Usuario usuario, ChaveDeConfirmacao chaveCrip) {
-        String msg = "clique no link para ativar sua conta http://localhost:8080/usuario/confirmar?id=" + chaveCrip.getIdCriptografado();
+    public void enviarNotificacaoDeCadastro(Usuario usuario, ChaveDeConfirmacao chaveCrip) {
+        String http = "http://";
+        String host = "localhost:8080";
+        String controller = "/usuario/confirmar";
+        String paramid = "?id=";
+        String endereco = http + host + controller + paramid + chaveCrip.getIdCriptografado();
+        String msg = "clique no link para ativar sua conta " + endereco;
 
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(usuario.getEmail());
@@ -32,4 +37,21 @@ public class NotificacaoServiceImple implements NotificacaoService {
         javaMailSender.send(mail);
     }
 
+    @Override
+    public void enviarNotificacaoDeSenha(Usuario usuario, ChaveDeConfirmacao chaveCrip) {
+        String http = "http://";
+        String host = "localhost:8080";
+        String controller = "/usuario/resetar/novasenha";
+        String paramid = "?id=";
+        String endereco = http + host + controller + paramid + chaveCrip.getIdCriptografado();
+
+        String msg = "clique no link para escolher uma nova senha " + endereco;
+
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(usuario.getEmail());
+        mail.setFrom("empresaantipragas@gmail.com");
+        mail.setSubject("Solicitação de Nova Senha");
+        mail.setText(msg);
+        javaMailSender.send(mail);
+    }
 }
