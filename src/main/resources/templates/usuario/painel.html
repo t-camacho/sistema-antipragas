@@ -32,7 +32,9 @@
 
                     <li><a href="#0">Sua Conta</a></li>
                     <li><a href="#0">Editar Conta</a></li>
-                    <li><a href="#0">Sair</a></li>
+                    <li><a href="#0" th:href="@{/logout}">Sair</a>
+                        <form th:action="@{/logout}" method="post" ></form>
+                    </li>
                 </ul>
             </li>
         </ul>
