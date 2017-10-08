@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Antipragas</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Catamaran|Varela+Round" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
+
+    <!-- CSS HOME
+    <link href="../static/css/style_home.css" th:href="@{/css/style_home.css}" rel="stylesheet" />-->
+    <link th:href="@{/css/style_home.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="container-fluid" id="register">
+    <h1>Cadastre-se</h1>
+    <form id="form" th:action="@{/usuario/registrar}" method="post" name="form-register">
+
+        <ul id="progress">
+            <li class="ativo">Informações</li>
+            <li>Configurações</li>
+            <li>Detalhes</li>
+        </ul>
+
+        <fieldset>
+            <h2>Informações Pessoais</h2>
+            Nome Completo<span style="color: red;">*</span>
+            <input type="text" name="nome" placeholder="João da Silva" />
+            <p class="error-name"></p>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    Telefone
+                    <input type="text" name="telefone" placeholder="(XX)XXXX-XXXX" maxlength="13" onkeypress='mascaraMutuario(this,phone)' onblur='clearTimeout()' />
+                </div>
+                <div class="col-12 col-md-6">
+                    Celular
+                    <input type="text" name="cell" placeholder="(XX)XXXXX-XXXX" maxlength="14" onkeypress='mascaraMutuario(this,cel)' onblur='clearTimeout()' />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    Data de Nascimento<span style="color: red;">*</span>
+                    <input type="date" name="dnascimento" />
+                    <p class="error-data"></p>
+                </div>
+                <div class="col-12 col-md-4">
+                    CPF<span style="color: red;">*</span>
+                    <input type="text" name="cpf" placeholder="CPF" maxlength="14" onkeypress='mascaraMutuario(this,cpfCnpj)' onblur='clearTimeout()' />
+                    <p class="error-cpf"></p>
+                </div>
+                <div class="col-12 col-md-4">
+                    Sexo<span style="color: red;">*</span><br/>
+                    <div data-toggle="buttons" class="btn-group btn-sexo">
+                        <label class="btn btn-primary active">
+                            <input type="radio" name="sexo" id="option2" autocomplete="off" value="fem" checked="checked" /> Feminino
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="sexo" id="option3" autocomplete="off" value="masc" /> Masculino
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <input type="button" name="next1" class="next acao" value="Próximo" />
+        </fieldset>
+
+        <fieldset>
+            <h2>Configurações da Conta</h2>
+            Email<span style="color: red;">*</span>
+            <input type="text" name="email" placeholder="joao@gmail.com" />
+            <p class="error-email"></p>
+            Senha<span style="color: red;">*</span>
+            <input type="password" name="senha"  />
+            <p class="error-senha"></p>
+            Confirmar Senha<span style="color: red;">*</span>
+            <input type="password" name="csenha" />
+            <p class="error-csenha"></p>
+            <input type="button" name="next" class="prev acao" value="Anterior" />
+            <input type="button" name="next2" class="next acao"  value="Próximo" />
+        </fieldset>
+        <fieldset>
+            <h2>Endereço(s) de Visita</h2>
+            <h3>Informe-nos endereços que você possa precisar de serviços</h3>
+
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    CEP<span style="color: red;">*</span>
+                    <input type="text" name="cep" id="cep" maxlength="9" placeholder="CEP" onkeypress='mascaraMutuario(this,cept)' onblur='clearTimeout()' />
+                    <p class="error-cep"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    Rua<span style="color: red;">*</span>
+                    <input name="rua" type="text" id="rua" size="60" placeholder="Rua" readonly="readonly" />
+                </div>
+                <div class="col-12 col-md-6">
+                    Número<span style="color: red;">*</span>
+                    <input name="numero" type="number" id="numero" size="40" placeholder="Número" value="0" min="0" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-5">
+                    Bairro<span style="color: red;">*</span>
+                    <input name="bairro" type="text" id="bairro" size="60" placeholder="Bairro" readonly="readonly" />
+                </div>
+                <div class="col-12 col-md-5">
+                    Cidade<span style="color: red;">*</span>
+                    <input name="cidade" type="text" id="cidade" size="40" placeholder="Cidade" value="Maringá" readonly="readonly" />
+                </div>
+
+                <div class="col-12 col-md-2">
+                    UF<span style="color: red;">*</span>
+                    <input name="uf" type="text" id="uf" size="40" placeholder="UF" value="PR" readonly="readonly" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    Complemento
+                    <input name="complemento" type="text" id="complemento" size="40" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <input type="button" class="acao add" value="Adicionar Endereço" />
+                </div>
+            </div>
+
+            <div id="list-of-address">
+                <h1>Endereços Adicionados</h1>
+            </div>
+
+            <input type="button" name="next" class="prev acao" value="Anterior" />
+            <input type="submit" class="acao"  value="Enviar" />
+        </fieldset>
+        <input name="nivel" value="NIVEL_FUNCIONARIO" hidden="hidden"/>
+    </form>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<!-- JQUERY -->
+<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
+<!-- JAVASCRIPT REGISTER -->
+<script type="text/javascript" th:src="@{/js/cadastro.js}" ></script>
+
+</body>
+</html>

@@ -14,7 +14,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/funcionario")
 public class FuncionarioController {
 
-    //@GetMapping
-
-
 }
