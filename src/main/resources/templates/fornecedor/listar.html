@@ -16,10 +16,18 @@
             <table>
                 <thead>
                     <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Endereços</th>
                 </thead>
                 <tbody>
                     <tr th:each="fornecedor : ${fornecedores}">
                         <td th:text="${fornecedor.nome}">Nome</td>
+                        <td th:text="${fornecedor.telefone}">Telefone</td>
+                        <td th:each="endereco : ${fornecedor.enderecos}">
+                            <p th:text="${endereco.rua} + ', ' + ${endereco.numero} +
+                                        ', ' + ${endereco.complemento} + ', ' + ${endereco.bairro} +
+                                        ', ' + ${endereco.cep} + ', ' + ${endereco.cidade} + ', ' + ${endereco.uf}">Endereço</p>
+                        </td>
                     </tr>
                 </tbody>
             </table>
