@@ -1,14 +1,18 @@
 package com.antipragas.controllers;
 
 import com.antipragas.models.enums.Nivel;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Thais Camacho
@@ -55,5 +59,14 @@ public class NavegacaoController {
             return new ModelAndView("administrador/registrar_funcionario", "resp", "normal");
         else
             return goHLogin("resp");
+    }
+
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public String logout (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/";
     }
 }
