@@ -1,17 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css' />
-    <link href="https://fonts.googleapis.com/css?family=Catamaran|Varela+Round" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
-    <title>Antipragas</title>
-    <link th:href="@{/../css/style_painel.css}" rel="stylesheet" />
-    <link th:href="@{/../css/reset_menu.css}" rel="stylesheet" />
-    <link th:href="@{/../css/style_menu.css}" rel="stylesheet" />
-</head>
+<head th:replace="fragments/head:: head"></head>
 <body>
     <header th:replace="fragments/menu_responsivo :: header1"></header>
     <main th:replace="fragments/menu_responsivo :: header2"></main>
