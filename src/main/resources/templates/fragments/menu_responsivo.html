@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <title>Sistema Antipragas</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css' />
+    <link href="https://fonts.googleapis.com/css?family=Catamaran|Varela+Round" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
+
+    <link th:href="@{/../css/style_painel.css}" rel="stylesheet" />
+    <link th:href="@{/../css/reset_menu.css}" rel="stylesheet" />
+    <link th:href="@{/../css/style_menu.css}" rel="stylesheet" />
+</head>
+<body>
+<header th:fragment="header1" class="cd-main-header">
+    <a href="#0" class="cd-logo"><img src="../img/cd-logo.svg" alt="Logo" /></a>
+    <div class="cd-search is-hidden">
+        <form action="#0">
+            <input type="search" placeholder="Procurar..." />
+        </form>
+    </div>
+
+    <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
+
+    <nav class="cd-nav">
+        <ul class="cd-top-nav">
+            <li><a href="#0">Funcionário</a></li>
+            <li class="has-children account">
+                <a href="#0">
+                    <img src="../img/cd-avatar.png" alt="avatar" />
+                    Conta
+                </a>
+                <ul>
+                    <li><a href="#0">Sua Conta</a></li>
+                    <li><a href="#0">Editar Conta</a></li>
+                    <li><a href="#0" th:href="@{/logout}">Sair</a>
+                        <form th:action="@{/logout}" method="post" ></form>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<main th:fragment="header2" class="cd-main-content">
+    <nav class="cd-side-nav">
+        <ul>
+            <li class="cd-label">Principal</li>
+            <li class="has-children overview">
+                <a href="#0">Serviços</a>
+
+                <ul>
+                    <li><a href="#0">Renegociação</a></li>
+                    <li><a href="#0">Correntes</a></li>
+                    <li><a href="#0">Finalizados</a></li>
+                </ul>
+            </li>
+            <li class="has-children notifications active">
+                <a href="#0">Propostas<span class="count">3</span></a>
+            </li>
+        </ul>
+
+        <ul>
+            <li class="cd-label">Geral</li>
+            <li class="has-children bookmarks">
+                <a href="#0">Fornecedores</a>
+
+
+            <li class="has-children users">
+                <a href="#0">Clientes</a>
+            </li>
+            </li>
+            <li class="has-children images">
+                <a href="#0">Outros</a>
+
+                <ul>
+                    <li><a href="#0">Funcionário Técnico</a></li>
+                    <li><a href="#0">Pragas</a></li>
+                </ul>
+            </li>
+        </ul>
+
+        <ul>
+            <li class="cd-label">Ações</li>
+            <li class="action-btn"><a href="#0">+ Nova Proposta</a></li>
+        </ul>
+    </nav>
+</main>
+</body>
+</html>

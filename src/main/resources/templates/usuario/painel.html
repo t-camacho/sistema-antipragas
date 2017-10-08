@@ -1,131 +1,29 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" class="no-js">
 <head>
-    <title>Sistema Antipragas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css' />
-    <link th:href="@{../css/style_menu.css}" rel="stylesheet" />
-    <link th:href="@{../css/reset_menu.css}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Catamaran|Varela+Round" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
+    <title>Antipragas</title>
+    <link th:href="@{/../css/style_painel.css}" rel="stylesheet" />
+    <link th:href="@{/../css/reset_menu.css}" rel="stylesheet" />
+    <link th:href="@{/../css/style_menu.css}" rel="stylesheet" />
 </head>
 <body>
-<header class="cd-main-header">
-    <a href="#0" class="cd-logo"><img src="../img/cd-logo.svg" alt="Logo" /></a>
-
-    <div class="cd-search is-hidden">
-        <form action="#0">
-            <input type="search" placeholder="Search..." />
-        </form>
-    </div> <!-- cd-search -->
-
-    <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
-
-    <nav class="cd-nav">
-        <ul class="cd-top-nav">
-            <li><a href="#0">Funcionário</a></li>
-            <li><a href="#0">Outros</a></li>
-            <li class="has-children account">
-                <a href="#0">
-                    <img src="../img/cd-avatar.png" alt="avatar" />
-                    Conta
-                </a>
-
-                <ul>
-
-                    <li><a href="#0">Sua Conta</a></li>
-                    <li><a href="#0">Editar Conta</a></li>
-                    <li><a href="#0" th:href="@{/logout}">Sair</a>
-                        <form th:action="@{/logout}" method="post" ></form>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </nav>
-</header> <!-- .cd-main-header -->
-
-<main class="cd-main-content">
-    <nav class="cd-side-nav">
-        <ul>
-            <li class="cd-label">Main</li>
-            <li class="has-children overview">
-                <a href="#0">Propostas</a>
-
-                <ul>
-                    <li><a href="#0">All Data</a></li>
-                    <li><a href="#0">Category 1</a></li>
-                    <li><a href="#0">Category 2</a></li>
-                </ul>
-            </li>
-            <li class="has-children notifications active">
-                <a href="#0">Serviços<span class="count">3</span></a>
-
-                <ul>
-                    <li><a href="#0">All Notifications</a></li>
-                    <li><a href="#0">Friends</a></li>
-                    <li><a href="#0">Other</a></li>
-                </ul>
-            </li>
-
-            <li class="has-children comments">
-                <a href="#0">Comments</a>
-
-                <ul>
-                    <li><a href="#0">All Comments</a></li>
-                    <li><a href="#0">Edit Comment</a></li>
-                    <li><a href="#0">Delete Comment</a></li>
-                </ul>
-            </li>
-        </ul>
-
-        <ul>
-            <li class="cd-label">Secondary</li>
-            <li class="has-children bookmarks">
-                <a href="#0">Bookmarks</a>
-
-                <ul>
-                    <li><a href="#0">All Bookmarks</a></li>
-                    <li><a href="#0">Edit Bookmark</a></li>
-                    <li><a href="#0">Import Bookmark</a></li>
-                </ul>
-            </li>
-            <li class="has-children images">
-                <a href="#0">Images</a>
-
-                <ul>
-                    <li><a href="#0">All Images</a></li>
-                    <li><a href="#0">Edit Image</a></li>
-                </ul>
-            </li>
-
-            <li class="has-children users">
-                <a href="#0">Users</a>
-
-                <ul>
-                    <li><a href="#0">All Users</a></li>
-                    <li><a href="#0">Edit User</a></li>
-                    <li><a href="#0">Add User</a></li>
-                </ul>
-            </li>
-        </ul>
-
-        <ul>
-            <li class="cd-label">Action</li>
-            <li class="action-btn"><a href="#0">+ Button</a></li>
-        </ul>
-    </nav>
-
-    <br/>
-    Fornecedores
-    <ui>
-        <li><a th:href="@{/fornecedor/listar}">Listar</a></li>
-        <li><a th:href="@{/fornecedor/cadastrar}">Cadastrar</a></li>
-    </ui>
-
-    <div class="content-wrapper">
-        <h1>Bem-Vindo</h1>
-    </div> <!-- .content-wrapper -->
-</main> <!-- .cd-main-content -->
+    <header th:replace="fragments/menu_responsivo :: header1"></header>
+    <main th:replace="fragments/menu_responsivo :: header2"></main>
+    <main class="cd-main-content">
+        <div class="content-wrapper">
+            Fornecedores
+            <ul>
+                <li><a th:href="@{/fornecedor/listar}">Listar</a></li>
+                <li><a th:href="@{/fornecedor/cadastrar}">Cadastrar</a></li>
+            </ul>
+        </div>
+    </main>
 
 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -164,6 +62,16 @@
     </div>
 </div>
 
+
+
+<a href="#" class="float">
+    <i class="fa fa-plus my-float"></i>
+</a>
+<div class="label-container">
+    <div class="label-text">Nova Proposta</div>
+    <i class="fa fa-play label-arrow"></i>
+</div>
+
 <script th:if="${resp == 'exists'}">
     $(function(){
         $('#myModal').modal('show');
@@ -175,10 +83,12 @@
         $('#myModal2').modal('show');
     });
 </script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 <script th:src="@{../js/jquery-2.1.4.js}"></script>
 <script th:src="@{../js/jquery.menu-aim.js}"></script>
 <script th:src="@{../js/main.js}"></script> <!-- Resource jQuery -->
+
 </body>
 </html>
