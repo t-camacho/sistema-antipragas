@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Fornecedores cadastrados</title>
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+</head>
+<body>
+    <h1>Lista de Fornecedores!</h1>
+
+    <div class="default-panel">
+        <div th:if="${#lists.isEmpty(fornecedores)}">
+            <h5>Nenhum fornecedor cadastrado</h5>
+        </div>
+        <div th:unless="${#lists.isEmpty(fornecedores)}">
+            <table>
+                <thead>
+                    <th>Nome</th>
+                </thead>
+                <tbody>
+                    <tr th:each="fornecedor : ${fornecedores}">
+                        <td th:text="${fornecedor.nome}">Nome</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<br/>
+<a th:href="@{/usuario/painel}">Voltar para o painel </a>
+</html>

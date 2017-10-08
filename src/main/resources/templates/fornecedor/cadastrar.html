@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Cadastrar Fornecedores</title>
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+</head>
+<body>
+    <h1>Cadastrar Fornecedor</h1>
+
+    <form th:object="${fornecedor}" th:action="@{/fornecedor/listar}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <label>Nome: </label>
+        <input type="text" th:field="*{nome}"/><br/>
+        <label>Telefone: </label>
+        <input type="text" th:field="*{telefone}"/><br/>
+
+        <h3>Endereços</h3>
+
+        <table>
+            <thead>
+                <th>CEP</th>
+                <th>Rua</th>
+                <th>Número</th>
+                <th>Bairro</th>
+                <th>Complemento</th>
+                <th>Cidade</th>
+                <th>UF</th>
+                <th>
+                </th>
+            </thead>
+            <tbody>
+                <tr th:each="endereco, i : *{enderecos}">
+                    <input type="text" th:field="*{enderecos[__${i.index}__].cep}"/><br/>
+                    <input type="text" th:field="*{enderecos[__${i.index}__].rua}"/><br/>
+                    <input type="text" th:field="*{enderecos[__${i.index}__].numero}"/><br/>
+                    <input type="text" th:field="*{enderecos[__${i.index}__].bairro}"/><br/>
+                    <input type="text" th:field="*{enderecos[__${i.index}__].complemento}"/><br/>
+                    <input type="text" th:field="*{enderecos[__${i.index}__].cidade}"/><br/>
+                    <input type="text" th:field="*{enderecos[__${i.index}__].uf}"/><br/>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit">Cadastrar fornecedor</button>
+    </form>
+</body>
+</html>
