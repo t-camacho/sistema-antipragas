@@ -1,0 +1,34 @@
+/*******************
+*    FORM PRAGAS   *
+********************/
+#add-pragas {
+    margin-bottom: 20px;
+}
+
+#add-pragas form {
+    width: 70%;
+    margin: auto;
+    text-align: center;
+}
+
+#add-pragas form input, #add-pragas form button {
+    height: 35px;
+    padding: 5px;
+    font-size: 14pt;
+}
+
+#add-pragas form button {
+    padding: 0 10px;
+}
+
+/*******************
+*  TABELA PRAGAS   *
+********************/
+
+table thead, table tfoot {
+    font-weight: bold;
+}
+
+table {
+    font-size: 12pt;
+}

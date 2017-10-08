@@ -191,9 +191,4 @@ public class UsuarioController {
     public String goPainel(){
         return "/usuario/painel";
     }
-
-    @RequestMapping("/pragas")
-    public String goPragas(){
-        return "/usuario/gerenciar_pragas";
-    }
 }

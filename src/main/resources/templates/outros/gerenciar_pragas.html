@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" class="no-js">
+<head th:replace="fragments/head:: head"></head>
+<head>
+    <link th:href="@{/../css/style_pragas.css}" rel="stylesheet" />
+</head>
+<body>
+<header th:replace="fragments/menu_responsivo :: header1"></header>
+<main th:replace="fragments/menu_responsivo :: header2"></main>
+<main class="cd-main-content">
+    <div class="content-wrapper">
+        <h1>Gerenciar Pragas</h1>
+        <div class="row" id="add-pragas">
+            <div class="col-12">
+                <form>
+                    <div class="input-group">
+                        <input class="form-control" type="text" placeholder="Nome da Praga" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="fa fa-table"></i> Pragas Cadastradas no Sistema</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Ações</th>
+                        </tr>
+                        </thead>
+
+                        <tfoot>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Ações</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        <tr>
+                            <th>Barata</th>
+                            <th>
+                                <button type="button" class="btn btn-danger">Excluir</button>
+                            </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-footer small text-muted">Atualizada em 02/05/2017 as 15:30</div>
+        </div>
+    </div>
+</main>
+<!-- SCRIPT -->
+<script th:src="@{../js/jquery-2.1.4.js}"></script>
+<script th:src="@{../js/jquery.menu-aim.js}"></script>
+<script th:src="@{../js/main.js}"></script>
+</body>
+</html>
