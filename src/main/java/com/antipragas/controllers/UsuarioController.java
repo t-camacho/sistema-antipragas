@@ -44,7 +44,7 @@ public class UsuarioController {
                                      @RequestParam String dnascimento,
                                      @RequestParam String cpf, @RequestParam String sexo, @RequestParam String senha,
                                      @RequestParam String telefone, @RequestParam String cell,
-                                     @RequestParam String endereco){
+                                     @RequestParam String endereco, @RequestParam String nivel){
 
         if(LOGGER.isInfoEnabled()){
             LOGGER.info(String.format("Criando um novo cadastro com email: [%s]", email));
@@ -52,7 +52,10 @@ public class UsuarioController {
 
         String resp = "register";
 
-        Usuario usuario = new Usuario(nome, email, new BCryptPasswordEncoder().encode(senha), dnascimento, Nivel.NIVEL_CLIENTE, Status.STATUS_DESATIVADA, cpf, new Telefone(telefone, cell));
+        Usuario usuario = new Usuario(nome, email, new BCryptPasswordEncoder().encode(senha), dnascimento, Nivel.valueOf(nivel), Status.STATUS_DESATIVADA, cpf, new Telefone(telefone, cell));
+
+        if(usuario.getNivel() == Nivel.NIVEL_FUNCIONARIO)
+            usuario.setStatus(Status.STATUS_ATIVADA);
 
         if(sexo.equals("fem")){
             usuario.setSexo(Sexo.F);
@@ -74,19 +77,25 @@ public class UsuarioController {
             usuario.setEnderecos(enderecos);
         }
 
+        //Caso o usuário não seja funcionario
         if(usuarioService.findByEmail(email) == null){
             usuarioService.create(usuario);
-            ChaveDeConfirmacao chaveCrip= new ChaveDeConfirmacao(usuario.getId(), new BCryptPasswordEncoder().encode(usuario.getId().toString()), Acao.ACAO_CONFIRMAR);
-            chaveDeConfirmacaoService.create(chaveCrip);
-            try{
-                notificacaoService.enviarNotificacaoDeCadastro(usuario, chaveCrip);
-            }catch (MailException e){
+            if(usuario.getNivel() == Nivel.NIVEL_CLIENTE) {
+                ChaveDeConfirmacao chaveCrip = new ChaveDeConfirmacao(usuario.getId(), new BCryptPasswordEncoder().encode(usuario.getId().toString()), Acao.ACAO_CONFIRMAR);
+                chaveDeConfirmacaoService.create(chaveCrip);
+                try {
+                    notificacaoService.enviarNotificacaoDeCadastro(usuario, chaveCrip);
+                } catch (MailException e) {
+                }
             }
         }else{
             resp = "exists";
         }
 
-        return new ModelAndView("redirect:/registrar", "resp", resp);
+        if((usuario.getNivel() == Nivel.NIVEL_CLIENTE))
+            return new ModelAndView("redirect:/registrar", "resp", resp);
+        else
+            return new ModelAndView("redirect:/usuario/painel", "resp", resp);
     }
 
     @RequestMapping(value = "/confirmar", method = RequestMethod.GET)

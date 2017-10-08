@@ -1,6 +1,9 @@
 package com.antipragas.controllers;
 
+import com.antipragas.models.enums.Nivel;
 import org.apache.log4j.Logger;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,5 +40,20 @@ public class NavegacaoController {
     public String goLogin(){
 
         return "login";
+    }
+
+    @RequestMapping("/registrar_funcionario")
+    public ModelAndView goRegisterFuncionario(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String role = auth.getAuthorities().toString();
+        role = role.replace("[", "");
+        role = role.replace("]", "");
+        if(LOGGER.isInfoEnabled()){
+            LOGGER.info(String.format("Role: [%s]", role));
+        }
+        if(role.equals(Nivel.NIVEL_ADMINISTRADOR.toString()))
+            return new ModelAndView("administrador/registrar_funcionario", "resp", "normal");
+        else
+            return goHLogin("resp");
     }
 }
