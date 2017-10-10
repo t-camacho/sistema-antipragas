@@ -6,8 +6,11 @@ import com.antipragas.repositories.FornecedorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -24,33 +27,40 @@ public class FornecedorController {
         return "/fornecedor/listar";
     }
 
-    @RequestMapping("/cadastrar")
+    @GetMapping("/cadastrar")
     public String cadastrar(Model model) {
         Fornecedor f = new Fornecedor();
-        f.getEnderecos().add(new Endereco());
+        ArrayList<Endereco> enderecos = new ArrayList<Endereco>();
+        enderecos.add(new Endereco());
+        f.setEnderecos(enderecos);
         model.addAttribute("fornecedor", f);
         return "/fornecedor/cadastrar";
     }
 
-    /*
-    @RequestMapping(value = "/cadastrar", params = {"novoEndereco"})
-    public String adicionarEndereco(final Fornecedor fornecedor) {
+    @RequestMapping(value = "/cadastrar", params = {"adicionarEndereco"}, method = RequestMethod.POST)
+    public String adicionarEndereco(final Fornecedor fornecedor,
+                                    final BindingResult result) {
         fornecedor.getEnderecos().add(new Endereco());
-        return "cadastrar";
+        return "/fornecedor/cadastrar";
     }
 
-    @RequestMapping(value = "/cadastrar", params = {"removerEndereco"})
-    public String removerEndereco(final Fornecedor fornecedor, final HttpServletRequest request) {
+    @RequestMapping(value = "/cadastrar", params = {"removerEndereco"}, method = RequestMethod.POST)
+    public String removerEndereco(
+            final Fornecedor fornecedor,
+            final HttpServletRequest request,
+            final BindingResult result) {
         final Integer idEndereco = Integer.valueOf(request.getParameter("removerEndereco"));
         fornecedor.getEnderecos().remove(idEndereco.intValue());
-        return "cadastrar";
-    } */
+        return "/fornecedor/cadastrar";
+    }
 
-    public String salvarCadastro(Fornecedor fornecedor) {
+    @RequestMapping(value = "/cadastrar", params = {"salvar"}, method = RequestMethod.POST)
+    public String salvarCadastro(Fornecedor fornecedor,
+                                 final BindingResult result) {
         for(Endereco e: fornecedor.getEnderecos()) {
             e.setFornecedor(fornecedor);
         }
         fornecedorRepository.save(fornecedor);
-        return "redirect:/fornecedor/listar";
+        return "/fornecedor/listar";
     }
 }
