@@ -12,15 +12,16 @@
         <h1>Gerenciar Pragas</h1>
         <div class="row" id="add-pragas">
             <div class="col-12">
-                <form>
+                <form name="form-add-praga" method="post" th:action="@{/praga/adicionar}">
                     <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Nome da Praga" />
+                        <input class="form-control" type="text" name="nome" placeholder="Nome da Praga" />
                         <span class="input-group-btn">
-                            <button class="btn btn-primary" type="button">
+                            <button class="btn btn-primary add" type="submit">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </span>
                     </div>
+                    <p class="error-nome"></p>
                 </form>
             </div>
         </div>
@@ -29,6 +30,16 @@
             <div class="card-header">
                 <i class="fa fa-table"></i> Pragas Cadastradas no Sistema</div>
             <div class="card-body">
+                <div class="row">
+                    <div class="col-9"></div>
+                    <div class="col-3">
+                        <form class="form-inline my-4 my-lg-0 mr-lg-4">
+                            <div class="input-group">
+                                <input class="form-control btn-buscar" type="text" placeholder="Buscar..." id="input-buscar" onkeyup="buscar()" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -45,23 +56,61 @@
                         </tr>
                         </tfoot>
                         <tbody>
-                        <tr>
-                            <th>Barata</th>
-                            <th>
-                                <button type="button" class="btn btn-danger">Excluir</button>
-                            </th>
+
+                        <tr th:each="praga : ${pragas}">
+                            <td href="#" th:text="${praga.nome}"></td>
+                            <td>
+                                <form method="post" th:action="@{/praga/deletar}">
+                                    <input type="hidden" th:value="${praga.id}" name="id" />
+                                    <button type="submit" value="delete" class="btn btn-danger">Excluir</button>
+                                    <button type="button" th:value="${praga.id}" class="btn btn-primary alterar" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Alterar</button>
+                                </form>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="card-footer small text-muted">Atualizada em 02/05/2017 as 15:30</div>
         </div>
     </div>
+
 </main>
+
+<div class="modal fade alterar-praga" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Alterar</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form th:action="@{/praga/alterar}" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="recipient-name" name="nomePraga" required="required" />
+                        <input type="hidden" id="idNovoNome" name="idAltPraga" />
+                        <p class="error-emailS"></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <input class="btn btn-primary" type="submit" value="Alterar" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!-- SCRIPT -->
 <script th:src="@{../js/jquery-2.1.4.js}"></script>
 <script th:src="@{../js/jquery.menu-aim.js}"></script>
 <script th:src="@{../js/main.js}"></script>
+<script th:src="@{../js/pragas.js}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+
 </body>
 </html>

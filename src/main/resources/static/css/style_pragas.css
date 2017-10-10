@@ -32,3 +32,39 @@ table thead, table tfoot {
 table {
     font-size: 12pt;
 }
+
+
+/*******************
+*  BOTÕES          *
+********************/
+.btn{
+    color: #FFF;
+    font-size: 11pt;
+}
+
+.btn-warning:hover {
+    color: #FFF;
+}
+
+/*******************
+*  FORM BUSCA      *
+********************/
+.input-group {
+    margin-bottom: 10px;
+    font-size: 14pt;
+}
+
+.btn-buscar {
+    font-size: 11pt;
+}
+
+
+
+.alterar-praga {
+    font-size: 25pt;
+}
+
+.alterar-praga input[name="nomePraga"] {
+    font-size: 11pt;
+    padding: 5px;
+}
