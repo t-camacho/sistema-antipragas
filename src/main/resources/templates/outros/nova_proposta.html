@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Antipragas - Nova Proposta</title>
+
+
+    <link href="https://fonts.googleapis.com/css?family=Catamaran|Varela+Round" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet"/>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
+
+    <link th:href="@{/../css/style_proposta.css}" rel="stylesheet" />
+
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary navbar-full " id="nav-main">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/usuario/painel}" id="item-menu">Voltar</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container-fluid" id="register">
+    <h1>Crie Uma Nova Proposta</h1>
+    <form id="form" th:action="@{/proposta/registrar}" method="post" name="form-proposta">
+
+        <ul id="progress">
+            <li class="ativo">Informações</li>
+            <li>Detalhes</li>
+        </ul>
+
+        <fieldset>
+            <h2>Informações Básicas</h2>
+            Endereço que Deseja o Serviço<span style="color: red;">*</span>
+            <select name="endereco" >
+                <option  th:each="endereco : ${enderecos}" th:value="${endereco.id}" th:inline="text">[[${endereco.rua}]] [[${endereco.numero}]] - [[${endereco.bairro}]] - [[${endereco.cidade}]]/[[${endereco.uf}]]</option>
+            </select>
+
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    Quantidade de visita<span style="color: red;">*</span><br/>
+                    <input id="qtdVisita" name="qtd"  type="number" class="qtdVisita" value="1" min="1"  />
+                </div>
+
+                <div class="col-12 col-md-6">
+                    Tipo do Serviço<span style="color: red;">*</span><br/>
+                    <div data-toggle="buttons" class="btn-group">
+                        <label class="btn btn-primary active">
+                            <input type="radio" name="tipo" id="option1" autocomplete="off" value="TIPO_EXTERMINIO" checked="checked" /> Extermínio
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="tipo" id="option2" autocomplete="off" value="TIPO_PREVENCAO" /> Prevenção
+                        </label>
+                    </div><br/>
+                </div>
+            </div>
+            <div class="row frequencia" id="frequencia">
+                <div class="col-12 col-md-12">
+                    Frequência das visitas<span style="color: red;">*</span><br/>
+                    <div data-toggle="buttons" class="btn-group">
+                        <label class="btn btn-primary">
+                            <input type="radio" name="frequencia" id="option1" autocomplete="off" value="FREQUENCIA_DIARIAMENTE" /> Diariamente
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="frequencia" id="option2" autocomplete="off" value="FREQUENCIA_SEMANALMENTE" /> Semanalmente
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="frequencia" id="option3" autocomplete="off" value="FREQUENCIA_MENSALMENTE" /> Mensalmente
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" name="frequencia" id="option4" autocomplete="off" value="FREQUENCIA_ANUALMENTE" /> Anualmente
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="radio" hidden="hidden" class="active" name="frequencia" id="freq_nula" value="FREQUENCIA_NULA" checked="checked" />
+                        </label>
+                    </div>
+                </div>
+                <p class="error-frequencia"></p>
+            </div>
+            <input type="button" name="next1" class="next acao" value="Próximo" />
+        </fieldset>
+
+        <fieldset>
+            <h2>Detalhes</h2>
+            <h3>Informe-nos possíveis pragas no local do serviço</h3>
+
+            <div class="container-fluid">
+                <label class="custom-control custom-checkbox" th:each="praga : ${pragas}">
+                    <input type="checkbox" class="custom-control-input" name="praga" th:value="${praga.id}" />
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description" th:text="${praga.nome}"></span>
+                </label>
+                <label class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" name="praga" th:value="0" />
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description" >Outro</span>
+                </label>
+            </div>
+            <p class="error-praga"></p>
+
+            <h3>Informe-nos uma descrição do serviço</h3>
+            <textarea placeholder="Deixe alguma descrição e observações sobre o serviço desejado..." name="descricao"></textarea>
+
+
+            <input type="button" name="next" class="prev acao" value="Anterior" />
+            <input type="submit" class="acao"  value="Enviar" />
+        </fieldset>
+    </form>
+
+</div>
+
+<!-- JQUERY -->
+<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
+<!-- JAVASCRIPT REGISTER -->
+<script type="text/javascript" th:src="@{/../js/nova_proposta.js}" ></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+</body>
+</html>

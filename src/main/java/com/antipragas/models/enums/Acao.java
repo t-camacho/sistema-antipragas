@@ -11,4 +11,12 @@ public enum Acao {
     Acao(String acao) {
         this.acao = acao;
     }
+
+    public String getAcao() {
+        return acao;
+    }
+
+    public void setAcao(String acao) {
+        this.acao = acao;
+    }
 }

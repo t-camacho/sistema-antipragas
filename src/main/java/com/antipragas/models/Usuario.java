@@ -43,11 +43,14 @@ public class Usuario {
     private String CPF;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "telefones_id")
+    @JoinColumn(name = "telefone_id")
     private Telefone telefone;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Set<Endereco> enderecos;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Set<Proposta> propostas;
 
     public Usuario() {
     }

@@ -1,6 +1,7 @@
 package com.antipragas.models;
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * @author Thais Camacho
@@ -15,6 +16,10 @@ public class Praga {
 
     @Column(length = 60)
     private String nome;
+
+
+    @ManyToMany(mappedBy = "pragas")
+    private Set<Proposta> propostas;
 
     public Praga() {
     }

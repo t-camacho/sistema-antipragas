@@ -18,14 +18,11 @@ public class ChaveDeConfirmacaoServiceImple implements ChaveDeConfirmacaoService
 
     @Override
     public ChaveDeConfirmacao create(ChaveDeConfirmacao encodeId) {
-
         return this.chaveDeConfirmacaoRepository.save(encodeId);
-
     }
 
     @Override
     public ChaveDeConfirmacao findByIdCriptografado(String id) {
-
         return chaveDeConfirmacaoRepository.findByIdCriptografado(id);
     }
 }

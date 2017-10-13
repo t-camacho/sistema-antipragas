@@ -2,6 +2,7 @@ package com.antipragas.models;
 
 
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * @author Thais Camacho
@@ -36,12 +37,15 @@ public class Endereco {
     private String uf;
 
     @ManyToOne
-    @JoinColumn(name = "usuarios_id")
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "fornecedor_id")
     private Fornecedor fornecedor;
+
+    @OneToMany(mappedBy = "endereco", cascade = CascadeType.ALL)
+    private Set<Proposta> propostas;
 
     public Endereco() {
     }
