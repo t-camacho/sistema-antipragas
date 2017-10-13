@@ -43,7 +43,7 @@ $(function(){
         var campos = formulario.serializeArray();
 
         if(campos[4].value == "") {
-            $('.error-praga').html('<p class="error-praga"><span style="color: red">Informe pelo menos um endereço</span></p>');
+            $('.error-praga').html('<p class="error-praga"><span style="color: red">Selecione um item</span></p>');
             return false;
         }else{
             $('.error-praga').html('<p class="error-praga"></p>');
