@@ -16,6 +16,7 @@ body {
   font-family: "Open Sans", sans-serif;
   color: #3e454c;
   background-color: #ffffff;
+  text-decoration: none;
 }
 body::after {
   clear: both;
@@ -359,6 +360,7 @@ Top Navigation
 @media only screen and (min-width: 1170px) {
   .cd-top-nav li:not(.has-children) a:hover {
     color: #1784c7;
+    text-decoration: none;
   }
 }
 
@@ -600,6 +602,7 @@ Sidebar
   }
   .no-touch .cd-side-nav .action-btn a:hover {
     background-color: #1a93de;
+    text-decoration: none;
   }
   .cd-side-nav .count {
     /* reset style */
@@ -672,6 +675,7 @@ Sidebar
   }
   .no-touch .has-children ul a:hover {
     color: #1784c7;
+    text-decoration: none;
   }
   .has-children > a::after {
     display: none;

@@ -71,7 +71,5 @@ $(function () {
             $('.error-emailS').html('<p class="error-emailS"></span></p>');
             evento.submit();
         }
-
-
     });
 });

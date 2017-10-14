@@ -5,17 +5,14 @@
 <body>
 <header th:fragment="header1" class="cd-main-header">
     <a href="#0" class="cd-logo"><img src="../img/cd-logo.svg" alt="Logo" /></a>
-    <div class="cd-search is-hidden">
-        <form action="#0">
-            <input type="search" placeholder="Procurar..." />
-        </form>
-    </div>
+
 
     <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
 
     <nav class="cd-nav">
         <ul class="cd-top-nav">
-            <li><a href="#0">Funcionário</a></li>
+            <!--
+            <li><a href="#0">Funcionário</a></li>-->
             <li class="has-children account">
                 <a href="#0">
                     <img src="../img/cd-avatar.png" alt="avatar" />
@@ -38,6 +35,10 @@
         <ul>
             <li class="cd-label">Principal</li>
             <li class="has-children overview">
+                <a th:href="@{/usuario/painel}">Início</a>
+            </li>
+            <!--
+            <li class="has-children overview">
                 <a href="#0">Serviços</a>
 
                 <ul>
@@ -48,11 +49,13 @@
             </li>
             <li class="has-children notifications active">
                 <a href="#0">Propostas<span class="count">3</span></a>
-            </li>
+            </li>-->
         </ul>
 
         <ul>
-            <li class="cd-label">Geral</li>
+
+            <li class="cd-label">Empresa</li>
+            <!--
             <li class="has-children bookmarks">
                 <a href="#0">Fornecedores</a>
 
@@ -60,11 +63,11 @@
             <li class="has-children users">
                 <a href="#0">Clientes</a>
             </li>
-            </li>
-            <li class="has-children images">
+            </li>-->
+            <li class="has-children overview">
                 <a href="#">Outros</a>
                 <ul>
-                    <li><a href="#">Funcionário Técnico</a></li>
+                    <!--<li><a href="#">Funcionário Técnico</a></li> -->
                     <li><a th:href="@{/praga/visualizar}">Pragas</a></li>
                 </ul>
             </li>
@@ -72,7 +75,7 @@
 
         <ul>
             <li class="cd-label">Ações</li>
-            <li class="action-btn"><a href="#0">+ Nova Proposta</a></li>
+            <li class="action-btn"><a th:href="@{/proposta/visualizar}">+ Nova Proposta</a></li>
         </ul>
     </nav>
 </main>

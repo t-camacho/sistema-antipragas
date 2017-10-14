@@ -47,7 +47,11 @@ public class PragaController {
     @RequestMapping(value = "/deletar", method = RequestMethod.POST)
     public  String deletarPraga(@RequestParam String id){
 
-        pragaService.deleteById(Long.parseLong(id));
+        try {
+            pragaService.deleteById(Long.parseLong(id));
+        }catch (Exception e){
+
+        }
 
         return "redirect:/praga/visualizar";
     }
@@ -59,7 +63,11 @@ public class PragaController {
 
         praga.setNome(nomePraga);
 
-        pragaService.edit(praga);
+        try{
+            pragaService.edit(praga);
+        }catch (Exception e){
+
+        }
 
         return "redirect:/praga/visualizar";
     }

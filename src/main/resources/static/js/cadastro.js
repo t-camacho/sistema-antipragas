@@ -7,7 +7,6 @@ $(function(){
     var array_div = [];
     var array_hidden = [];
 
-
     //função para passar pro próximo passo
     function next(elem){
         atual_fs = $(elem).parent();
@@ -187,7 +186,7 @@ $(function(){
 
     $('.add').click(function(){
         var array = formu.serializeArray();
-        if(array[9].value == '' || array[10].value == '...'){
+        if(array[9].value == '' || array[10].value == '...' || array[10].value == ''){
             $('.error-cep').html('<p class="error-cep"><span style="color: red">Informe o CEP do endereço</span></p>');
         }else{
             $('.error-cep').html('<p class="error-cep"></p>');

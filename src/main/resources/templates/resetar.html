@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Title</title>
     <title>Antipragas - Redefinir Senha</title>
 
     <link href="https://fonts.googleapis.com/css?family=Catamaran|Varela+Round" rel="stylesheet" />
@@ -39,14 +38,14 @@
         <form id="formulario" th:action="@{/usuario/resetar/novasenha}" method="post" name="form-senha">
             <div class="row">
                 <div class="col-12 col-md-12">
-                    Senha
+                    Senha<span style="color: red">*</span>
                     <input type="password" name="senha" />
                     <p class="error-senha"></p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-12">
-                    Confirmar Senha
+                    Confirmar Senha<span style="color: red">*</span>
                     <input type="password" name="csenha" />
                     <p class="error-csenha"></p>
                 </div>
@@ -54,7 +53,7 @@
             <input type="hidden" id="id" name="id" value="" />
             <div class="row">
                 <div class="col-12 col-md-12">
-                    <input class="acao" type="submit" value="Resetar" />
+                    <input type="submit" class="acao" value="Resetar" />
                 </div>
             </div>
         </form>
@@ -63,6 +62,11 @@
     <div class="col-12 col-md-2">
     </div>
 </div>
+
+<!-- JQUERY -->
+<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
+<!-- SCRIPT RESETAR -->
+<script type="text/javascript" th:src="@{/js/resetar.js}"></script>
 
 <script th:inline="javascript">
     //guarda o id do usuário no input hidden
