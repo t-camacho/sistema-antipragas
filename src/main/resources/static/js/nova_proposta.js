@@ -12,6 +12,7 @@ $(function(){
         next_fs.show(800);
     }
 
+
     //função para voltar um passo
     $('.prev').click(function(){
         atual_fs = $(this).parent();
@@ -24,6 +25,13 @@ $(function(){
 
     $('input[name=next1]').click(function(){
         var campos = formulario.serializeArray();
+
+        if(campos[1].value == ''){
+            $('.error-qtd').html('<p class="error-qtd"><span style="color: red">Informe a quantidade de visitas</span></p>');
+            return;
+        }else{
+            $('.error-qtd').html('<p class="error-qtd"></p>');
+        }
 
         if(campos[1].value > 1){
             if(campos[3].value == 'FREQUENCIA_NULA'){
@@ -42,23 +50,34 @@ $(function(){
     $('input[type=submit]').click(function (evento) {
         var campos = formulario.serializeArray();
 
-        if(campos[4].value == "") {
-            $('.error-praga').html('<p class="error-praga"><span style="color: red">Selecione um item</span></p>');
+        if(campos[4].value == "" || campos[5].value == ""){
+            if(campos[4].value == "") {
+                $('.error-praga').html('<p class="error-praga"><span style="color: red">Selecione um item</span></p>');
+            }else{
+                $('.error-praga').html('<p class="error-praga"></p>');
+            }
+
+            if(campos[5].value == ""){
+                $('.error-desc').html('<p class="error-desc"><span style="color: red">Descrição Obrigatória</span></p>');
+            }else{
+                $('.error-desc').html('<p class="error-desc"></p>');
+            }
             return false;
         }else{
             $('.error-praga').html('<p class="error-praga"></p>');
-            evento.submit();
+            $('.error-desc').html('<p class="error-desc"></p>');
         }
     });
 
     //só deixa escolher uma freq se visita > 1
-    $('.qtdVisita').click(function () {
-       if(this.value > 1){
-           document.getElementById("frequencia").style.display="block";
-       }else{
-           document.getElementById("frequencia").style.display="none";
-           document.getElementById("freq_nula").checked = "checked";
-       }
+    $('.qtdVisita').bind("click keyup" ,function () {
+        if(this.value > 1){
+            document.getElementById("frequencia").style.display="block";
+        }else{
+            document.getElementById("frequencia").style.display="none";
+            document.getElementById("freq_nula").checked = "checked";
+        }
     });
 
 });
+

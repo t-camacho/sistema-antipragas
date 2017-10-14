@@ -156,7 +156,7 @@ $(function(){
             }
 
             if((array[7].value).length < 8){
-                $('.error-senha').html('<p class="error-senha"><span style="color: red">Informe uma senha com pelo menos 8 dígitos</span></p>');
+                $('.error-senha').html('<p class="error-senha"><span style="color: red">Informe uma senha com pelo menos 8 caracteres</span></p>');
                 return;
             }else{
                 $('.error-senha').html('<p class="error-senha"></p>');
