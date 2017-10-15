@@ -35,30 +35,35 @@ public class PragaController {
     }
 
     @RequestMapping(value = "/adicionar", method = RequestMethod.POST)
-    public String adicionarPraga(@RequestParam String nome){
+    public ModelAndView adicionarPraga(@RequestParam String nome){
+        String resp = "ok";
 
         Praga praga = new Praga(nome);
 
-        pragaService.create(praga);
+        try {
+            pragaService.create(praga);
+        }catch (Exception e){
+            resp = "error_excluir";
+        }
 
-        return "redirect:/praga/visualizar";
+        return new ModelAndView("redirect:/praga/visualizar", resp, "add");
     }
 
     @RequestMapping(value = "/deletar", method = RequestMethod.POST)
-    public  String deletarPraga(@RequestParam String id){
-
+    public  ModelAndView deletarPraga(@RequestParam String id){
+        String resp = "ok";
         try {
             pragaService.deleteById(Long.parseLong(id));
         }catch (Exception e){
-
+            resp = "error_excluir";
         }
 
-        return "redirect:/praga/visualizar";
+        return new ModelAndView("redirect:/praga/visualizar", resp, "deletar");
     }
 
     @RequestMapping(value = "/alterar", method = RequestMethod.POST)
-    public String alterarPraga(@RequestParam String idAltPraga, @RequestParam String nomePraga){
-
+    public ModelAndView alterarPraga(@RequestParam String idAltPraga, @RequestParam String nomePraga){
+        String resp = "ok";
         Praga praga = pragaService.findById(Long.parseLong(idAltPraga));
 
         praga.setNome(nomePraga);
@@ -66,9 +71,9 @@ public class PragaController {
         try{
             pragaService.edit(praga);
         }catch (Exception e){
-
+            resp = "error";
         }
 
-        return "redirect:/praga/visualizar";
+        return new ModelAndView("redirect:/praga/visualizar", resp, "alterar");
     }
 }

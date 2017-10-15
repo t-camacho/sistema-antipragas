@@ -44,6 +44,12 @@ $(function(){
             $('.error-frequencia').html('<p class="error-frequencia"></p>');
         }
 
+        if(campos[2].value == "TIPO_PREVENCAO"){
+            document.getElementById("pragas").style.display="none";
+        }else{
+            document.getElementById("pragas").style.display="block";
+        }
+
         next($(this));
     });
 

@@ -92,22 +92,23 @@
 
         <fieldset>
             <h2>Detalhes</h2>
-            <h3>Informe-nos possíveis pragas no local do serviço</h3>
+            <div class="pragas" id="pragas">
+                <h3>Informe-nos possíveis pragas no local do serviço</h3>
 
-            <div class="container-fluid">
-                <label class="custom-control custom-checkbox" th:each="praga : ${pragas}">
-                    <input type="checkbox" class="custom-control-input" name="praga" th:value="${praga.id}" />
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description" th:text="${praga.nome}"></span>
-                </label>
-                <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="praga" th:value="0" />
-                    <span class="custom-control-indicator"></span>
-                    <span class="custom-control-description" >Outro</span>
-                </label>
+                <div class="container-fluid">
+                    <label class="custom-control custom-checkbox" th:each="praga : ${pragas}">
+                        <input type="checkbox" class="custom-control-input" name="praga" th:value="${praga.id}" />
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description" th:text="${praga.nome}"></span>
+                    </label>
+                    <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="praga" id="outro" th:value="0" />
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description" >Outro</span>
+                    </label>
+                </div>
+                <p class="error-praga"></p>
             </div>
-            <p class="error-praga"></p>
-
             <h3>Informe-nos uma descrição do serviço</h3>
             <textarea placeholder="Deixe uma descrição do serviço..." name="descricao"></textarea>
             <p class="error-desc"></p>
