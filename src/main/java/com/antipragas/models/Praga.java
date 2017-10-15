@@ -17,7 +17,6 @@ public class Praga {
     @Column(length = 60)
     private String nome;
 
-
     @ManyToMany(mappedBy = "pragas")
     private Set<Proposta> propostas;
 
