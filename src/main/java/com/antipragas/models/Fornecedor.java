@@ -6,6 +6,10 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/*
+    @author Rafael
+ */
+
 @Entity
 @Table(name = "fornecedores")
 public class Fornecedor {
