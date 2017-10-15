@@ -105,13 +105,18 @@ public class PropostaController {
         proposta.setStatus(StatusProposta.STATUS_PROPOSTA_PENDENTE);
 
 
-        String array_pragas[] = praga.split(",");
+        if(!tipo.equals("TIPO_PREVENCAO")){
+            String array_pragas[] = praga.split(",");
 
-        for(int i = 0; i < array_pragas.length; i++){
-            if(!array_pragas[i].equals("0")){
-                pragas.add(pragaService.findById(Long.parseLong(array_pragas[i])));
+            for(int i = 0; i < array_pragas.length; i++){
+                if(!array_pragas[i].equals("0")){
+                    pragas.add(pragaService.findById(Long.parseLong(array_pragas[i])));
+                }
             }
+
+            proposta.setPragas(pragas);
         }
+
 
         for(Endereco end : enderecos){
             if(end.getId() == Long.parseLong(endereco)){
@@ -120,9 +125,12 @@ public class PropostaController {
         }
 
         proposta.setUsuario(usuario);
-        proposta.setPragas(pragas);
 
-        propostaService.create(proposta);
+        try{
+            propostaService.create(proposta);
+        }catch (Exception e){
+
+        }
 
         return "redirect:/usuario/painel";
     }

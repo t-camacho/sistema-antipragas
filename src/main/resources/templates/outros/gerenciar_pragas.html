@@ -102,6 +102,65 @@
     </div>
 </div>
 
+<div class="modal fade" id="error_exclusao" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Falha na Operação</h5>
+                <a class="close" th:href="@{/praga/visualizar}" role="button" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                Não foi possível realizar a operação. A praga está sendo usada pelo sistema.
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" th:href="@{/praga/visualizar}" role="button">Fechar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_ok" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sucesso</h5>
+                <a class="close" th:href="@{/praga/visualizar}" role="button" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                Operação realizada com sucesso.
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" th:href="@{/praga/visualizar}" role="button">Fechar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="error" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Falha na Operação</h5>
+                <a class="close" th:href="@{/praga/visualizar}" role="button" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                Não foi possivel realizar a operação. Tente de novo mais tarde.
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" th:href="@{/praga/visualizar}" role="button">Fechar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JQUERY -->
+<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
 <!-- SCRIPT -->
 <script th:src="@{../js/jquery-2.1.4.js}"></script>
 <script th:src="@{../js/jquery.menu-aim.js}"></script>
@@ -111,6 +170,23 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
+<script th:if="${param.ok}" >
+    $(function(){
+        $('#modal_ok').modal('show');
+    });
+</script>
+
+<script th:if="${param.error_excluir}" >
+    $(function(){
+        $('#error_exclusao').modal('show');
+    });
+</script>
+
+<script th:if="${param.error}" >
+    $(function(){
+        $('#error').modal('show');
+    });
+</script>
 
 </body>
 </html>
