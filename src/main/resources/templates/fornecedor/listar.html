@@ -23,10 +23,15 @@
                     <tr th:each="fornecedor : ${fornecedores}">
                         <td th:text="${fornecedor.nome}">Nome</td>
                         <td th:text="${fornecedor.telefone}">Telefone</td>
-                        <td th:each="endereco : ${fornecedor.enderecos}">
-                            <p th:text="${endereco.rua} + ', ' + ${endereco.numero} +
+                        <td>
+                            <ul th:each="endereco : ${fornecedor.enderecos}">
+                                <li th:text="${endereco.rua} + ', ' + ${endereco.numero} +
                                         ', ' + ${endereco.complemento} + ', ' + ${endereco.bairro} +
-                                        ', ' + ${endereco.cep} + ', ' + ${endereco.cidade} + ', ' + ${endereco.uf}">Endereço</p>
+                                        ', ' + ${endereco.cep} + ', ' + ${endereco.cidade} + ', ' + ${endereco.uf}">Endereço</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <a th:href="${'/fornecedor/remover/' + fornecedor.id}">Remover</a>
                         </td>
                     </tr>
                 </tbody>

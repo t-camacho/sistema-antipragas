@@ -20,64 +20,35 @@
         <h3>Endereços</h3>
         <br/><br/>
 
-        <div th:each="endereco, i : *{enderecos}">
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    <p th:text="'Endereço ' + ${i.index + 1}">Endereço 1</p>
-                    <input type="hidden" th:field="*{enderecos[__${i.index}__].id}"/>
-                </div>
-                <div class="col-12 col-md-6">
-                    <button type="submit" name="removerEndereco" th:value="${i.index}"
-                            th:if="${#lists.size(fornecedor.enderecos) gt 1}">
-                        Remover</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    CEP<span style="color: red;">*</span>
-                    <input type="text" th:field="*{enderecos[__${i.index}__].cep}" id="cep" maxlength="9" placeholder="CEP" onkeypress='mascaraMutuario(this,cept)' onblur='clearTimeout()' />
-                    <p class="error-cep"></p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    Rua<span style="color: red;">*</span>
-                    <input type="text" th:field="*{enderecos[__${i.index}__].rua}" id="rua" size="60" placeholder="Rua" readonly="readonly" />
-                </div>
-                <div class="col-12 col-md-6">
-                    Número<span style="color: red;">*</span>
-                    <input type="number" th:field="*{enderecos[__${i.index}__].numero}" id="numero" size="40" placeholder="Número" value="0" min="0" />
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-md-5">
-                    Bairro<span style="color: red;">*</span>
-                    <input type="text" th:field="*{enderecos[__${i.index}__].bairro}" id="bairro" size="60" placeholder="Bairro" readonly="readonly" />
-                </div>
-                <div class="col-12 col-md-5">
-                    Cidade<span style="color: red;">*</span>
-                    <input type="text" th:field="*{enderecos[__${i.index}__].cidade}" id="cidade" size="40" placeholder="Cidade" value="Maringá" readonly="readonly" />
-                </div>
-
-                <div class="col-12 col-md-2">
-                    UF<span style="color: red;">*</span>
-                    <input type="text" th:field="*{enderecos[__${i.index}__].uf}" id="uf" size="40" placeholder="UF" value="PR" readonly="readonly" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    Complemento
-                    <input type="text" th:field="*{enderecos[__${i.index}__].complemento}" id="complemento" size="40" />
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-12">
+        <table>
+            <thead>
+            <th>CEP</th>
+            <th>Rua</th>
+            <th>Número</th>
+            <th>Bairro</th>
+            <th>Complemento</th>
+            <th>Cidade</th>
+            <th>UF</th>
+            <th>
                 <button type="submit" name="adicionarEndereco">Novo endereço</button>
-            </div>
-        </div>
+            </th>
+            </thead>
+            <tbody>
+            <tr th:each="endereco, i : *{enderecos}">
+                <input type="hidden" th:field="*{enderecos[__${i.index}__].id}"/>
+                <td><input type="text" th:field="*{enderecos[__${i.index}__].cep}"/></td>
+                <td><input type="text" th:field="*{enderecos[__${i.index}__].rua}"/></td>
+                <td><input type="text" th:field="*{enderecos[__${i.index}__].numero}"/></td>
+                <td><input type="text" th:field="*{enderecos[__${i.index}__].bairro}"/></td>
+                <td><input type="text" th:field="*{enderecos[__${i.index}__].complemento}"/></td>
+                <td><input type="text" th:field="*{enderecos[__${i.index}__].cidade}"/></td>
+                <td><input type="text" th:field="*{enderecos[__${i.index}__].uf}"/></td>
+                <td><button type="submit" name="removerEndereco" th:value="${i.index}"
+                            th:if="${#lists.size(fornecedor.enderecos) gt 1}">
+                    Remover</button></td>
+            </tr>
+            </tbody>
+        </table>
 
         <br/><br/>
         <button type="submit" name="salvar">Cadastrar fornecedor</button>

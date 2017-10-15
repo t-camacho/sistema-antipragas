@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head th:replace="fragments/head:: head">
+    <meta charset="UTF-8"/>
+    <title>Bem-Página inicial do cliente</title>
+</head>
+<body>
+    <h1 th:text="'Bem-vindo(a), ' + ${cliente.nome}">Bem-vindo</h1>
+    <br/><br/>
+
+    <h3>Serviços de hoje</h3>
+
+    <div th:if="${#lists.isEmpty(servicosDoDia)}">
+        Nenhum serviço para hoje.
+    </div>
+
+    <div th:unless="${#lists.isEmpty(servicosDoDia)}">
+        <table>
+            <thead>
+               <th>Horário</th>
+                <th>Responsável</th>
+                <th>Valor</th>
+                <th>Endereço</th>
+            </thead>
+            <tbody>
+                <tr th:each="servico : ${servicosDoDia}">
+                    <td th:text="${#dates.format(servico.dataHorario, 'HH:mm')}"></td>
+                    <td th:text="${servico.funcionarioTecnico.nome}"></td>
+                    <td th:text="'R$ ' + ${servico.orcamento}"></td>
+                    <td th:text="${servico.endereco.rua} + ', ' + ${servico.endereco.numero} + ', ' + ${servico.endereco.bairro} + ', ' + ${servico.endereco.complemento}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br/><br/>
+    <h3>Serviços nesta semana</h3>
+    <br/>
+
+    <div th:if="${#lists.isEmpty(servicosDaSemana)}">
+        Nenhum serviço nesta semana.
+    </div>
+
+    <div th:unless="${#lists.isEmpty(servicosDaSemana)}">
+        <table>
+            <thead>
+            <th>Dia</th>
+            <th>Horário</th>
+            <th>Responsável</th>
+            <th>Valor</th>
+            <th>Endereço</th>
+            </thead>
+            <tbody>
+            <tr th:each="servico : ${servicosDoDia}">
+                <td th:text="${#dates.format(servico.dataHorario, 'dd/MM/yyyy')}"></td>
+                <td th:text="${#dates.format(servico.dataHorario, 'HH:mm')}"></td>
+                <td th:text="${servico.funcionarioTecnico.nome}"></td>
+                <td th:text="'R$ ' + ${servico.orcamento}"></td>
+                <td th:text="${servico.endereco.rua} + ', ' + ${servico.endereco.numero} + ', ' + ${servico.endereco.bairro} + ', ' + ${servico.endereco.complemento}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
