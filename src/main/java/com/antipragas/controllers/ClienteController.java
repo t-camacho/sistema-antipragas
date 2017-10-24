@@ -39,8 +39,8 @@ public class ClienteController {
     }
 
     public List<Servico> getServicosDaSemana(Usuario cliente) {
-        Calendar hoje = null, inicioProximaSemana = null;
-        Date dataLimite = null;
+        Calendar hoje = null, inicioDestaSemana = null, inicioProximaSemana = null;
+        Date dataInicio = null, dataLimite = null;
         int offset = 0;
         List<Servico> servicosDaSemana = null, servicosDoCliente = null;
 
@@ -50,10 +50,16 @@ public class ClienteController {
         offset = Calendar.SATURDAY - hoje.get(Calendar.DAY_OF_WEEK) + 1;
         inicioProximaSemana = Calendar.getInstance();
         inicioProximaSemana.add(Calendar.DATE, offset);
-        inicioProximaSemana.set(Calendar.HOUR, 0);
+        inicioProximaSemana.set(Calendar.HOUR, -12);
         inicioProximaSemana.set(Calendar.MINUTE, 0);
         inicioProximaSemana.set(Calendar.SECOND, 0);
         dataLimite = inicioProximaSemana.getTime();
+
+        // determina o começo da semana
+        inicioDestaSemana = Calendar.getInstance();
+        inicioDestaSemana.setTime(dataLimite);
+        inicioDestaSemana.add(Calendar.DATE, -7);
+        dataInicio = inicioDestaSemana.getTime();
 
         // procura quais serviços do cliente estão agendados para a semana
         servicosDaSemana = new ArrayList<Servico>();
@@ -61,7 +67,7 @@ public class ClienteController {
         ordenarServicosPorData(servicosDoCliente);
 
         for(Servico servico : servicosDoCliente) {
-            if (servico.getDataHorario().before(dataLimite)) {
+            if (servico.getDataHorario().after(dataInicio) && servico.getDataHorario().before(dataLimite)) {
                 servicosDaSemana.add(servico);
             }
         }
@@ -69,8 +75,8 @@ public class ClienteController {
     }
 
     public List<Servico> getServicosDoDia(Usuario cliente) {
-        Calendar hoje = null, amanha = null;
-        Date dataLimite = null;
+        Calendar inicioDoDia = null, hoje = null, amanha = null;
+        Date dataInicio = null, dataLimite = null;
         List<Servico> servicosDoDia = null, servicosDoCliente = null;
 
         hoje = Calendar.getInstance();
@@ -78,10 +84,16 @@ public class ClienteController {
         // determina o início do dia de amanhã
         amanha = Calendar.getInstance();
         amanha.add(Calendar.DATE, 1);
-        amanha.set(Calendar.HOUR, 0);
+        amanha.set(Calendar.HOUR, -12);
         amanha.set(Calendar.MINUTE, 0);
         amanha.set(Calendar.SECOND, 0);
         dataLimite = amanha.getTime();
+
+        // determina o início do dia
+        inicioDoDia = Calendar.getInstance();
+        inicioDoDia.setTime(amanha.getTime());
+        inicioDoDia.add(Calendar.DATE, -1);
+        dataInicio = inicioDoDia.getTime();
 
         // verifica quais servicos do cliente são de hoje
         servicosDoDia = new ArrayList<Servico>();
@@ -89,7 +101,7 @@ public class ClienteController {
         ordenarServicosPorData(servicosDoCliente);
 
         for (Servico servico : servicosDoCliente) {
-            if (servico.getDataHorario().before(dataLimite)) {
+            if (servico.getDataHorario().after(dataInicio) && servico.getDataHorario().before(dataLimite)) {
                 servicosDoDia.add(servico);
             }
         }
