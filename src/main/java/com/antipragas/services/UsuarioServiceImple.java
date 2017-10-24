@@ -4,9 +4,12 @@ import com.antipragas.models.Usuario;
 import com.antipragas.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Thais Camacho
@@ -19,7 +22,8 @@ public class UsuarioServiceImple implements UsuarioService {
     private UsuarioRepository userRepository;
     @Override
     public Usuario findByEmail(String email){
-        return this.userRepository.findByEmail(email);
+        Optional<Usuario> userOpt = this.userRepository.findByEmail(email);
+        return userOpt.orElseThrow(() -> new UsernameNotFoundException("Error"));
     }
     @Override
     public List<Usuario> findAll() {

@@ -4,24 +4,19 @@
     <title>Responsive Tabs</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="css/style_servicos.css"/>
+    <link rel="stylesheet" href="/static/css/style_servicos.css"/>
 </head>
 <body>
+
 
 <!--<hr></hr>-->
 <div class="container"><h2>Serviços</h2></div>
 
 <div id="exTab2" class="container">
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#1" data-toggle="tab" onclick="selecionar_servicos('Pendente')">Pendentes</a></li>
-        <li><a href="#2" data-toggle="tab" onclick="selecionar_servicos('Cancelado')">Cancelados</a></li>
-        <li><a href="#3" data-toggle="tab" onclick="selecionar_servicos('Concluído')">Concluídos</a></li>
-    </ul>
-
     <div class="tab-content ">
-        <div class="tab-pane active" id="1">
+        <div class="tab-pane active" th:if="${resp == 'Pendente'}" id="1">
             <div th:if="${#lists.isEmpty(servicos_pendentes)}">
-                <h5>Nenhum serviço cadastrado!</h5>
+                <h5>Nenhum serviço pendente!</h5>
             </div>
             <div th:unless="${#lists.isEmpty(servicos_pendentes)}">
                 <table>
@@ -39,7 +34,7 @@
                     <tr th:each="servico : ${servicos_pendentes}">
                         <td th:text="${servico.nome}">Nome</td>
                         <td th:text="${servico.descricao}">Descrição</td>
-                        <td th:text="${#dates.format(servico.data, 'dd/MM/yyyy')}">Data Prevista</td>
+                        <td th:text="${#dates.format(servico.dataHorario, 'dd/MM/yyyy')}">Data Prevista</td>
                         <td th:text="${servico.funcionarioTecnico.nome}">Técnico Responsável</td>
                         <td th:text="${endereco.rua} + ', ' + ${endereco.numero} +
                                         ', ' + ${endereco.complemento} + ', ' + ${endereco.bairro} +
@@ -54,12 +49,6 @@
                 </table>
             </div>
         </div>
-        <div class="tab-pane" id="2">
-            <h3>Notice the gap between the content and tab after applying a background color</h3>
-        </div>
-        <div class="tab-pane" id="3">
-            <h3>add clearfix to tab-content (see the css)</h3>
-        </div>
     </div>
 </div>
 
@@ -70,7 +59,7 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="js/servicos.js"></script>
+<script th:src="@{/js/servicos.js}"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
