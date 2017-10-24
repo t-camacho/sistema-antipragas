@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head:: head">
     <meta charset="UTF-8"/>
     <title>Bem-Página inicial do cliente</title>
@@ -61,6 +61,10 @@
             </tbody>
         </table>
     </div>
+
+    <li><a href="#0" th:href="@{/logout}">Sair</a>
+        <form th:action="@{/logout}" method="post" ></form>
+    </li>
 
 </body>
 </html>

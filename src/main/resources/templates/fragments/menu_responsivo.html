@@ -4,7 +4,7 @@
 </head>
 <body>
 <header th:fragment="header1" class="cd-main-header">
-    <a href="#0" class="cd-logo"><img src="../img/cd-logo.svg" alt="Logo" /></a>
+    <a href="#0" class="cd-logo"><img src="../img/cd-logo.svg" alt="Logo"/></a>
 
 
     <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
@@ -13,23 +13,41 @@
         <ul class="cd-top-nav">
             <!--
             <li><a href="#0">Funcionário</a></li>-->
-            <li class="has-children account">
-                <a href="#0">
-                    <img src="../img/cd-avatar.png" alt="avatar" />
+            <!--<li class="has-children account">-->
+
+            <div class="dropdown show">
+
+            <a class="btn btn-secondary dropdown-toggle" href="#0" role="button" id="dropdownSuaConta"
+               data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+                    <img src="../img/cd-avatar.png" alt="avatar"/>
                     Conta
                 </a>
-                <ul>
-                    <li><a href="#0">Sua Conta</a></li>
-                    <li><a href="#0">Editar Conta</a></li>
-                    <li><a href="#0" th:href="@{/logout}">Sair</a>
+
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownSuaConta">
+                        <a class="dropdown-item" href="#0">Editar Conta</a>
+                        <a class="dropdown-item" href="#0" th:href="@{/logout}">Sair</a>
                         <form th:action="@{/logout}" method="post" ></form>
-                    </li>
-                </ul>
-            </li>
+                    </div>
+                </div>
+            <!--</li>-->
         </ul>
     </nav>
 </header>
+<!--
+        <div class="dropdown show">
+  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Dropdown link
+  </a>
 
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+    <a class="dropdown-item" href="#">Action</a>
+    <a class="dropdown-item" href="#">Another action</a>
+    <a class="dropdown-item" href="#">Something else here</a>
+  </div>
+</div>
+        -->
 <main th:fragment="header2" class="cd-main-content">
     <nav class="cd-side-nav">
         <ul>
@@ -52,7 +70,8 @@
             </li>-->
         </ul>
 
-        <ul>
+
+        <ul class="dropdown show">
 
             <li class="cd-label">Empresa</li>
             <!--
@@ -65,11 +84,13 @@
             </li>
             </li>-->
             <li class="has-children overview">
-                <a href="#">Outros</a>
-                <ul>
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownOutros"
+                   data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">Outros</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownOutros">
                     <!--<li><a href="#">Funcionário Técnico</a></li> -->
-                    <li><a th:href="@{/praga/visualizar}">Pragas</a></li>
-                </ul>
+                    <a class="dropdown-item" th:href="@{/praga/visualizar}">Pragas</a>
+                </div>
             </li>
         </ul>
 
