@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head:: head">
     <meta charset="UTF-8"/>
     <title>Bem-Página inicial do cliente</title>
@@ -19,6 +19,7 @@
             <thead>
                <th>Horário</th>
                 <th>Responsável</th>
+               <th>Descrição</th>
                 <th>Valor</th>
                 <th>Endereço</th>
             </thead>
@@ -26,6 +27,7 @@
                 <tr th:each="servico : ${servicosDoDia}">
                     <td th:text="${#dates.format(servico.dataHorario, 'HH:mm')}"></td>
                     <td th:text="${servico.funcionarioTecnico.nome}"></td>
+                    <td th:text="${servico.descricao}"></td>
                     <td th:text="'R$ ' + ${servico.orcamento}"></td>
                     <td th:text="${servico.endereco.rua} + ', ' + ${servico.endereco.numero} + ', ' + ${servico.endereco.bairro} + ', ' + ${servico.endereco.complemento}"></td>
                 </tr>
@@ -47,20 +49,26 @@
             <th>Dia</th>
             <th>Horário</th>
             <th>Responsável</th>
+            <th>Descrição</th>
             <th>Valor</th>
             <th>Endereço</th>
             </thead>
             <tbody>
-            <tr th:each="servico : ${servicosDoDia}">
+            <tr th:each="servico : ${servicosDaSemana}">
                 <td th:text="${#dates.format(servico.dataHorario, 'dd/MM/yyyy')}"></td>
                 <td th:text="${#dates.format(servico.dataHorario, 'HH:mm')}"></td>
                 <td th:text="${servico.funcionarioTecnico.nome}"></td>
+                <td th:text="${servico.descricao}"></td>
                 <td th:text="'R$ ' + ${servico.orcamento}"></td>
                 <td th:text="${servico.endereco.rua} + ', ' + ${servico.endereco.numero} + ', ' + ${servico.endereco.bairro} + ', ' + ${servico.endereco.complemento}"></td>
             </tr>
             </tbody>
         </table>
     </div>
+
+    <li><a href="#0" th:href="@{/logout}">Sair</a>
+        <form th:action="@{/logout}" method="post" ></form>
+    </li>
 
 </body>
 </html>
