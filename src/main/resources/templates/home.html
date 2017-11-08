@@ -127,7 +127,7 @@
         <fieldset>
             <h2>Informações Pessoais</h2>
             Nome Completo<span style="color: red;">*</span>
-            <input type="text" name="nome" placeholder="João da Silva" />
+            <input type="text" name="nome" placeholder="João da Silva" th:maxlength="59" />
             <p class="error-name"></p>
             <div class="row">
                 <div class="col-12 col-md-6">
@@ -171,10 +171,10 @@
             <input type="text" name="email" placeholder="joao@gmail.com" />
             <p class="error-email"></p>
             Senha<span style="color: red;">*</span>
-            <input type="password" name="senha"  />
+            <input type="password" name="senha" th:maxlength="59" />
             <p class="error-senha"></p>
             Confirmar Senha<span style="color: red;">*</span>
-            <input type="password" name="csenha" />
+            <input type="password" name="csenha" th:maxlength="59" />
             <p class="error-csenha"></p>
             <input type="button" name="next" class="prev acao" value="Anterior" />
             <input type="button" name="next2" class="next acao"  value="Próximo" />

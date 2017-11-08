@@ -49,6 +49,9 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Set<Endereco> enderecos;
 
+    @OneToMany(mappedBy = "funcionario", cascade = CascadeType.ALL)
+    private Set<Proposta> negociacao;
+
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Set<Proposta> propostas;
 

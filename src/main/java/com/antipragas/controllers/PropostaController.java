@@ -1,12 +1,10 @@
 package com.antipragas.controllers;
 
-import com.antipragas.models.Endereco;
-import com.antipragas.models.Praga;
-import com.antipragas.models.Proposta;
-import com.antipragas.models.Usuario;
+import com.antipragas.models.*;
 import com.antipragas.models.enums.Frequencia;
 import com.antipragas.models.enums.StatusProposta;
 import com.antipragas.models.enums.Tipo;
+import com.antipragas.services.MensagemService;
 import com.antipragas.services.PragaService;
 import com.antipragas.services.PropostaService;
 import com.antipragas.services.UsuarioService;
@@ -16,7 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,8 +40,12 @@ public class PropostaController {
     @Autowired
     private PropostaService propostaService;
 
-    @RequestMapping("/visualizar")
-    public ModelAndView goProposta(){
+    @Autowired
+    private MensagemService mensagemService;
+
+    //cliente
+    @RequestMapping("/nova/proposta")
+    public ModelAndView goNovaProposta(){
         Map<String, Object> model = new HashMap<String, Object>();
         Usuario usuario = null;
         Set enderecos = null;
@@ -68,10 +69,10 @@ public class PropostaController {
         return new ModelAndView("/outros/nova_proposta", model);
     }
 
-
+    //cliente
     @RequestMapping(value = "/registrar", method = RequestMethod.POST)
     public String registrarProposta(@RequestParam String endereco,
-                                    @RequestParam String frequencia,
+                                    @RequestParam String freq,
                                     @RequestParam String qtd,
                                     @RequestParam String tipo,
                                     @RequestParam String praga,
@@ -101,7 +102,7 @@ public class PropostaController {
         proposta.setQuantidade(Integer.parseInt(qtd));
         proposta.setTipo(Tipo.valueOf(tipo));
         proposta.setDescricao(descricao);
-        proposta.setFrequencia(Frequencia.valueOf(frequencia));
+        proposta.setFrequencia(Frequencia.valueOf(freq));
         proposta.setStatus(StatusProposta.STATUS_PROPOSTA_PENDENTE);
 
 
@@ -133,5 +134,38 @@ public class PropostaController {
         }
 
         return "redirect:/usuario/painel";
+    }
+
+    @RequestMapping("/visualizar")
+    public ModelAndView goProposta(){
+        Usuario usuario = null;
+        List propostas;
+        SecurityContext context = SecurityContextHolder.getContext();
+        if(context instanceof SecurityContext)
+        {
+            Authentication authentication = context.getAuthentication();
+            if(authentication instanceof Authentication)
+            {
+                usuario = usuarioService.findByEmail(authentication.getName());
+            }
+        }
+        if(usuario != null){
+            //propostas = propostaService.findByUsuario(usuario);
+        }
+
+        propostas = propostaService.findAll();
+
+        return new ModelAndView("/proposta/proposta", "propostas", propostas);
+    }
+
+    @RequestMapping(value = "/visualizar/negociacao", method = RequestMethod.POST)
+    public ModelAndView goNegociacao(@RequestParam String id){
+        Map<String, Object> model = new HashMap<String, Object>();
+
+        Proposta proposta = propostaService.findById(Long.parseLong(id));
+
+        model.put("proposta", proposta);
+
+        return new ModelAndView("/proposta/negociacao", model);
     }
 }

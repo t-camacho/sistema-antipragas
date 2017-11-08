@@ -1,6 +1,7 @@
 package com.antipragas.services;
 
 import com.antipragas.models.Proposta;
+import com.antipragas.models.Usuario;
 import com.antipragas.repositories.PropostaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -42,5 +43,10 @@ public class PropostaServiceImple implements PropostaService {
     @Override
     public void deleteById(Long id) {
         propostaRepository.delete(id);
+    }
+
+    @Override
+    public List<Proposta> findByUsuario(Usuario usuario) {
+        return propostaRepository.findByUsuario(usuario);
     }
 }

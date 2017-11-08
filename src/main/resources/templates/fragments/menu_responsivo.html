@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" class="no-js">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" class="no-js">
 <head>
 </head>
 <body>
@@ -15,7 +15,7 @@
             <li><a href="#0">Funcionário</a></li>-->
             <li class="has-children account">
                 <a href="#0">
-                    <img src="../img/cd-avatar.png" alt="avatar" />
+                    <img src="../img/cd_avatar.png" alt="avatar" />
                     Conta
                 </a>
                 <ul>
@@ -34,7 +34,7 @@
     <nav class="cd-side-nav">
         <ul>
             <li class="cd-label">Principal</li>
-            <li class="has-children overview">
+            <li class="has-children overview active">
                 <a th:href="@{/usuario/painel}">Início</a>
             </li>
             <!--
@@ -46,25 +46,23 @@
                     <li><a href="#0">Correntes</a></li>
                     <li><a href="#0">Finalizados</a></li>
                 </ul>
-            </li>
-            <li class="has-children notifications active">
-                <a href="#0">Propostas<span class="count">3</span></a>
             </li>-->
+            <li class="has-children notifications">
+                <a th:href="@{/proposta/visualizar}">Propostas<span class="count">3</span></a>
+            </li>
         </ul>
 
         <ul>
 
-            <li class="cd-label">Empresa</li>
+            <li sec:authorize="hasAuthority('NIVEL_FUNCIONARIO')" class="cd-label">Empresa</li>
             <!--
             <li class="has-children bookmarks">
                 <a href="#0">Fornecedores</a>
-
-
             <li class="has-children users">
                 <a href="#0">Clientes</a>
             </li>
             </li>-->
-            <li class="has-children overview">
+            <li sec:authorize="hasAuthority('NIVEL_FUNCIONARIO')" class="has-children overview">
                 <a href="#">Outros</a>
                 <ul>
                     <!--<li><a href="#">Funcionário Técnico</a></li> -->
@@ -75,7 +73,7 @@
 
         <ul>
             <li class="cd-label">Ações</li>
-            <li class="action-btn"><a th:href="@{/proposta/visualizar}">+ Nova Proposta</a></li>
+            <li sec:authorize="hasAuthority('NIVEL_CLIENTE')" class="action-btn"><a th:href="@{/proposta/nova/proposta}">+ Nova Proposta</a></li>
         </ul>
     </nav>
 </main>

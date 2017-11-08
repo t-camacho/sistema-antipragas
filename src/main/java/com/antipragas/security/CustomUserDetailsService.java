@@ -49,6 +49,4 @@ public class CustomUserDetailsService implements UserDetailsService {
         authority.add(new SimpleGrantedAuthority(usuario.getNivel().toString().toUpperCase()));
         return authority;
     }
-
-
 }

@@ -48,6 +48,12 @@ public class Proposta {
     @JoinTable(name = "praga_proposta", joinColumns = @JoinColumn(name = "proposta_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "praga_id", referencedColumnName = "id"))
     private Set<Praga> pragas;
 
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id")
+    private Usuario funcionario;
+
+    @OneToMany(mappedBy = "proposta", cascade = CascadeType.ALL)
+    private Set<Mensagem> mensagens;
 
     public Proposta() {
     }
@@ -146,5 +152,13 @@ public class Proposta {
 
     public void setPragas(Set<Praga> pragas) {
         this.pragas = pragas;
+    }
+
+    public Usuario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Usuario funcionario) {
+        this.funcionario = funcionario;
     }
 }

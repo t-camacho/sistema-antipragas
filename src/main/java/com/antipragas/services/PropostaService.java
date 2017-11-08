@@ -1,6 +1,7 @@
 package com.antipragas.services;
 
 import com.antipragas.models.Proposta;
+import com.antipragas.models.Usuario;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ public interface PropostaService {
     Proposta create(Proposta proposta);
     Proposta edit(Proposta proposta);
     void deleteById(Long id);
+    List<Proposta> findByUsuario(Usuario usuario);
 }

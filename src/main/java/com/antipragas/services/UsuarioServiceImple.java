@@ -41,4 +41,5 @@ public class UsuarioServiceImple implements UsuarioService {
     public void deleteById(Long id) {
         this.userRepository.delete(id);
     }
+
 }

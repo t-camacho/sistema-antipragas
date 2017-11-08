@@ -14,7 +14,7 @@
             <div class="col-12">
                 <form name="form-add-praga" method="post" th:action="@{/praga/adicionar}">
                     <div class="input-group">
-                        <input class="form-control" type="text" name="nome" placeholder="Nome da Praga" />
+                        <input class="form-control" type="text" name="nome" placeholder="Nome da Praga" th:maxlength="59" />
                         <span class="input-group-btn">
                             <button class="btn btn-primary add" type="submit">
                                 <i class="fa fa-plus"></i>
@@ -88,7 +88,7 @@
             <form th:action="@{/praga/alterar}" method="post">
                 <div class="modal-body">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="recipient-name" name="nomePraga" required="required" />
+                        <input type="text" class="form-control" id="recipient-name" name="nomePraga" required="required" th:maxlength="59" />
                         <input type="hidden" id="idNovoNome" name="idAltPraga" />
                         <p class="error-emailS"></p>
                     </div>
