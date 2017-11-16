@@ -114,7 +114,7 @@
   transition: all .4s;
 }
 
-.todas_propostas .bloqueada button {
+.todas_propostas .item .bloqueada {
   background: #6f827d;
-  border: 1px solid rgba(100, 117, 112, 0.9);
+  border: 1px solid rgba(104, 122, 117, 0.9);
 }

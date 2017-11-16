@@ -1,38 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Antipragas</title>
-
+    <!-- FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Catamaran|Varela+Round" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet"/>
-
+    <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
-
-    <!-- CSS HOME
-    <link href="../static/css/style_home.css" th:href="@{/css/style_home.css}" rel="stylesheet" />-->
+    <!-- CSS HOME-->
     <link th:href="@{/css/style_home.css}" rel="stylesheet" />
-
 </head>
 <body>
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-full " id="nav-main">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" th:href="@{/}" id="item-menu">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" id="item-menu" href="#sobre">Sobre Nós <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#sobre">Sobre Nós<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" id="item-menu" href="#info">Endereço <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#info">Endereço<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" id="item-menu" href="#info">Contato<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#info">Contato<span class="sr-only">(current)</span></a>
             </li>
         </ul>
         <ul class="form-inline my-2 my-lg-0" >
@@ -66,7 +61,6 @@
                 </p>
             </div>
         </div>
-
         <div class="row">
             <div class="col-12 col-md-4">
                 <img th:src="@{img/hospitalar.png}" />
@@ -265,7 +259,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Falha ao realizar o cadastro</h5>
+                <h5 class="modal-title" id="exampleModalLabel1">Falha ao realizar o cadastro</h5>
                 <a class="close" th:href="@{/}" role="button" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
@@ -284,7 +278,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Cadastro realizado com sucesso</h5>
+                <h5 class="modal-title" id="exampleModalLabel2">Cadastro realizado com sucesso</h5>
                 <a class="close" th:href="@{/}" role="button" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
@@ -303,7 +297,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmação do cadastro realizada com sucesso</h5>
+                <h5 class="modal-title" id="exampleModalLabel3">Confirmação do cadastro realizada com sucesso</h5>
                 <a class="close" th:href="@{/}" role="button" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
@@ -319,31 +313,11 @@
     </div>
 </div>
 
-<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Senha alterada com Sucesso</h5>
-                <a class="close" th:href="@{/}" role="button" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
-            </div>
-            <div class="modal-body">
-                Para começar a negociação basta entrar no sistema.
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-primary" th:href="@{/login}" role="button">Entrar</a>
-                <a class="btn btn-secondary" th:href="@{/}" role="button">Fechar</a>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Redefinir Senha</h5>
+                <h5 class="modal-title" id="exampleModalLabel5">Redefinir Senha</h5>
                 <a class="close" th:href="@{/}" role="button" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
@@ -360,11 +334,10 @@
 
 <!-- JQUERY -->
 <script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
-<!-- JAVASCRIPT REGISTER -->
 <script type="text/javascript" th:src="@{/js/cadastro.js}" ></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js}" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js}" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
 <script th:if="${resp == 'exists'}" >
     $(function(){
@@ -391,13 +364,13 @@
 </script>
 
 <script>
-$(document).ready(function () {
-    $('input').keypress(function (e) {
-        var code = null;
-        code = (e.keyCode ? e.keyCode : e.which);
-        return (code == 13) ? false : true;
+    $(document).ready(function () {
+        $('input').keypress(function (e) {
+            var code = null;
+            code = (e.keyCode ? e.keyCode : e.which);
+            return (code == 13) ? false : true;
+        });
     });
-});
 </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" class="no-js">
+<html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml" class="no-js">
 <head th:replace="fragments/head:: head"></head>
 <head>
     <link th:href="@{/../css/style_pragas.css}" rel="stylesheet" />
@@ -80,7 +80,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Alterar</h5>
+                <h5 class="modal-title" id="exampleModalLabel2">Alterar</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -106,7 +106,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Falha na Operação</h5>
+                <h5 class="modal-title" id="exampleModalLabel3">Falha na Operação</h5>
                 <a class="close" th:href="@{/praga/visualizar}" role="button" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
@@ -144,7 +144,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Falha na Operação</h5>
+                <h5 class="modal-title" id="exampleModalLabel1">Falha na Operação</h5>
                 <a class="close" th:href="@{/praga/visualizar}" role="button" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
@@ -167,8 +167,8 @@
 <script th:src="@{../js/main.js}"></script>
 <script th:src="@{../js/pragas.js}"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js}" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js}" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
 <script th:if="${param.ok}" >
     $(function(){
