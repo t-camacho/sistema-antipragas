@@ -2,23 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Antipragas - Redefinir Senha</title>
-
     <link href="https://fonts.googleapis.com/css?family=Catamaran|Varela+Round" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet"/>
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
-
     <link th:href="@{../../css/style_login.css}" rel="stylesheet" />
     <link th:href="@{../../css/style_home.css}" rel="stylesheet" />
 </head>
 <body>
 
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-full " id="nav-main">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -28,11 +23,9 @@
     </div>
 </nav>
 
-
 <div class="row" id="painel" >
     <div class="col-12 col-md-2">
     </div>
-
     <div class="col-12 col-md-6 container">
         <h1>Redefinir Senha</h1>
         <form id="formulario" th:action="@{/usuario/resetar/novasenha}" method="post" name="form-senha">
@@ -58,21 +51,17 @@
             </div>
         </form>
     </div>
-
     <div class="col-12 col-md-2">
     </div>
 </div>
-
 <!-- JQUERY -->
 <script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
 <!-- SCRIPT RESETAR -->
 <script type="text/javascript" th:src="@{/js/resetar.js}"></script>
-
 <script th:inline="javascript">
     //guarda o id do usuário no input hidden
     var id = [[${usuario}]];
     document.getElementById("id").value = id;
 </script>
-
 </body>
 </html>

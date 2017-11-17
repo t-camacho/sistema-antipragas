@@ -1,6 +1,8 @@
 package com.antipragas.models;
 
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -13,27 +15,34 @@ import java.util.Set;
 public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Expose
     private Long id;
 
     @Column(length = 9)
+    @Expose
     private String cep;
 
     @Column(length = 60)
+    @Expose
     private String rua;
 
     @Column(length = 40)
+    @Expose
     private String bairro;
 
     @Column(length = 40)
+    @Expose
     private String cidade;
 
     @Column(length = 13)
+    @Expose
     private Integer numero;
 
     @Column(length = 60)
     private String complemento;
 
     @Column(length = 13)
+    @Expose
     private String uf;
 
     @ManyToOne

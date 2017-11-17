@@ -24,7 +24,7 @@ header {
     align-items: center;
 }
 
-#item-menu:hover{
+.navbar-nav .item_menu:hover{
     color: #7aa9de;
 }
 
@@ -192,14 +192,12 @@ footer {
     color: white;
     margin-top: 5px;
 }
-
 /********************/
 /*     Botão ADD    */
 /********************/
 #form .add {
     width: 100%;
 }
-
 /********************/
 /*CAMPO OBRIGATÓRIO */
 /********************/
