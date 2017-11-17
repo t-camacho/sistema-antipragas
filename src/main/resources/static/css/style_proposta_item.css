@@ -26,7 +26,7 @@
   background-color: rgba(4, 99, 201, 0.9);;
 }
 /*********************
-   PROPOSTAS
+      PROPOSTAS
 *********************/
 .todas_propostas {
   display: flex;
@@ -117,4 +117,19 @@
 .todas_propostas .item .bloqueada {
   background: #6f827d;
   border: 1px solid rgba(104, 122, 117, 0.9);
+}
+
+/*********************
+     SEM PROPOSTA
+*********************/
+.nenhuma_proposta {
+  text-align: center;
+  display: none;
+}
+/*********************
+CARREGANDO POR DEMANDA
+*********************/
+.demanda {
+  margin-top: 20px;
+  text-align: center;
 }

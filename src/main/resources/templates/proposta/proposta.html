@@ -2,6 +2,7 @@
 <html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head::head"></head>
 <head>
+    <!-- STYLE DOS ITEM -->
     <link th:href="@{/../css/style_proposta_item.css}" rel="stylesheet" />
 </head>
 <body>
@@ -18,102 +19,23 @@
             <a href="#" class="categoria_item" category="cancelada">Cancelada</a>
         </div>
         <section class="todas_propostas">
-            <div th:if="${propostas} == null">
-                <h2>Nenhuma Proposta</h2>
-            </div>
-            <div class="item" th:each="proposta : ${propostas}" th:if="${#strings.toString(proposta.status)} == 'STATUS_PROPOSTA_PENDENTE'" category="pendente">
-                <div class="title-item" >
-                    <span class="status pendente"></span>
-                    <p>Orçamento: 0,00</p>
-                </div>
-                <p class="subtitulo">Endereço de Realização</p>
-                <p class="informacao" th:inline="text">[[${proposta.endereco.rua}]] [[${proposta.endereco.numero}]] - [[${proposta.endereco.bairro}]] - [[${proposta.endereco.cidade}]]/[[${proposta.endereco.uf}]]</p>
-                <p class="subtitulo">Tipo</p>
-                <p class="informacao" th:if="${#strings.toString(proposta.tipo)} == 'TIPO_EXTERMINIO'">Extermínio</p>
-                <p class="informacao" th:unless="${#strings.toString(proposta.tipo)} == 'TIPO_EXTERMINIO'">Prevenção</p>
-                <p class="subtitulo">Descrição</p>
-                <p class="informacao" th:if="${proposta.descricao == ''}">
-                    não informado
-                </p>
-                <p class="informacao" th:unless="${proposta.descricao == ''}" th:text="${proposta.descricao}"></p>
-                <form method="post" th:action="@{/proposta/visualizar/negociacao}">
-                    <input type="hidden" th:value="${proposta.id}" name="id" />
-                    <button th:if="${proposta.funcionario} == null" class="btn-detalhes bloqueada" type="submit" th:disabled="true">Detalhes</button>
-                    <button th:unless="${proposta.funcionario} == null" class="btn-detalhes" type="submit">Detalhes</button>
-                </form>
-            </div>
-            <div class="item" th:if="${#strings.toString(proposta.status)} == 'STATUS_PROPOSTA_CANCELADA'" category="cancelada" th:each="proposta : ${propostas}">
-                <div class="title-item" >
-                    <span class="status cancelada"></span>
-                    <p>Orçamento: 0,00</p>
-                </div>
-                <p class="subtitulo">Endereço de Realização</p>
-                <p class="informacao" th:inline="text">[[${proposta.endereco.rua}]] [[${proposta.endereco.numero}]] - [[${proposta.endereco.bairro}]] - [[${proposta.endereco.cidade}]]/[[${proposta.endereco.uf}]]</p>
-                <p class="subtitulo">Tipo</p>
-                <p class="informacao" th:if="${#strings.toString(proposta.tipo)} == 'TIPO_EXTERMINIO'">Extermínio</p>
-                <p class="informacao" th:unless="${#strings.toString(proposta.tipo)} == 'TIPO_EXTERMINIO'">Prevenção</p>
-                <p class="subtitulo">Descrição</p>
-                <p class="informacao" th:if="${proposta.descricao == ''}">
-                    não informado
-                </p>
-                <p class="informacao" th:unless="${proposta.descricao == ''}" th:text="${proposta.descricao}"></p>
-                <form method="post" th:action="@{/proposta/visualizar/negociacao}">
-                    <input type="hidden" th:value="${proposta.id}" name="id" />
-                    <button th:if="${proposta.funcionario} == null" class="btn-detalhes bloqueada" type="submit" th:disabled="true">Detalhes</button>
-                    <button th:unless="${proposta.funcionario} == null" class="btn-detalhes" type="submit">Detalhes</button>                </form>
-            </div>
-            <div class="item" th:if="${#strings.toString(proposta.status)} == 'STATUS_PROPOSTA_APROVADA'" category="aprovada" th:each="proposta : ${propostas}">
-                <div class="title-item" >
-                    <span class="status aprovada"></span>
-                    <p>Orçamento: 0,00</p>
-                </div>
-                <p class="subtitulo">Endereço de Realização</p>
-                <p class="informacao" th:inline="text">[[${proposta.endereco.rua}]] [[${proposta.endereco.numero}]] - [[${proposta.endereco.bairro}]] - [[${proposta.endereco.cidade}]]/[[${proposta.endereco.uf}]]</p>
-                <p class="subtitulo">Tipo</p>
-                <p class="informacao" th:if="${#strings.toString(proposta.tipo)} == 'TIPO_EXTERMINIO'">Extermínio</p>
-                <p class="informacao" th:unless="${#strings.toString(proposta.tipo)} == 'TIPO_EXTERMINIO'">Prevenção</p>
-                <p class="subtitulo">Descrição</p>
-                <p class="informacao" th:if="${proposta.descricao == ''}">
-                    não informado
-                </p>
-                <p class="informacao" th:unless="${proposta.descricao == ''}" th:text="${proposta.descricao}"></p>
-                <form method="post" th:action="@{/proposta/visualizar/negociacao}">
-                    <input type="hidden" th:value="${proposta.id}" name="id" />
-                    <button th:if="${proposta.funcionario} == null" class="btn-detalhes bloqueada" type="submit" th:disabled="true">Detalhes</button>
-                    <button th:unless="${proposta.funcionario} == null" class="btn-detalhes" type="submit">Detalhes</button>                </form>
-            </div>
-            <div class="item" th:if="${#strings.toString(proposta.status)} == 'STATUS_PROPOSTA_CANCELADA'" category="cancelada" th:each="proposta : ${propostas}">
-                <div class="title-item" >
-                    <span class="status cancelada"></span>
-                    <p>Orçamento: 0,00</p>
-                </div>
-                <p class="subtitulo">Endereço de Realização</p>
-                <p class="informacao" th:inline="text">[[${proposta.endereco.rua}]] [[${proposta.endereco.numero}]] - [[${proposta.endereco.bairro}]] - [[${proposta.endereco.cidade}]]/[[${proposta.endereco.uf}]]</p>
-                <p class="subtitulo">Tipo</p>
-                <p class="informacao" th:if="${#strings.toString(proposta.tipo)} == 'TIPO_EXTERMINIO'">Extermínio</p>
-                <p class="informacao" th:unless="${#strings.toString(proposta.tipo)} == 'TIPO_EXTERMINIO'">Prevenção</p>
-                <p class="subtitulo">Descrição</p>
-                <p class="informacao" th:if="${proposta.descricao == ''}">
-                    não informado
-                </p>
-                <p class="informacao" th:unless="${proposta.descricao == ''}" th:text="${proposta.descricao}"></p>
-                <form method="post" th:action="@{/proposta/visualizar/negociacao}">
-                    <input type="hidden" th:value="${proposta.id}" name="id" />
-                    <button th:if="${proposta.funcionario} == null" class="btn-detalhes bloqueada" type="submit" th:disabled="true">Detalhes</button>
-                    <button th:unless="${proposta.funcionario} == null" class="btn-detalhes" type="submit">Detalhes</button>                </form>
-            </div>
+            <!-- ADICIONADA POR AJAX EM load.js -->
         </section>
+        <div class="nenhuma_proposta">
+            <h1 class="aviso"></h1>
+        </div>
     </div>
 </main>
 <!-- JQUERY -->
 <script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
+<!-- MENU -->
+<script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
+<script th:src="@{../js/menu/main.js}"></script>
+<script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
+<script th:src="@{../js/menu/modernizr.js}"></script>
 <!-- SCRIPT -->
-<script th:src="@{../js/jquery-2.1.4.js}"></script>
-<script th:src="@{../js/jquery.menu-aim.js}"></script>
-<script th:src="@{../js/main.js}"></script>
-<script th:src="@{../js/proposta/filtro.js}"></script>
-<script th:src="@{../js/proposta/script.js}"></script>
-<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js}" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js}" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script th:src="@{../js/proposta/filtro.js}"></script> <!--filtro das propostas-->
+<script th:src="@{../js/proposta/script.js}"></script> <!--lógica de negócio-->
+<script th:src="@{../js/proposta/load.js}"></script>   <!--carrega proposta por demanda-->
 </body>
 </html>

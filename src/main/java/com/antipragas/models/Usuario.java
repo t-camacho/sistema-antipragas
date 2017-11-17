@@ -3,6 +3,7 @@ package com.antipragas.models;
 import com.antipragas.models.enums.Nivel;
 import com.antipragas.models.enums.Sexo;
 import com.antipragas.models.enums.Status;
+import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -15,6 +16,7 @@ import java.util.Set;
 @Table(name = "usuarios")
 public class Usuario {
     @Id
+    @Expose
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
