@@ -4,7 +4,7 @@ import com.antipragas.models.*;
 import com.antipragas.models.enums.Frequencia;
 import com.antipragas.models.enums.StatusProposta;
 import com.antipragas.models.enums.Tipo;
-import com.antipragas.services.MensagemService;
+//import com.antipragas.services.MensagemService;
 import com.antipragas.services.PragaService;
 import com.antipragas.services.PropostaService;
 import com.antipragas.services.UsuarioService;
@@ -41,7 +41,7 @@ public class PropostaController {
     private PropostaService propostaService;
 
     @Autowired
-    private MensagemService mensagemService;
+//    private MensagemService mensagemService;
 
     //cliente
     @RequestMapping("/nova/proposta")

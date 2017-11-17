@@ -3,7 +3,8 @@ package com.antipragas.models.enums;
 public enum StatusServico {
     PENDENTE("Pendente"),
     CONCLUIDO("Concluído"),
-    CANCELADO("Cancelado");
+    CANCELADO("Cancelado"),
+    RENEGOCIANDO("Renegociando");
 
     private String status;
 
