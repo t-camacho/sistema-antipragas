@@ -1,6 +1,7 @@
 package com.antipragas.models.enums;
 
 public enum StatusServico {
+    PRE_SERVICO("Pré-Serviço"),
     PENDENTE("Pendente"),
     CONCLUIDO("Concluído"),
     CANCELADO("Cancelado");

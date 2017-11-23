@@ -1,24 +1,5 @@
 $(document).ready(function () {
     var ultimoId = 0;
-    var selecionado = 'todas';
-
-    //inicia com o filtro todas
-    $('.categoria_lista .categoria_item[category="todas"]').addClass('selecionada');
-
-    function getCategoryInteger(category) {
-        switch (category){
-            case 'aprovada':
-                return 0;
-            case 'cancelada':
-                return 1;
-            case 'pendente':
-                return 2;
-            case 'deliberada':
-                return 3;
-            default://todas
-                return 5;
-        }
-    }
 
     function semProposta() {
         var item = $('.item');
@@ -36,31 +17,14 @@ $(document).ready(function () {
         jQuery.ajax({
             url: 'http://localhost:8080/proposta/carregar',
             type: 'GET',
-            data: {inicio: inicio, qtd: qtd, categoria: getCategoryInteger(category)},
+            data: {inicio: inicio, qtd: qtd, categoria: 4},
             success: function (resultado) {
                 var propostas = JSON.parse(resultado);
                 var status, btn, tipo;
                 ultimoId = propostas.ultimoId;
                 $.each(propostas.dados, function (i, proposta) {
-                    switch (proposta.status){
-                        case 'STATUS_PROPOSTA_PENDENTE':
-                            status = 'pendente';
-                            break;
-                        case 'STATUS_PROPOSTA_APROVADA':
-                            status = 'aprovada';
-                            break;
-                        case 'STATUS_PROPOSTA_CANCELADA':
-                            status = 'cancelada';
-                            break;
-                        case 'STATUS_PROPOSTA_DELIBERADA':
-                            status = 'deliberada';
-                            break;
-                    }
-                    if(proposta.funcionario === undefined){
-                        btn = '<button class="btn-detalhes bloqueada" type="submit" disabled="true">Detalhes</button>\n';
-                    }else{
-                        btn = '<button class="btn-detalhes" type="submit" >Detalhes</button>\n';
-                    }
+                    status = "pendente";
+                    btn = '<button class="btn-detalhes" type="submit">Aceitar</button>\n';
                     if(proposta.tipo === 'TIPO_EXTERMINIO'){
                         tipo = 'Extermínio';
                     }else{
@@ -78,9 +42,9 @@ $(document).ready(function () {
                         '   <p class="informacao">'+ tipo +'</p>' +
                         '   <p class="subtitulo">Descrição</p>' +
                         '   <p class="informacao">'+ proposta.descricao +'</p>' +
-                        '   <form method="get" action="/proposta/negociacao">' +
+                        '   <form method="get" action="/proposta/aceitar">' +
                         '      <input type="hidden" value="'+ proposta.id +'" name="id" />' +
-                                            btn +
+                        btn +
                         '   </form>' +
                         '</div>'
                     );

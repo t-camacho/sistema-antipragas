@@ -4,7 +4,8 @@ package com.antipragas.models.enums;
  * @author Thais Camacho
  */
 public enum Tipo {
-    TIPO_EXTERMINIO("Exterminio"), TIPO_PREVENCAO("Prevencao");
+    TIPO_EXTERMINIO("Exterminio"),
+    TIPO_PREVENCAO("Prevencao");
 
     Tipo(String status) {
         this.tipo = status;

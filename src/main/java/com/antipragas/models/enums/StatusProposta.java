@@ -4,6 +4,7 @@ package com.antipragas.models.enums;
  * @author Thais Camacho
  */
 public enum StatusProposta {
+    STATUS_PROPOSTA_EM_ABERTO("Em Aberto"),
     STATUS_PROPOSTA_PENDENTE("Pendente"),
     STATUS_PROPOSTA_APROVADA("Aprovada"),
     STATUS_PROPOSTA_DELIBERADA("Deliberada"),
