@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head th:replace="fragments/head::head"></head>
 <head>
     <!-- STYLE DOS ITEM -->
@@ -8,6 +8,7 @@
 <body>
 <header th:replace="fragments/menu_responsivo::header1"></header>
 <main th:replace="fragments/menu_responsivo::header2"></main>
+<div sec:authorize="hasRole('NIVEL_ADMINISTRADOR')">
 <main class="cd-main-content">
     <div class="content-wrapper">
         <h1>Propostas</h1>
@@ -26,6 +27,8 @@
         </div>
     </div>
 </main>
+</div>
+
 <!-- JQUERY -->
 <script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
 <!-- MENU -->

@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -141,7 +142,12 @@ public class PropostaController {
 
     //cliente e funcionario
     @RequestMapping("/visualizar")
-    public String goProposta(){
+    public String goProposta(Model model){
+        Usuario usuario = null;
+        usuario = getUsuarioSession();
+        if(usuario != null){
+            model.addAttribute("role", usuario.getNivel().getNivel());
+        }
         return "/proposta/proposta";
     }
 

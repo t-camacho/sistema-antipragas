@@ -57,11 +57,7 @@ public class ServicoController {
 
         Usuario usuario = usuarioOpt.orElseThrow(() -> new UsernameNotFoundException("Error"));
 
-        StatusServico st = StatusServico.PENDENTE;
-
         List<Servico> servicos = servicoRepository.findByClienteAndStatus(usuario, StatusServico.PENDENTE);
-
-        model.addAttribute("resp", st.getStatus());
 
         model.addAttribute("servicos_pendentes", servicos);
         return "/servicos/listar/Pendente";
@@ -76,11 +72,7 @@ public class ServicoController {
 
         Usuario usuario = usuarioOpt.orElseThrow(() -> new UsernameNotFoundException("Error"));
 
-        StatusServico st = StatusServico.CONCLUIDO;
-
-        List<Servico> servicos = servicoRepository.findByClienteAndStatus(usuario, st);
-
-        model.addAttribute("resp", st.getStatus());
+        List<Servico> servicos = servicoRepository.findByClienteAndStatus(usuario, StatusServico.CONCLUIDO);
 
         model.addAttribute("servicos_concluidos", servicos);
 
@@ -96,13 +88,10 @@ public class ServicoController {
 
         Usuario usuario = usuarioOpt.orElseThrow(() -> new UsernameNotFoundException("Error"));
 
-        StatusServico st = StatusServico.CANCELADO;
-
-        List<Servico> servicos = servicoRepository.findByClienteAndStatus(usuario, st);
-
-        model.addAttribute("resp", st.getStatus());
+        List<Servico> servicos = servicoRepository.findByClienteAndStatus(usuario, StatusServico.CANCELADO);
 
          model.addAttribute("servicos_cancelados", servicos);
+
         return "/servicos/listar/Cancelado";
     }
 }

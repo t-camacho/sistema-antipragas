@@ -1,42 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head:: head"></head>
 <head>
-    <title>Responsive Tabs</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="/static/css/style_servicos.css"/>
+    <title>Serviços Concluídos</title>
 </head>
 <body>
 
+<header th:replace="fragments/menu_responsivo :: header1"></header>
+<main th:replace="fragments/menu_responsivo :: header2"></main>
+
 <!--<hr></hr>-->
-<div class="container"><h2>Serviços</h2></div>
+<main class="cd-main-content">
+    <div class="content-wrapper">
+<div class="container"><h2>Serviços Cancelados</h2></div>
 
 <div id="exTab2" class="container">
     <div class="tab-content ">
         <div class="tab-pane" id="3">
-            <div class="tab-pane active" id="1" th:if="${resp == 'Cancelado'}">
+            <div class="tab-pane active" id="1">
                 <div th:if="${#lists.isEmpty(servicos_cancelados)}">
                     <h5>Nenhum serviço cancelado!</h5>
                 </div>
                 <div th:unless="${#lists.isEmpty(servicos_cancelados)}">
                     <table>
                         <thead>
-                        <th>Nome</th>
                         <th>Descrição</th>
                         <th>Data Prevista</th>
                         <th>Técnico Responsável</th>
-                        <th>Endereço</th>
+                        <!--<th>Endereço</th>-->
                         <th>Pragas Previstas</th>
+                        <th>Visualizar Relatório</th>
                         </thead>
                         <tbody>
                         <tr th:each="servico : ${servicos_cancelados}">
-                            <td th:text="${servico.nome}">Nome</td>
                             <td th:text="${servico.descricao}">Descrição</td>
                             <td th:text="${#dates.format(servico.dataHorario, 'dd/MM/yyyy')}">Data Prevista</td>
                             <td th:text="${servico.funcionarioTecnico.nome}">Técnico Responsável</td>
-                            <td th:text="${endereco.rua} + ', ' + ${endereco.numero} +
-								', ' + ${endereco.complemento} + ', ' + ${endereco.bairro} +
-								', ' + ${endereco.cep} + ', ' + ${endereco.cidade} + ', ' + ${endereco.uf}">Endereço</td>
+                            <!--<td th:text="${endereco.rua} + ', ' + ${endereco.numero} +-->
+								<!--', ' + ${endereco.complemento} + ', ' + ${endereco.bairro} +-->
+								<!--', ' + ${endereco.cep} + ', ' + ${endereco.cidade} + ', ' + ${endereco.uf}">Endereço</td>-->
                             <td th:each="praga : ${servico.pragas}">
                                 <p th:text="${praga.nome}">Possível Praga</p>
                             </td>
@@ -49,17 +51,21 @@
         </div>
     </div>
 </div>
-
+    </div>
+</main>
 <!--<hr></hr>-->
 
 <!-- Bootstrap core JavaScript
     ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script th:src="@{/js/servicos.js}"></script>
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- JQUERY -->
+<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
+<!-- JAVASCRIPT REGISTER -->
+<script type="text/javascript" th:src="@{/js/cadastro.js}" ></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
 </body>
 </html>
