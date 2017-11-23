@@ -1,0 +1,251 @@
+*{margin:0; padding: 0; box-sizing: border-box; list-style: none;}
+/*********************
+      JANELA CHAT
+*********************/
+.janela {
+    float: left;
+    width: 270px;
+    height: auto;
+    margin-left: 5px;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.janela .cabecalho_janela {
+    float: left;
+    background: #007bff;
+    padding: 5px;
+    width: 270px;
+    position: relative;
+}
+
+.janela .cabecalho_janela .fechar {
+    text-decoration: none;
+    float: left;
+    color: white;
+    padding: 0 10px 0 0;
+}
+
+.janela .cabecalho_janela .nome {
+    float: left;
+    font: 16px tahoma, arial;
+    color: white;
+    right: 8px;
+    top: 50%;
+    margin-top: 3px;
+}
+
+#chat_cliente, #chat_funcionario {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 82%;
+}
+
+.status {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    margin-top: -6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #666;
+}
+
+.status.off {
+    background-color: #ccc;
+}
+
+.status.on {
+    background-color: #090;
+}
+
+.janela .corpo {
+    float: right;
+    width: 100%;
+    margin-right: 2px;
+}
+
+.janela .corpo .mensagens {
+    float: left;
+    width: 100%;
+    background: #ebebeb;
+    border-left: 1px solid #999;
+    border-right: 1px solid #999;
+    height: 230px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.janela .corpo .enviar {
+    float: left;
+    width: 100%;
+    position: relative;
+}
+
+.janela .corpo .enviar input {
+    float: left;
+    width: 100%;
+    padding: 3px;
+    background-color: white;
+    border: 1px solid #999;
+    outline: none;
+}
+
+.mensagens::-webkit-scrollbar {
+    width: 3px;
+}
+
+.mensagens::-webkit-scrollbar-track{
+    background-color: #666;
+    border-left: 1px solid #ebebeb;
+    border-right: 1px solid #ebebeb;
+}
+
+.mensagens::-webkit-scrollbar-thumb {
+    background-color: #666;
+}
+
+.mensagens::-webkit-scrollbar-thumb:hover {
+    background-color: #069;
+}
+
+.mensagens ul li {
+    display: inline-block;
+    background-color: white;
+    border-radius: 4px;
+    position: relative;
+    width: 80%;
+    padding-top: 14px;
+    padding-left: 6px;
+    margin: 5px 10px 5px 10px;
+}
+
+.mensagens ul li.outro:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: -8.5px;
+    top: 7px;
+    height: 0px;
+    width: 0px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #FFFFFF;
+}
+
+.mensagens ul li.outro:before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: -9px;
+    top: 7px;
+    height: 0px;
+    width: 0px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    //border-right: 8px solid black;
+}
+
+.mensagens ul li.eu:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    right: -8px;
+    top: 6px;
+    height: 0px;
+    width: 0px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid #329fd9;
+}
+
+.mensagens ul li.eu:before {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    right: -9px;
+    top: 6px;
+    height: 0px;
+    width: 0px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    //border-left: 8px solid black;
+}
+
+.mensagens ul li.eu {
+    float: right;
+
+    background-color: #329fd9;
+    color: white;
+}
+
+.mensagens ul li .outro {
+    //float: left;
+}
+
+/*********************
+    CONTEUDO
+*********************/
+.conteudo {
+    margin-top: 15px;
+}
+
+.conteudo-proposta {
+    margin-left: 20px;
+}
+
+.conteudo .titulo {
+    background-color: #329fd9;
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+/*********************
+   CONTEUDO-POPOSTA
+*********************/
+.conteudo-proposta h1 {
+    text-align: center;
+}
+
+.conteudo-servicos {
+    text-align: center;
+}
+
+.button-negociando {
+    background-color: white;
+    border-radius: 5px;
+    width: 100%;
+    padding: 12px 0 0 10px;
+    margin: 5px;
+}
+
+.button-negociando {
+    background: rgba(4, 99, 201, 0.9);
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 12px 0;
+    float: left;
+    margin-right: 5%;
+}
+
+.button-negociando:hover {
+    background-color: #329fd9;
+    border: solid 1px rgba(9, 79, 157, 0.9);
+}
+
+.aceitar {
+    background-color: #38b879;
+    border: 1px solid rgba(50, 184, 138, 0.9);
+}
+
+.cancelar {
+    background-color: tomato;
+    border: 1px solid rgba(201, 57, 57, 0.9);
+}
+
+nav {
+    margin-bottom: 10px;
+}

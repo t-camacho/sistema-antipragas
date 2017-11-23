@@ -1,7 +1,7 @@
 $(function () {
     var formulario = $('form[name=form-senha]');
 
-    $('input[type=submit]').click(function(){
+    $('input[type=submit]').click(function(evento){
         var campos = formulario.serializeArray();
 
         if(campos[0].value == '' || campos[1].value == ''){
@@ -25,14 +25,16 @@ $(function () {
                 return false;
             }else{
                 $('.error-senha').html('<p class="error-senha"></p>');
-                return false;
             }
+
+
             if(campos[0].value != campos[1].value) {
                 $('.error-csenha').html('<p class="error-csenha"><span style="color: red">Não corresponde com a senha</span></p>');
                 return false;
             }else{
                 $('.error-csenha').html('<p class="error-csenha"></p>');
             }
+            evento.submit();
         }
     });
 });

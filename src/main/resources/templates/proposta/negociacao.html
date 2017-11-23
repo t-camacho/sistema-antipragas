@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="">
+<head>
+    <title>Antipragas - Negociação</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
+    <link rel="stylesheet" th:href="@{/../css/style_negociacao.css}" />
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary navbar-full " id="nav-main">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{/usuario/painel}" id="item-menu">Voltar</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="conteudo-servico col-12 col-md-4">
+                <div class="card mb-3">
+                    <div class="card-header" th:inline="text" >
+                        Proposta
+                    </div>
+                    <input type="hidden" id="id_proposta" th:value="${proposta.id}" />
+                    <div class="card-body">
+                        <div class="row" th:switch="${proposta.tipo.toString()}">
+                            <div class="col-md-12" th:case="TIPO_EXTERMINIO">
+                                <span style="font-weight: bold">Tipo:</span>
+                                Extermínio
+                            </div>
+                            <div class="col-md-12" th:case="TIPO_PREVENCAO">
+                                <span style="font-weight: bold">Tipo:</span>
+                                Prevenção
+                            </div>
+                        </div>
+                        <div class="row" th:if="${proposta.frequencia.toString() != 'FREQUENCIA_NULA'}" th:switch="${proposta.frequencia.toString()}">
+                            <div class="col-md-12" th:case="FREQUENCIA_DIARIAMENTE">
+                                <span style="font-weight: bold">Frequencia:</span>
+                                Diariamente
+                            </div>
+                            <div class="col-md-12" th:case="FREQUENCIA_SEMANALMENTE">
+                                <span style="font-weight: bold">Frequencia:</span>
+                                Semanalmente
+                            </div>
+                            <div class="col-md-12" th:case="FREQUENCIA_MENSALMENTE">
+                                <span style="font-weight: bold">Frequencia:</span>
+                                Mensalmente
+                            </div>
+                            <div class="col-md-12" th:case="FREQUENCIA_ANUALMENTE">
+                                <span style="font-weight: bold">Frequencia:</span>
+                                Anualmente
+                            </div>
+                        </div>
+                        <div class="row" th:if="${proposta.frequencia.toString() != 'FREQUENCIA_NULA'}">
+                            <div class="col-md-12" th:inline="text">
+                                <span style="font-weight: bold">Quantidade:</span>
+                                [[${proposta.quantidade}]]
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" th:inline="text">
+                                <span style="font-weight: bold">Descricão:</span> [[${proposta.descricao}]]
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                </div>
+            </div>
+
+            <div class="conteudo-servico col-12 col-md-8">
+                <div class="card mb-3" th:each="servico : ${preServicos}">
+                    <div class="card-header">
+                        <i class="fa fa-area-chart"></i> Servico</div>
+                    <div class="card-body">
+                        <div th:inline="text">[[${servico.id}]]</div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                </div>
+                <div class="row">
+                    <div class="col-1"></div>
+                    <div class="col-10">
+                        <input class="button-negociando aceitar" type="button" value="Aceitar" />
+                        <input class="button-negociando cancelar" type="button" value="Cancelar" />
+                    </div>
+                    <div class="col-1"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<aside sec:authorize="hasAuthority('NIVEL_CLIENTE')" id="chat_cliente">
+    <div class="janela" th:id="${proposta.usuario.id}">
+        <div class="cabecalho_janela">
+            <a href="#" class="fechar"></a>
+            <span class="nome" th:text="${proposta.funcionario.nome}"></span>
+            <span th:id="${proposta.usuario.id}" class="status on"></span>
+        </div>
+        <div class="corpo">
+            <div class="mensagens">
+                <ul>
+                </ul>
+            </div>
+            <div class="enviar">
+                <input type="text" name="mensagem" class="msg" th:id="|${proposta.usuario.id}:${proposta.funcionario.id}|" />
+            </div>
+        </div>
+    </div>
+</aside>
+
+<aside sec:authorize="hasAuthority('NIVEL_FUNCIONARIO')" id="chat_funcionario">
+    <div class="janela" th:id="${proposta.funcionario.id}">
+        <div class="cabecalho_janela">
+            <a href="#" class="fechar"></a>
+            <span class="nome" th:text="${proposta.usuario.nome}"></span>
+            <span th:id="${proposta.funcionario.id}" class="status on"></span>
+        </div>
+        <div class="corpo">
+            <div class="mensagens">
+                <ul>
+
+                </ul>
+            </div>
+            <div class="enviar">
+                <input type="text" name="mensagem" class="msg" th:id="|${proposta.funcionario.id}:${proposta.usuario.id}|" />
+            </div>
+        </div>
+    </div>
+</aside>
+
+<!-- JQUERY -->
+<script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js}"></script>
+<!-- SCRIPT CHAT -->
+<script th:src="@{../../js/chat/chat.js}"></script>
+
+<!-- MENU -->
+<script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
+<script th:src="@{../js/menu/main.js}"></script>
+<script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
+<script th:src="@{../js/menu/modernizr.js}"></script>
+</body>
+</html>

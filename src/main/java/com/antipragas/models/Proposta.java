@@ -7,6 +7,7 @@ package com.antipragas.models;
 import com.antipragas.models.enums.Frequencia;
 import com.antipragas.models.enums.StatusProposta;
 import com.antipragas.models.enums.Tipo;
+import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -15,6 +16,7 @@ import java.util.Set;
 @Table(name = "propostas")
 public class Proposta {
     @Id
+    @Expose
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -22,18 +24,22 @@ public class Proposta {
     private Integer quantidade;
 
     @Column
+    @Expose
     private Double orcamento;
 
     @Column(length = 250)
+    @Expose
     private String descricao;
 
     @Enumerated(EnumType.STRING)
+    @Expose
     private Tipo tipo;
 
     @Enumerated(EnumType.STRING)
     private Frequencia frequencia;
 
     @Enumerated(EnumType.STRING)
+    @Expose
     private StatusProposta status;
 
     @ManyToOne
@@ -42,12 +48,20 @@ public class Proposta {
 
     @ManyToOne
     @JoinColumn(name = "endereco_id")
+    @Expose
     private Endereco endereco;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "praga_proposta", joinColumns = @JoinColumn(name = "proposta_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "praga_id", referencedColumnName = "id"))
     private Set<Praga> pragas;
 
+    @ManyToOne
+    @JoinColumn(name = "funcionario_id")
+    @Expose
+    private Usuario funcionario;
+
+//    @OneToMany(mappedBy = "proposta", cascade = CascadeType.ALL)
+//    private Set<Mensagem> mensagens;
 
     public Proposta() {
     }
@@ -146,5 +160,13 @@ public class Proposta {
 
     public void setPragas(Set<Praga> pragas) {
         this.pragas = pragas;
+    }
+
+    public Usuario getFuncionario() {
+        return funcionario;
+    }
+
+    public void setFuncionario(Usuario funcionario) {
+        this.funcionario = funcionario;
     }
 }

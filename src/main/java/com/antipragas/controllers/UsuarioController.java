@@ -133,7 +133,6 @@ public class UsuarioController {
 
     @RequestMapping(value = "/resetar/novasenha", method = RequestMethod.GET)
     public ModelAndView resetarNovaSenha(@RequestParam String id){
-
         if(LOGGER.isInfoEnabled()){
             LOGGER.info(String.format("Acesso ao link de resetar senha pelo usuário: [%s]", id));
         }
@@ -150,7 +149,7 @@ public class UsuarioController {
 
     @RequestMapping(value = "/resetar/novasenha", method = RequestMethod.POST)
     public ModelAndView alterarSenha(@RequestParam String id, @RequestParam String senha){
-
+        System.out.println("olaaaa");
         if(LOGGER.isInfoEnabled()){
             LOGGER.info(String.format("Alterando para a senha nova o usuário de id: [%s]", id));
         }

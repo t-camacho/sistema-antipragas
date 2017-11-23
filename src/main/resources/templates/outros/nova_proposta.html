@@ -1,17 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Antipragas - Nova Proposta</title>
-
 
     <link href="https://fonts.googleapis.com/css?family=Catamaran|Varela+Round" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet"/>
 
-
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
 
     <link th:href="@{/../css/style_proposta.css}" rel="stylesheet" />
-
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary navbar-full " id="nav-main">
@@ -28,11 +25,9 @@
     </div>
 </nav>
 
-
 <div class="container-fluid" id="register">
     <h1>Crie Uma Nova Proposta</h1>
     <form id="form" th:action="@{/proposta/registrar}" method="post" name="form-proposta">
-
         <ul id="progress">
             <li class="ativo">Informações</li>
             <li>Detalhes</li>
@@ -67,7 +62,7 @@
             <div class="row frequencia" id="frequencia">
                 <div class="col-12 col-md-12">
                     Frequência das visitas<span style="color: red;">*</span><br/>
-                    <div data-toggle="buttons" class="btn-group">
+                    <div data-toggle="buttons" class="btn-group" id="opcFreq">
                         <label class="btn btn-primary">
                             <input type="radio" name="frequencia" id="option1" autocomplete="off" value="FREQUENCIA_DIARIAMENTE" /> Diariamente
                         </label>
@@ -77,11 +72,8 @@
                         <label class="btn btn-primary">
                             <input type="radio" name="frequencia" id="option3" autocomplete="off" value="FREQUENCIA_MENSALMENTE" /> Mensalmente
                         </label>
-                        <label class="btn btn-primary">
-                            <input type="radio" name="frequencia" id="option4" autocomplete="off" value="FREQUENCIA_ANUALMENTE" /> Anualmente
-                        </label>
-                        <label class="btn btn-primary">
-                            <input type="radio" hidden="hidden" class="active" name="frequencia" id="freq_nula" value="FREQUENCIA_NULA" checked="checked" />
+                        <label class="btn btn-primary active">
+                            <input type="radio"  name="frequencia" id="option4" autocomplete="off" value="FREQUENCIA_ANUALMENTE" checked="checked" /> Anualmente
                         </label>
                     </div>
                 </div>
@@ -97,27 +89,26 @@
 
                 <div class="container-fluid">
                     <label class="custom-control custom-checkbox" th:each="praga : ${pragas}">
-                        <input type="checkbox" class="custom-control-input" name="praga" th:value="${praga.id}" />
+                        <input type="checkbox" class="custom-control-input bd_praga" name="praga" th:value="${praga.id}" />
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description" th:text="${praga.nome}"></span>
                     </label>
                     <label class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="praga" id="outro" th:value="0" />
                         <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description" >Outro</span>
+                        <span class="custom-control-description">Outro</span>
                     </label>
                 </div>
                 <p class="error-praga"></p>
             </div>
             <h3>Informe-nos uma descrição do serviço</h3>
-            <textarea placeholder="Deixe uma descrição do serviço..." name="descricao"></textarea>
+            <textarea placeholder="Deixe uma descrição do serviço..." id="campoDescricao" name="descricao"></textarea>
             <p class="error-desc"></p>
-
+            <input type="hidden" name="freq" id="freq_nula" value="FREQUENCIA_NULA" checked="checked" />
             <input type="button" name="next" class="prev acao" value="Anterior" />
             <input type="submit" class="acao"  value="Enviar" />
         </fieldset>
     </form>
-
 </div>
 
 <!-- JQUERY -->

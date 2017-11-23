@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" class="no-js">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" class="no-js">
 <head th:replace="fragments/head:: head"></head>
 <body>
     <header th:replace="fragments/menu_responsivo :: header1"></header>
     <main th:replace="fragments/menu_responsivo :: header2"></main>
     <main class="cd-main-content">
         <div class="content-wrapper">
-            Fornecedores
-            <ul>
-                <li><a th:href="@{/fornecedor/listar}">Listar</a></li>
-                <li><a th:href="@{/fornecedor/cadastrar}">Cadastrar</a></li>
-            </ul>
+Fornecedor:
+            <a th:href="@{/fornecedor/listar}">aqui</a>
 
             <br/><br/>
 
@@ -29,7 +26,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Cadastro realizado com sucesso</h5>
+                <h5 class="modal-title" id="exampleModalLabel2">Cadastro realizado com sucesso</h5>
                 <a class="close" th:href="@{/usuario/painel}" role="button" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
@@ -47,7 +44,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Falha ao realizar o cadastro</h5>
+                <h5 class="modal-title" id="exampleModalLabel2">Falha ao realizar o cadastro</h5>
                 <a class="close" th:href="@{/}" role="button" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
@@ -62,12 +59,15 @@
     </div>
 </div>
 
-<a th:href="@{/proposta/visualizar}" class="float">
-    <i class="fa fa-plus my-float"></i>
-</a>
-<div class="label-container">
-    <div class="label-text">Nova Proposta</div>
-    <i class="fa fa-play label-arrow"></i>
+<!-- Botão Float de nova proposta, só para o cliente -->
+<div sec:authorize="hasAuthority('NIVEL_CLIENTE')">
+    <a th:href="@{/proposta/nova/proposta}" class="float">
+        <i class="fa fa-plus my-float"></i>
+    </a>
+    <div class="label-container">
+        <div class="label-text">Nova Proposta</div>
+        <i class="fa fa-play label-arrow"></i>
+    </div>
 </div>
 
 <script th:if="${resp == 'exists'}">
@@ -82,11 +82,13 @@
     });
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-<script th:src="@{../js/jquery-2.1.4.js}"></script>
-<script th:src="@{../js/jquery.menu-aim.js}"></script>
-<script th:src="@{../js/main.js}"></script> <!-- Resource jQuery -->
+<!-- MODAL -->
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js}" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js}" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<!-- MENU -->
+<script th:src="@{../js/menu/jquery-2.1.4.js}"></script>
+<script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
+<script th:src="@{../js/menu/main.js}"></script>
 
 </body>
 </html>

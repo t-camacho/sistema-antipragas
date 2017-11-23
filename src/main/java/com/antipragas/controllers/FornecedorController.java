@@ -64,6 +64,6 @@ public class FornecedorController {
             e.setFornecedor(fornecedor);
         }
         fornecedorRepository.save(fornecedor);
-        return "/fornecedor/listar";
+        return "redirect:/fornecedor/listar";
     }
 }

@@ -24,53 +24,34 @@ $(function(){
     });
 
     $('input[name=next1]').click(function(){
-        var campos = formulario.serializeArray();
-
-        if(campos[1].value == ''){
-            $('.error-qtd').html('<p class="error-qtd"><span style="color: red">Informe a quantidade de visitas</span></p>');
-            return;
-        }else{
-            $('.error-qtd').html('<p class="error-qtd"></p>');
-        }
-
-        if(campos[1].value > 1){
-            if(campos[3].value == 'FREQUENCIA_NULA'){
-                $('.error-frequencia').html('<p class="error-frequencia"><span style="color: red">Informe uma frequência</span></p>');
-                return;
-            }else{
-                $('.error-frequencia').html('<p class="error-frequencia"></p>');
-            }
-        }else{
-            $('.error-frequencia').html('<p class="error-frequencia"></p>');
-        }
-
-        if(campos[2].value == "TIPO_PREVENCAO"){
-            document.getElementById("pragas").style.display="none";
-        }else{
-            document.getElementById("pragas").style.display="block";
-        }
-
         next($(this));
     });
 
     $('input[type=submit]').click(function (evento) {
         var campos = formulario.serializeArray();
+        var praga_selecionada = false;
+        if(campos[1].value > 1){
+            document.getElementById("freq_nula").value = campos[3].value;
+        }
 
-        if(campos[4].value == "" || campos[5].value == ""){
-            if(campos[4].value == "") {
-                $('.error-praga').html('<p class="error-praga"><span style="color: red">Selecione um item</span></p>');
-            }else{
-                $('.error-praga').html('<p class="error-praga"></p>');
+        var pragas = document.getElementsByName("praga");
+        for(var i =0; i < pragas.length; i++){
+            if(pragas[i].checked){
+                praga_selecionada = true;
             }
+        }
 
-            if(campos[5].value == ""){
-                $('.error-desc').html('<p class="error-desc"><span style="color: red">Descrição Obrigatória</span></p>');
-            }else{
-                $('.error-desc').html('<p class="error-desc"></p>');
-            }
+        if(!praga_selecionada) {
+            $('.error-praga').html('<p class="error-praga"><span style="color: red">Selecione um item</span></p>');
             return false;
         }else{
             $('.error-praga').html('<p class="error-praga"></p>');
+        }
+
+        if(document.getElementById("campoDescricao").value == ""){
+            $('.error-desc').html('<p class="error-desc"><span style="color: red">Descrição Obrigatória</span></p>');
+            return false;
+        }else{
             $('.error-desc').html('<p class="error-desc"></p>');
         }
     });
@@ -81,7 +62,6 @@ $(function(){
             document.getElementById("frequencia").style.display="block";
         }else{
             document.getElementById("frequencia").style.display="none";
-            document.getElementById("freq_nula").checked = "checked";
         }
     });
 

@@ -9,6 +9,7 @@ import com.antipragas.models.enums.StatusServico;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "servicos")
@@ -52,7 +53,17 @@ public class Servico {
             joinColumns = @JoinColumn(name = "servico_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "praga_id", referencedColumnName = "id")
     )
-    private List<Praga> pragas;
+    private Set<Praga> pragas;
+
+    public Servico(Proposta proposta, Usuario cliente, String descricao, StatusServico status, Endereco endereco, Set<Praga> pragas) {
+        this.proposta = proposta;
+        this.cliente = cliente;
+        this.orcamento = orcamento;
+        this.descricao = descricao;
+        this.status = status;
+        this.endereco = endereco;
+        this.pragas = pragas;
+    }
 
     public Long getId() {
         return id;
@@ -126,11 +137,11 @@ public class Servico {
         this.dataHorario = dataHorario;
     }
 
-    public List<Praga> getPragas() {
+    public Set<Praga> getPragas() {
         return pragas;
     }
 
-    public void setPragas(List<Praga> pragas) {
+    public void setPragas(Set<Praga> pragas) {
         this.pragas = pragas;
     }
 }

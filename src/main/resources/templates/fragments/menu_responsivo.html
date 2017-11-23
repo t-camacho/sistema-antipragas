@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" class="no-js">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" class="no-js">
 <head>
 </head>
 <body>
 <header th:fragment="header1" class="cd-main-header">
-    <a href="#0" class="cd-logo"><img src="../img/cd-logo.svg" alt="Logo"/></a>
+    <a href="#0" class="cd-logo"><img src="../img/cd-logo.svg" alt="Logo" /></a>
 
 
     <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
@@ -13,41 +13,23 @@
         <ul class="cd-top-nav">
             <!--
             <li><a href="#0">Funcionário</a></li>-->
-            <!--<li class="has-children account">-->
-
-            <div class="dropdown show">
-
-            <a class="btn btn-secondary dropdown-toggle" href="#0" role="button" id="dropdownSuaConta"
-               data-toggle="dropdown"
-               aria-haspopup="true" aria-expanded="false">
-                    <img src="../img/cd-avatar.png" alt="avatar"/>
+            <li class="has-children account">
+                <a href="#0">
+                    <img src="../img/cd_avatar.png" alt="avatar" />
                     Conta
                 </a>
-
-
-                    <div class="dropdown-menu" aria-labelledby="dropdownSuaConta">
-                        <a class="dropdown-item" href="#0">Editar Conta</a>
-                        <a class="dropdown-item" href="#0" th:href="@{/logout}">Sair</a>
+                <ul>
+                    <li><a href="#0">Sua Conta</a></li>
+                    <li><a href="#0">Editar Conta</a></li>
+                    <li><a href="#0" th:href="@{/logout}">Sair</a>
                         <form th:action="@{/logout}" method="post" ></form>
-                    </div>
-                </div>
-            <!--</li>-->
+                    </li>
+                </ul>
+            </li>
         </ul>
     </nav>
 </header>
-<!--
-        <div class="dropdown show">
-  <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Dropdown link
-  </a>
 
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-    <a class="dropdown-item" href="#">Action</a>
-    <a class="dropdown-item" href="#">Another action</a>
-    <a class="dropdown-item" href="#">Something else here</a>
-  </div>
-</div>
-        -->
 <main th:fragment="header2" class="cd-main-content">
     <nav class="cd-side-nav">
         <ul>
@@ -55,37 +37,48 @@
             <li class="has-children overview">
                 <a th:href="@{/usuario/painel}">Início</a>
             </li>
+
+            <li sec:authorize="hasAuthority('NIVEL_FUNCIONARIO')" class="has-children overview">
+                <a href="#0">Proposta</a>
+                <ul>
+                    <li><a th:href="@{/proposta/visualizar}">Minhas</a></li>
+                    <li><a th:href="@{/proposta/abertas}">Em Abertas</a></li>
+                    <!--<li><a href="#0">Finalizados</a></li>-->
+                </ul>
+            </li>
             <li class="has-children overview">
                 <a th:href="@{/servicos/listar/Pendente}">Serviços Pendentes</a>
                 <a th:href="@{/servicos/listar/Cancelado}">Serviços Cancelados</a>
                 <a th:href="@{/servicos/listar/Concluido}">Serviços Concluídos</a>
+                <a href="#0">Serviço</a>
+                <ul>
+                    <li><a th:href="@{/renegociando/listar}">Renegociação</a></li>
+                </ul>
             </li>
             <!--<li class="has-children notifications active">-->
                 <!--<a href="#0">Propostas<span class="count">3</span></a>-->
             <!--</li>-->
+            <li sec:authorize="hasAuthority('NIVEL_CLIENTE')" class="has-children notifications">
+                <a th:href="@{/proposta/visualizar}">Propostas<span class="count">3</span></a>
+            </li>
         </ul>
 
-
-        <ul class="dropdown show">
+        <ul>
 
             <li class="cd-label">Empresa</li>
             <!--
             <li class="has-children bookmarks">
                 <a href="#0">Fornecedores</a>
-
-
             <li class="has-children users">
                 <a href="#0">Clientes</a>
             </li>
             </li>-->
-            <li class="has-children overview">
-                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownOutros"
-                   data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Outros</a>
-                <div class="dropdown-menu" aria-labelledby="dropdownOutros">
+            <li sec:authorize="hasAuthority('NIVEL_FUNCIONARIO')" class="has-children overview">
+                <a href="#">Outros</a>
+                <ul>
                     <!--<li><a href="#">Funcionário Técnico</a></li> -->
-                    <a class="dropdown-item" th:href="@{/praga/visualizar}">Pragas</a>
-                </div>
+                    <li><a th:href="@{/praga/visualizar}">Pragas</a></li>
+                </ul>
             </li>
         </ul>
 
