@@ -4,7 +4,8 @@ public enum StatusServico {
     PRE_SERVICO("Pré-Serviço"),
     PENDENTE("Pendente"),
     CONCLUIDO("Concluído"),
-    CANCELADO("Cancelado");
+    CANCELADO("Cancelado"),
+    RENEGOCIANDO("Renegociando");
 
     private String status;
 

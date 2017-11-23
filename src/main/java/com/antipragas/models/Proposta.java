@@ -60,8 +60,8 @@ public class Proposta {
     @Expose
     private Usuario funcionario;
 
-    @OneToMany(mappedBy = "proposta", cascade = CascadeType.ALL)
-    private Set<Mensagem> mensagens;
+//    @OneToMany(mappedBy = "proposta", cascade = CascadeType.ALL)
+//    private Set<Mensagem> mensagens;
 
     public Proposta() {
     }
