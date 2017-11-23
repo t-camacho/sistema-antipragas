@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" class="no-js">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" class="no-js">
 <head>
 </head>
 <body>
@@ -37,22 +37,22 @@
             <li class="has-children overview">
                 <a th:href="@{/usuario/painel}">Início</a>
             </li>
-            <!--
-            <li class="has-children overview">
-                <a href="#0">Serviços</a>
 
+            <li sec:authorize="hasAuthority('NIVEL_FUNCIONARIO')" class="has-children overview">
+                <a href="#0">Proposta</a>
                 <ul>
-                    <li><a href="#0">Renegociação</a></li>
-                    <li><a href="#0">Correntes</a></li>
-                    <li><a href="#0">Finalizados</a></li>
+                    <li><a th:href="@{/proposta/visualizar}">Minhas</a></li>
+                    <li><a th:href="@{/proposta/abertas}">Em Abertas</a></li>
+                    <!--<li><a href="#0">Finalizados</a></li>-->
+                </ul>
+            </li>
+            <li class="has-children overview">
+                <a href="#0">Serviço</a>
+                <ul>
+                    <li><a th:href="@{/renegociando/listar}">Renegociação</a></li>
                 </ul>
             </li>
             <li sec:authorize="hasAuthority('NIVEL_CLIENTE')" class="has-children notifications">
-            </li>-->
-            <li class="has-children notifications active">
-                <a th:href="@{/renegociando/listar}"> Serviços em Renegociação</a></li>
-
-            <li class="has-children notifications">
                 <a th:href="@{/proposta/visualizar}">Propostas<span class="count">3</span></a>
             </li>
         </ul>

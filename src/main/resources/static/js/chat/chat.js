@@ -10,10 +10,10 @@ jQuery(function(){
 
     //envia msg p/ bd
     jQuery('body').on('keyup', '.msg', function(evento){
-        if(evento.which === 13){
+        if(evento.which == 13){
            var texto = jQuery(this).val();
            var id_proposta = jQuery('#id_proposta').val();
-            var id = jQuery('.msg').attr('id');
+           var id = jQuery('.msg').attr('id');
            jQuery.ajax({
                url: 'http://localhost:8080/chat/enviar',
                data: {mensagem: texto, id: id, id_proposta: id_proposta},
@@ -57,14 +57,14 @@ jQuery(function(){
                 var retorno = JSON.parse(obj);
                 clearInterval(manipulador);
 
-                if(retorno.status === 'resultados' || retorno.status === 'vazio'){
+                if(retorno.status == 'resultados' || retorno.status == 'vazio'){
                     manipulador = setTimeout(function () {
                         verifica(retorno.timestamp, retorno.ultimoId, retorno.idProposta);
                     },100);
-                    if(retorno.status === 'resultados'){
+                    if(retorno.status == 'resultados'){
                         jQuery.each(retorno.dados, function (i, msg) {
-                            if(jQuery('.janela .mensagens ul li#msg'+msg.id).length === 0){
-                                if(usuarioOnline === msg.idDe){
+                            if(jQuery('.janela .mensagens ul li#msg'+msg.id).length == 0){
+                                if(usuarioOnline == msg.idDe){
                                     jQuery('.janela .mensagens ul').append('<li class="eu" id="msg'+msg.id+'"><p>'+msg.mensagem+'</p></li>');
                                 }else{
                                     jQuery('.janela .mensagens ul').append('<li class="outro" id="msg'+msg.id+'"><p>'+msg.mensagem+'</p></li>');
