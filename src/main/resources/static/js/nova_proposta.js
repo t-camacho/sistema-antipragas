@@ -50,6 +50,7 @@ $(function(){
 
         if(document.getElementById("campoDescricao").value == ""){
             $('.error-desc').html('<p class="error-desc"><span style="color: red">Descrição Obrigatória</span></p>');
+            return false;
         }else{
             $('.error-desc').html('<p class="error-desc"></p>');
         }
