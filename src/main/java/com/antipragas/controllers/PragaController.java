@@ -39,12 +39,11 @@ public class PragaController {
     public ModelAndView adicionarPraga(@RequestParam String nome){
         String resp = "ok";
 
-        Praga praga = new Praga(nome);
-
         try {
+            Praga praga = new Praga(nome);
             pragaService.create(praga);
         }catch (Exception e){
-            resp = "error_excluir";
+            resp = "error";
         }
 
         return new ModelAndView("redirect:/praga/visualizar", resp, "add");
@@ -65,11 +64,10 @@ public class PragaController {
     @RequestMapping(value = "/alterar", method = RequestMethod.POST)
     public ModelAndView alterarPraga(@RequestParam String idAltPraga, @RequestParam String nomePraga){
         String resp = "ok";
-        Praga praga = pragaService.findById(Long.parseLong(idAltPraga));
-
-        praga.setNome(nomePraga);
 
         try{
+            Praga praga = pragaService.findById(Long.parseLong(idAltPraga));
+            praga.setNome(nomePraga);
             pragaService.edit(praga);
         }catch (Exception e){
             resp = "error";
