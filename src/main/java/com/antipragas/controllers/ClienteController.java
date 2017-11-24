@@ -29,7 +29,7 @@ public class ClienteController {
 
     @Autowired
     private ServicoRepository servicoRepository;
-
+/*
     @GetMapping("/cliente/home")
     public String goPaginaInicial(Model model) {
         Usuario clienteLogado = getUsuarioLogado();
@@ -38,7 +38,7 @@ public class ClienteController {
         model.addAttribute("servicosDaSemana", getServicosDaSemana(clienteLogado));
         return "/usuario/cliente/home";
     }
-
+*/
     public List<Servico> getServicosDaSemana(Usuario cliente) {
         Calendar hoje = null, inicioDestaSemana = null, inicioProximaSemana = null;
         Date dataInicio = null, dataLimite = null;
@@ -118,10 +118,10 @@ public class ClienteController {
             }
         });
     }
-
+/*
     public Usuario getUsuarioLogado() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String email = auth.getName();
         return (usuarioRepository.findByEmail(email)).orElseThrow(() -> new UsernameNotFoundException("Error"));
-    }
+    }*/
 }

@@ -22,8 +22,7 @@ public class UsuarioServiceImple implements UsuarioService {
     private UsuarioRepository userRepository;
     @Override
     public Usuario findByEmail(String email){
-        Optional<Usuario> userOpt = this.userRepository.findByEmail(email);
-        return userOpt.orElseThrow(() -> new UsernameNotFoundException("Error"));
+        return userRepository.findByEmail(email);
     }
     @Override
     public List<Usuario> findAll() {

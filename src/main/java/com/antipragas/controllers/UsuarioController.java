@@ -46,10 +46,10 @@ public class UsuarioController {
 
     @RequestMapping(value ="/registrar", method = RequestMethod.POST)
     public ModelAndView registrarUsuario(@RequestParam String nome, @RequestParam String email,
-                                     @RequestParam String dnascimento,
-                                     @RequestParam String cpf, @RequestParam String sexo, @RequestParam String senha,
-                                     @RequestParam String telefone, @RequestParam String cell,
-                                     @RequestParam String endereco, @RequestParam String nivel){
+                                         @RequestParam String dnascimento,
+                                         @RequestParam String cpf, @RequestParam String sexo, @RequestParam String senha,
+                                         @RequestParam String telefone, @RequestParam String cell,
+                                         @RequestParam String endereco, @RequestParam String nivel){
 
         if(LOGGER.isInfoEnabled()){
             LOGGER.info(String.format("Criando um novo cadastro com email: [%s]", email));
@@ -97,10 +97,11 @@ public class UsuarioController {
             resp = "exists";
         }
 
-        if((usuario.getNivel() == Nivel.NIVEL_CLIENTE))
+        if((usuario.getNivel() == Nivel.NIVEL_CLIENTE)){
             return new ModelAndView("redirect:/registrar", "resp", resp);
-        else
+        }else{
             return new ModelAndView("redirect:/usuario/painel", "resp", resp);
+        }
     }
 
     @RequestMapping(value="/logout", method = RequestMethod.GET)

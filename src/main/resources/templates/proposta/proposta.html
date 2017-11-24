@@ -4,52 +4,89 @@
 <head>
     <!-- STYLE DOS ITEM -->
     <link th:href="@{/../css/style_proposta_item.css}" rel="stylesheet" />
+    <link th:href="@{/../css/style_pragas.css}" rel="stylesheet" />
 </head>
 <body>
 <header th:replace="fragments/menu_responsivo::header1"></header>
 <main th:replace="fragments/menu_responsivo::header2"></main>
-<div sec:authorize="hasAuthority('NIVEL_CLIENTE')">
-    <main class="cd-main-content">
-        <div class="content-wrapper">
-            <h1>Propostas</h1>
-            <div class="categoria_lista">
-                <a href="#" class="categoria_item" category="todas">Todas</a>
-                <a href="#" class="categoria_item" category="pendente">Pendente</a>
-                <a href="#" class="categoria_item" category="aprovada">Aprovada</a>
-                <a href="#" class="categoria_item" category="deliberada">Deliberada</a>
-                <a href="#" class="categoria_item" category="cancelada">Cancelada</a>
-                <a href="#" class="categoria_item" category="aberta">Em Aberto</a>
+<main class="cd-main-content">
+    <div class="content-wrapper">
+        <h1>Propostas</h1>
+        <div class="categoria_lista">
+            <a href="#" class="categoria_item" category="todas">Todas</a>
+            <a href="#" class="categoria_item" category="pendente">Pendente</a>
+            <a href="#" class="categoria_item" category="aprovada">Aprovada</a>
+            <a href="#" class="categoria_item" category="deliberada">Deliberada</a>
+            <a href="#" class="categoria_item" category="cancelada">Cancelada</a>
+            <a sec:authorize="hasAuthority('NIVEL_CLIENTE')" href="#" class="categoria_item" category="aberta">Em Aberto</a>
+        </div>
+        <section class="todas_propostas">
+            <!-- ADICIONADA POR AJAX EM load.js -->
+        </section>
+        <div class="nenhuma_proposta">
+            <h1 class="aviso"></h1>
+        </div>
+    </div>
+</main>
+
+<!-- MODELS -->
+<div class="modal fade" id="modal_cancelada" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Proposta Cancelada</h5>
+                <a class="close" th:href="@{/proposta/visualizar}" role="button" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
             </div>
-            <section class="todas_propostas">
-                <!-- ADICIONADA POR AJAX EM load.js -->
-            </section>
-            <div class="nenhuma_proposta">
-                <h1 class="aviso"></h1>
+            <div class="modal-body">
+                A proposta foi cancelada com sucesso.
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" th:href="@{/proposta/visualizar}" role="button">Fechar</a>
             </div>
         </div>
-    </main>
+    </div>
 </div>
-<div sec:authorize="hasAuthority('NIVEL_FUNCIONARIO') or hasAuthority('NIVEL_ADMINISTRADOR')">
-    <main class="cd-main-content">
-        <div class="content-wrapper">
-            <h1>Propostas</h1>
-            <div class="categoria_lista">
-                <a href="#" class="categoria_item_funcadmin" category="todas">Todas</a>
-                <a href="#" class="categoria_item_funcadmin" category="pendente">Pendente</a>
-                <a href="#" class="categoria_item_funcadmin" category="aprovada">Aprovada</a>
-                <a href="#" class="categoria_item_funcadmin" category="deliberada">Deliberada</a>
-                <a href="#" class="categoria_item_funcadmin" category="cancelada">Cancelada</a>
-                <a href="#" class="categoria_item_funcadmin" category="aberta">Em Aberto</a>
+
+<div class="modal fade" id="modal_aceita" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">Proposta Aceita</h5>
+                <a class="close" th:href="@{/proposta/visualizar}" role="button" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
             </div>
-            <section class="todas_propostas">
-                <!-- ADICIONADA POR AJAX EM load.js -->
-            </section>
-            <div class="nenhuma_proposta">
-                <h1 class="aviso"></h1>
+            <div class="modal-body">
+                Você aceitou a proposta da empresa, aguarde a confirmação da mesma.
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" th:href="@{/proposta/visualizar}" role="button">Fechar</a>
             </div>
         </div>
-    </main>
+    </div>
 </div>
+
+<div class="modal fade" id="modal_aceitaf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel3">Serviço(s) Gerados</h5>
+                <a class="close" th:href="@{/proposta/visualizar}" role="button" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                Serviço(s) referente(s) a proposta foi gerado com sucesso.
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" th:href="@{/proposta/visualizar}" role="button">Fechar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- JQUERY -->
 <script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
 <!-- MENU -->
@@ -59,5 +96,28 @@
 <script th:src="@{../js/menu/modernizr.js}"></script>
 <!-- SCRIPT -->
 <script th:src="@{../js/proposta/load.js}"></script>   <!--carrega proposta por demanda-->
+
+<!--MODAL-->
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js}" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js}" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+<script th:if="${param.cancelada}" >
+    $(function(){
+        $('#modal_cancelada').modal('show');
+    });
+</script>
+
+<script th:if="${param.aceita}" >
+    $(function(){
+        $('#modal_aceita').modal('show');
+    });
+</script>
+
+<script th:if="${param.aceitaf}" >
+    $(function(){
+        $('#modal_aceitaf').modal('show');
+    });
+</script>
+
 </body>
 </html>

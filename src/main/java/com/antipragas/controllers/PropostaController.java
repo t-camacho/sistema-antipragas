@@ -41,9 +41,6 @@ public class PropostaController {
     private PropostaService propostaService;
 
     @Autowired
-    private MensagemService mensagemService;
-
-    @Autowired
     private FuncionarioTecnicoService funcionarioTecnicoService;
 
     @Autowired
@@ -78,7 +75,6 @@ public class PropostaController {
             model.put("pragas", pragas);
             model.put("enderecos", enderecos);
         }
-
         return new ModelAndView("/outros/nova_proposta", model);
     }
 
@@ -90,7 +86,6 @@ public class PropostaController {
                                     @RequestParam String tipo,
                                     @RequestParam String praga,
                                     @RequestParam String descricao){
-
         Usuario usuario = null;
         Set<Endereco> enderecos = null;
         Set<Praga> pragas = new HashSet<Praga>();
@@ -111,16 +106,15 @@ public class PropostaController {
         proposta.setFrequencia(Frequencia.valueOf(freq));
         proposta.setStatus(StatusProposta.STATUS_PROPOSTA_EM_ABERTO);
         proposta.setOrcamento(0.0);
+        proposta.setCanceladoPor(Cancelado.CANCELADO_NINGUEM);
 
         if(!tipo.equals("TIPO_PREVENCAO")){
             String array_pragas[] = praga.split(",");
-
             for(int i = 0; i < array_pragas.length; i++){
                 if(!array_pragas[i].equals("0")){
                     pragas.add(pragaService.findById(Long.parseLong(array_pragas[i])));
                 }
             }
-
             proposta.setPragas(pragas);
         }
 
@@ -135,10 +129,9 @@ public class PropostaController {
         try{
             propostaService.create(proposta);
         }catch (Exception e){
-
+            return "redirect:/usuario/painel?nova_error";
         }
-
-        return "redirect:/usuario/painel";
+        return "redirect:/usuario/painel?nova_proposta";
     }
 
     //cliente e funcionario
@@ -154,7 +147,7 @@ public class PropostaController {
         proposta.setFuncionario(getUsuarioSession());
         proposta.setStatus(StatusProposta.STATUS_PROPOSTA_PENDENTE);
         propostaService.edit(proposta);
-        return "redirect:/proposta/abertas";
+        return "redirect:/proposta/abertas?aceita";
     }
 
     private void gerarServico(){
@@ -163,52 +156,57 @@ public class PropostaController {
 
     @RequestMapping(value = "/aceitarc", method = RequestMethod.POST)
     public String aceitarPropostaCliente(@RequestParam String id){
-
-        Proposta proposta = propostaService.findById(Long.parseLong(id));
-
-        proposta.setStatus(StatusProposta.STATUS_PROPOSTA_APROVADA);
-        propostaService.edit(proposta);
-
-        return "redirect:/proposta/negociacao?id="+id;
+        try{
+            Proposta proposta = propostaService.findById(Long.parseLong(id));
+            proposta.setStatus(StatusProposta.STATUS_PROPOSTA_APROVADA);
+            propostaService.edit(proposta);
+        }catch (Exception e){
+            return "redirect:/proposta/visualizar?error";
+        }
+        return "redirect:/proposta/visualizar?aceita";
     }
 
     @RequestMapping(value = "/aceitarf", method = RequestMethod.POST)
     public String aceitarPropostaFuncionario(@RequestParam String id){
-        Proposta proposta = propostaService.findById(Long.parseLong(id));
-
-        proposta.setStatus(StatusProposta.STATUS_PROPOSTA_DELIBERADA);
-        propostaService.edit(proposta);
-
-        return "redirect:/proposta/visualizar";
+        try{
+            Proposta proposta = propostaService.findById(Long.parseLong(id));
+            proposta.setStatus(StatusProposta.STATUS_PROPOSTA_DELIBERADA);
+            propostaService.edit(proposta);
+        }catch (Exception e){
+            return "redirect:/proposta/visualizar?error";
+        }
+        return "redirect:/proposta/visualizar?aceitaf";
     }
 
     @RequestMapping(value = "/cancelarc", method = RequestMethod.POST)
     public String cancelarPropostaCliente(@RequestParam String id){
-        Proposta proposta = propostaService.findById(Long.parseLong(id));
-
-        proposta.setStatus(StatusProposta.STATUS_PROPOSTA_CANCELADA);
-
-
-        propostaService.edit(proposta);
-
-        return "redirect:/proposta/visualizar";
+        try{
+            Proposta proposta = propostaService.findById(Long.parseLong(id));
+            proposta.setStatus(StatusProposta.STATUS_PROPOSTA_CANCELADA);
+            proposta.setCanceladoPor(Cancelado.CANCELADO_PELO_CLIENTE);
+            propostaService.edit(proposta);
+        }catch (Exception e){
+            return "redirect:/proposta/visualizar?error";
+        }
+        return "redirect:/proposta/visualizar?cancelada";
     }
 
     @RequestMapping(value = "/cancelarf", method = RequestMethod.POST)
     public String cancelarPropostaFuncionario(@RequestParam String id){
-        Proposta proposta = propostaService.findById(Long.parseLong(id));
-
-        proposta.setStatus(StatusProposta.STATUS_PROPOSTA_CANCELADA);
-
-        propostaService.edit(proposta);
-
-        return "redirect:/proposta/visualizar";
+        try{
+            Proposta proposta = propostaService.findById(Long.parseLong(id));
+            proposta.setStatus(StatusProposta.STATUS_PROPOSTA_CANCELADA);
+            proposta.setCanceladoPor(Cancelado.CANCELADO_PELA_EMPRESA);
+            propostaService.edit(proposta);
+        }catch (Exception e){
+            return "redirect:/proposta/visualizar?error";
+        }
+        return "redirect:/proposta/visualizar?cancelada";
     }
 
     //funcionario
     @RequestMapping("/abertas")
     public String goPropostasAbertas(){
-
         return ("/proposta/em_aberto");
     }
 

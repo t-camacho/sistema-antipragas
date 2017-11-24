@@ -4,6 +4,7 @@ package com.antipragas.models;
  * @author Thais Camacho
  */
 
+import com.antipragas.models.enums.Cancelado;
 import com.antipragas.models.enums.Frequencia;
 import com.antipragas.models.enums.StatusProposta;
 import com.antipragas.models.enums.Tipo;
@@ -42,6 +43,10 @@ public class Proposta {
     @Expose
     private StatusProposta status;
 
+    @Enumerated(EnumType.STRING)
+    @Expose
+    private Cancelado canceladoPor;
+
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
@@ -77,6 +82,20 @@ public class Proposta {
         this.usuario = usuario;
         this.endereco = endereco;
         this.pragas = pragas;
+    }
+
+    public Proposta(Integer quantidade, Double orcamento, String descricao, Tipo tipo, Frequencia frequencia, StatusProposta status, Cancelado canceladoPor, Usuario usuario, Endereco endereco, Set<Praga> pragas, Usuario funcionario) {
+        this.quantidade = quantidade;
+        this.orcamento = orcamento;
+        this.descricao = descricao;
+        this.tipo = tipo;
+        this.frequencia = frequencia;
+        this.status = status;
+        this.canceladoPor = canceladoPor;
+        this.usuario = usuario;
+        this.endereco = endereco;
+        this.pragas = pragas;
+        this.funcionario = funcionario;
     }
 
     public Proposta(Frequencia frequencia) {
@@ -169,5 +188,13 @@ public class Proposta {
 
     public void setFuncionario(Usuario funcionario) {
         this.funcionario = funcionario;
+    }
+
+    public Cancelado getCanceladoPor() {
+        return canceladoPor;
+    }
+
+    public void setCanceladoPor(Cancelado canceladoPor) {
+        this.canceladoPor = canceladoPor;
     }
 }
