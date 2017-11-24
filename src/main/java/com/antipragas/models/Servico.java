@@ -55,6 +55,8 @@ public class Servico {
     )
     private Set<Praga> pragas;
 
+    public Servico() {}
+
     public Servico(Proposta proposta, Usuario cliente, String descricao, StatusServico status, Endereco endereco, Set<Praga> pragas) {
         this.proposta = proposta;
         this.cliente = cliente;
