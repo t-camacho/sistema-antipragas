@@ -52,8 +52,7 @@ public class PropostaController {
 
     private Usuario getUsuarioSession(){
         SecurityContext context = SecurityContextHolder.getContext();
-        if(context != null)
-        {
+        if(context != null){
             Authentication authentication = context.getAuthentication();
             if(authentication != null)
             {
@@ -75,7 +74,6 @@ public class PropostaController {
         usuario = getUsuarioSession();
         if(usuario != null){
             enderecos = usuario.getEnderecos();
-
             model.put("pragas", pragas);
             model.put("enderecos", enderecos);
         }
@@ -145,11 +143,9 @@ public class PropostaController {
     //cliente e funcionario
     @RequestMapping("/visualizar")
     public String goProposta(Model model){
-        Usuario usuario = null;
-        usuario = getUsuarioSession();
-        if(usuario != null){
-            model.addAttribute("role", usuario.getNivel().getNivel());
-        }
+        Usuario usuario = getUsuarioSession();
+        model.addAttribute("nivel", usuario.getNivel().getNivel());
+        LOGGER.info(String.valueOf("Exibindo propostas para: " + usuario.getNivel().getNivel()));
         return "/proposta/proposta";
     }
 

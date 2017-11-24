@@ -8,26 +8,49 @@
 <body>
 <header th:replace="fragments/menu_responsivo::header1"></header>
 <main th:replace="fragments/menu_responsivo::header2"></main>
-<div sec:authorize="hasRole('NIVEL_ADMINISTRADOR')">
-<main class="cd-main-content">
-    <div class="content-wrapper">
-        <h1>Propostas</h1>
-        <div class="categoria_lista">
-            <a href="#" class="categoria_item" category="todas">Todas</a>
-            <a href="#" class="categoria_item" category="pendente">Pendente</a>
-            <a href="#" class="categoria_item" category="aprovada">Aprovada</a>
-            <a href="#" class="categoria_item" category="deliberada">Deliberada</a>
-            <a href="#" class="categoria_item" category="cancelada">Cancelada</a>
-            <a href="#" class="categoria_item" category="aberta">Em Aberto</a>
-        </div>
-        <section class="todas_propostas">
-            <!-- ADICIONADA POR AJAX EM load.js -->
-        </section>
-        <div class="nenhuma_proposta">
-            <h1 class="aviso"></h1>
-        </div>
+<div th:with="condition=${nivel == 'Administrador' or nivel == 'Funcionario'}" th:remove="tag">
+    <!--PARA ADMINISTRADOR E FUNCIONÁRIO-->
+    <div th:if="${condition}">
+        <main class="cd-main-content">
+            <div class="content-wrapper">
+                <h1>Propostas</h1>
+                <div class="categoria_lista">
+                    <a href="#" class="categoria_item" category="todas">Todas</a>
+                    <a href="#" class="categoria_item" category="pendente">Pendente</a>
+                    <a href="#" class="categoria_item" category="aprovada">Aprovada</a>
+                    <a href="#" class="categoria_item" category="deliberada">Deliberada</a>
+                    <a href="#" class="categoria_item" category="cancelada">Cancelada</a>
+                </div>
+                <section class="todas_propostas">
+                    <!-- ADICIONADA POR AJAX EM load.js -->
+                </section>
+                <div class="nenhuma_proposta">
+                    <h1 class="aviso"></h1>
+                </div>
+            </div>
+        </main>
     </div>
-</main>
+    <!--PARA CLIENTE-->
+    <div th:unless="${condition}">
+        <main class="cd-main-content">
+            <div class="content-wrapper">
+                <h1>Propostas</h1>
+                <div class="categoria_lista">
+                    <a href="#" class="categoria_item" category="todas">Todas</a>
+                    <a href="#" class="categoria_item" category="pendente">Pendente</a>
+                    <a href="#" class="categoria_item" category="aprovada">Aprovada</a>
+                    <a href="#" class="categoria_item" category="deliberada">Deliberada</a>
+                    <a href="#" class="categoria_item" category="cancelada">Cancelada</a>
+                </div>
+                <section class="todas_propostas">
+                    <!-- ADICIONADA POR AJAX EM load.js -->
+                </section>
+                <div class="nenhuma_proposta">
+                    <h1 class="aviso"></h1>
+                </div>
+            </div>
+        </main>
+    </div>
 </div>
 
 <!-- JQUERY -->
@@ -38,6 +61,8 @@
 <script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
 <script th:src="@{../js/menu/modernizr.js}"></script>
 <!-- SCRIPT -->
+<script th:src="@{../js/proposta/filtro.js}"></script> <!--filtro das propostas-->
+<script th:src="@{../js/proposta/script.js}"></script> <!--lógica de negócio-->
 <script th:src="@{../js/proposta/load.js}"></script>   <!--carrega proposta por demanda-->
 </body>
 </html>
