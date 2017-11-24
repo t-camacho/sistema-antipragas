@@ -81,4 +81,9 @@ public class PropostaServiceImple implements PropostaService {
     public List<Proposta> findByStatus(StatusProposta status) {
         return propostaRepository.findByStatus(status);
     }
+
+    @Override
+    public List<Proposta> findByIdGreaterThan(Long id) {
+        return propostaRepository.findByIdGreaterThan(id);
+    }
 }

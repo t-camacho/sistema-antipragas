@@ -251,7 +251,7 @@ public class PropostaController {
                     propostas = propostaService.findByUsuarioAndIdGreaterThan(usuario, inicio);
                     break;
             }
-        }else{
+        }else if(usuario.getNivel() == Nivel.NIVEL_FUNCIONARIO){
             switch (categoria){
                 case 0://category = aprovada
                     propostas = propostaService.findByFuncionarioAndIdGreaterThanAndStatus(usuario, inicio,
@@ -275,6 +275,27 @@ public class PropostaController {
                     break;
                 default://category = todas
                     propostas = propostaService.findByFuncionarioAndIdGreaterThan(usuario, inicio);
+                    break;
+            }
+        }else{
+            switch (categoria){
+                case 0://category = aprovada
+                    propostas = propostaService.findByIdGreaterThanAndStatus(inicio, StatusProposta.STATUS_PROPOSTA_APROVADA);
+                    break;
+                case 1://category = cancelada
+                    propostas = propostaService.findByIdGreaterThanAndStatus(inicio, StatusProposta.STATUS_PROPOSTA_CANCELADA);
+                    break;
+                case 2://category = pedente
+                    propostas = propostaService.findByIdGreaterThanAndStatus(inicio, StatusProposta.STATUS_PROPOSTA_PENDENTE);
+                    break;
+                case 3://category = deliberada
+                    propostas = propostaService.findByIdGreaterThanAndStatus(inicio, StatusProposta.STATUS_PROPOSTA_DELIBERADA);
+                    break;
+                case 4://category = em_aberto
+                    propostas = propostaService.findByIdGreaterThanAndStatus(inicio, StatusProposta.STATUS_PROPOSTA_EM_ABERTO);
+                    break;
+                default://category = todas
+                    propostas = propostaService.findByIdGreaterThan(inicio);
                     break;
             }
         }

@@ -8,25 +8,48 @@
 <body>
 <header th:replace="fragments/menu_responsivo::header1"></header>
 <main th:replace="fragments/menu_responsivo::header2"></main>
-<main class="cd-main-content">
-    <div class="content-wrapper">
-        <h1>Propostas</h1>
-        <div class="categoria_lista">
-            <a href="#" class="categoria_item" category="todas">Todas</a>
-            <a href="#" class="categoria_item" category="pendente">Pendente</a>
-            <a href="#" class="categoria_item" category="aprovada">Aprovada</a>
-            <a href="#" class="categoria_item" category="deliberada">Deliberada</a>
-            <a href="#" class="categoria_item" category="cancelada">Cancelada</a>
-            <a sec:authorize="hasAuthority('NIVEL_CLIENTE')" href="#" class="categoria_item" category="aberta">Em Aberto</a>
+<div sec:authorize="hasAuthority('NIVEL_CLIENTE')">
+    <main class="cd-main-content">
+        <div class="content-wrapper">
+            <h1>Propostas</h1>
+            <div class="categoria_lista">
+                <a href="#" class="categoria_item" category="todas">Todas</a>
+                <a href="#" class="categoria_item" category="pendente">Pendente</a>
+                <a href="#" class="categoria_item" category="aprovada">Aprovada</a>
+                <a href="#" class="categoria_item" category="deliberada">Deliberada</a>
+                <a href="#" class="categoria_item" category="cancelada">Cancelada</a>
+                <a href="#" class="categoria_item" category="aberta">Em Aberto</a>
+            </div>
+            <section class="todas_propostas">
+                <!-- ADICIONADA POR AJAX EM load.js -->
+            </section>
+            <div class="nenhuma_proposta">
+                <h1 class="aviso"></h1>
+            </div>
         </div>
-        <section class="todas_propostas">
-            <!-- ADICIONADA POR AJAX EM load.js -->
-        </section>
-        <div class="nenhuma_proposta">
-            <h1 class="aviso"></h1>
+    </main>
+</div>
+<div sec:authorize="hasAuthority('NIVEL_FUNCIONARIO') or hasAuthority('NIVEL_ADMINISTRADOR')">
+    <main class="cd-main-content">
+        <div class="content-wrapper">
+            <h1>Propostas</h1>
+            <div class="categoria_lista">
+                <a href="#" class="categoria_item_funcadmin" category="todas">Todas</a>
+                <a href="#" class="categoria_item_funcadmin" category="pendente">Pendente</a>
+                <a href="#" class="categoria_item_funcadmin" category="aprovada">Aprovada</a>
+                <a href="#" class="categoria_item_funcadmin" category="deliberada">Deliberada</a>
+                <a href="#" class="categoria_item_funcadmin" category="cancelada">Cancelada</a>
+                <a href="#" class="categoria_item_funcadmin" category="aberta">Em Aberto</a>
+            </div>
+            <section class="todas_propostas">
+                <!-- ADICIONADA POR AJAX EM load.js -->
+            </section>
+            <div class="nenhuma_proposta">
+                <h1 class="aviso"></h1>
+            </div>
         </div>
-    </div>
-</main>
+    </main>
+</div>
 <!-- JQUERY -->
 <script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
 <!-- MENU -->

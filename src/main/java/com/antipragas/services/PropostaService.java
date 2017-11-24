@@ -20,6 +20,7 @@ public interface PropostaService {
     List<Proposta> findByUsuarioAndIdGreaterThan(Usuario usuario, Long id);
     List<Proposta> findByUsuarioAndIdGreaterThanAndStatus(Usuario usuario, Long id, StatusProposta status);
     List<Proposta> findByIdGreaterThanAndStatus(Long id, StatusProposta status);
+    List<Proposta> findByIdGreaterThan(Long id);
     List<Proposta> findByFuncionarioAndIdGreaterThanAndStatus(Usuario funcionario, Long id, StatusProposta status);
     List<Proposta> findByFuncionarioAndIdGreaterThan(Usuario usuario, Long id);
     List<Proposta> findByStatus(StatusProposta status);
