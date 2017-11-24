@@ -41,10 +41,10 @@ $(document).ready(function () {
             data: {inicio: inicio, qtd: qtd, categoria: getCategoryInteger(category)},
             success: function (resultado) {
                 var propostas = JSON.parse(resultado);
-                var status, btn, tipo, pragas = "";
+                var status, btn, tipo, pragas = "", canceladaPor = "";
                 ultimoId = propostas.ultimoId;
                 $.each(propostas.dados, function (i, proposta) {
-                    pragas = "";
+                    pragas = "";canceladaPor = "";
                     switch (proposta.status){
                         case 'STATUS_PROPOSTA_PENDENTE':
                             status = 'pendente';
@@ -54,6 +54,11 @@ $(document).ready(function () {
                             break;
                         case 'STATUS_PROPOSTA_CANCELADA':
                             status = 'cancelada';
+                            if(proposta.canceladoPor == 'CANCELADO_PELO_CLIENTE'){
+                                canceladaPor = "Cancelada pelo cliente";
+                            }else{
+                                canceladaPor = "Cancelada pela empresa";
+                            }
                             break;
                         case 'STATUS_PROPOSTA_DELIBERADA':
                             status = 'deliberada';
@@ -74,7 +79,7 @@ $(document).ready(function () {
                     if(pragas == ""){
                         pragas = "Não definido";
                     }
-                    if(proposta.funcionario === undefined || status == 'cancelada' || status == 'deliberada'){
+                    if(proposta.funcionario === undefined || status == 'cancelada' || status == 'deliberada' || status == 'aprovada'){
                         btn = '<button class="btn-detalhes bloqueada" type="submit" disabled="true">Detalhes</button>\n';
                     }else{
                         btn = '<button class="btn-detalhes" type="submit" >Detalhes</button>\n';
@@ -90,6 +95,7 @@ $(document).ready(function () {
                         '      <span class="status '+ status+'"></span>' +
                         '      <p>Orçamento: R$ '+proposta.orcamento+'</p>' +
                         '   </div>' +
+                        '   <p class="informacao" style="text-align: center; font-weight: bold">Proposta '+ proposta.id +'</p>' +
                         '   <p class="subtitulo">Endereço de Realização</p>' +
                         '   <p class="informacao">'+ proposta.endereco.rua +' '+ proposta.endereco.numero +' '+ proposta.endereco.bairro +' - '+ proposta.endereco.cidade +'/'+ proposta.endereco.uf +'</p>\n' +
                         '   <p class="subtitulo">Tipo</p>' +
@@ -98,6 +104,7 @@ $(document).ready(function () {
                         '   <p class="informacao">'+ pragas +'</p>' +
                         '   <p class="subtitulo">Descrição</p>' +
                         '   <p class="informacao">'+ proposta.descricao +'</p>' +
+                        '   <p class="informacao" style="text-align: center">'+ canceladaPor +'</p>' +
                         '   <form method="get" action="/proposta/negociacao">' +
                         '      <input type="hidden" value="'+ proposta.id +'" name="id" />' +
                         btn +

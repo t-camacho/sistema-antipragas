@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" class="no-js">
-<head th:replace="fragments/head:: head"></head>
+<html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" class="no-js">
+<head th:replace="fragments/head::head">
+    <link th:href="@{/../css/style_pragas.css}" rel="stylesheet" />
+</head>
 <body>
     <header th:replace="fragments/menu_responsivo :: header1"></header>
     <main th:replace="fragments/menu_responsivo :: header2"></main>
@@ -26,7 +28,7 @@ Fornecedor:
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel2">Cadastro realizado com sucesso</h5>
+                <h5 class="modal-title" id="exampleModalLabel1">Cadastro realizado com sucesso</h5>
                 <a class="close" th:href="@{/usuario/painel}" role="button" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </a>
@@ -59,6 +61,44 @@ Fornecedor:
     </div>
 </div>
 
+    <div class="modal fade" id="nova_proposta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel3">Proposta Criada Com Sucesso</h5>
+                    <a class="close" th:href="@{/usuario/painel}" role="button" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    Aguarde respostas da empresa para iniciar as negociações.
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-secondary" th:href="@{/usuario/painel}" role="button">Fechar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="nova_error" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel4">Falha na Criação da Proposta</h5>
+                    <a class="close" th:href="@{/usuario/painel}" role="button" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    Não foi possível criar a proposta, por favor, tente novamente.
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-secondary" th:href="@{/usuario/painel}" role="button">Fechar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <!-- Botão Float de nova proposta, só para o cliente -->
 <div sec:authorize="hasAuthority('NIVEL_CLIENTE')">
     <a th:href="@{/proposta/nova/proposta}" class="float">
@@ -70,25 +110,30 @@ Fornecedor:
     </div>
 </div>
 
-<script th:if="${resp == 'exists'}">
-    $(function(){
-        $('#myModal').modal('show');
-    });
-</script>
-
-<script th:if="${resp == 'register'}">
-    $(function(){
-        $('#myModal2').modal('show');
-    });
-</script>
+<!-- JQUERY -->
+<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
+<!-- MENU -->
+<script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
+<script th:src="@{../js/menu/main.js}"></script>
+<script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
+<script th:src="@{../js/menu/modernizr.js}"></script>
 
 <!-- MODAL -->
 <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js}" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js}" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-<!-- MENU -->
-<script th:src="@{../js/menu/jquery-2.1.4.js}"></script>
-<script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
-<script th:src="@{../js/menu/main.js}"></script>
+<!-- JQUERY -->
+
+<script th:if="${param.nova_proposta}" >
+    $(function(){
+        $('#nova_proposta').modal('show');
+    });
+</script>
+
+<script th:if="${param.nova_error}" >
+    $(function(){
+        $('#nova_error').modal('show');
+    });
+</script>
 
 </body>
 </html>

@@ -19,6 +19,27 @@
         </div>
     </div>
 </main>
+
+<!-- MODELS -->
+<div class="modal fade" id="modal_aceita" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Proposta foi aceita por você</h5>
+                <a class="close" th:href="@{/proposta/abertas}" role="button" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                Você aceitou a proposta e ela foi adicionada as suas propostas no painel.
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" th:href="@{/proposta/abertas}" role="button">Fechar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- JQUERY -->
 <script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
 <!-- MENU -->
@@ -28,5 +49,16 @@
 <script th:src="@{../js/menu/modernizr.js}"></script>
 <!-- SCRIPT -->
 <script th:src="@{../js/proposta/em_aberto.js}"></script>   <!--carrega proposta por demanda-->
+
+<!--MODAL-->
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js}" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js}" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+<script th:if="${param.aceita}" >
+    $(function(){
+        $('#modal_aceita').modal('show');
+    });
+</script>
+
 </body>
 </html>

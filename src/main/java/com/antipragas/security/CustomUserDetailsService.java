@@ -31,12 +31,26 @@ public class CustomUserDetailsService implements UserDetailsService {
     public CustomUserDetailsService(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
-
+/*
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(username);
 
         Usuario usuario = usuarioOptional.orElseThrow(() -> new UsernameNotFoundException("Usuario ou senha incorretos"));
+
+        if(usuario == null){
+            throw new UsernameNotFoundException("Usuário " + username + " não encontrado");
+        }else if(usuario.getStatus() != Status.STATUS_ATIVADA){
+            throw new UsernameNotFoundException("Usuário " + username + " não cadastrado");
+        }else{
+            return new User(username, usuario.getSenha(), getPermissao(usuario));
+        }
+    }
+*/
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuario usuario= usuarioRepository.findByEmail(username);
 
         if(usuario == null){
             throw new UsernameNotFoundException("Usuário " + username + " não encontrado");

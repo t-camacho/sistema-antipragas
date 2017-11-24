@@ -47,7 +47,7 @@ public class ServicoController {
         //model.addAttribute("fornecedores", fornecedorRepository.findAll());
         return "/servicos/listar";
     }
-
+/*
     @RequestMapping(value = "/listar/Pendente", method = RequestMethod.GET)
         public String listarServicosPendentes(Model model, final HttpServletRequest request){
 
@@ -93,5 +93,5 @@ public class ServicoController {
          model.addAttribute("servicos_cancelados", servicos);
 
         return "/servicos/listar/Cancelado";
-    }
+    }*/
 }

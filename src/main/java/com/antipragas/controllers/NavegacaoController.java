@@ -30,7 +30,6 @@ public class NavegacaoController {
 
     @RequestMapping(value = "/registrar", method = RequestMethod.GET)
     public ModelAndView goHomeResp(@RequestParam String resp){
-
         return new ModelAndView("home", "resp", resp);
     }
 
@@ -55,7 +54,7 @@ public class NavegacaoController {
             return goHLogin("resp");
     }
 
-        @RequestMapping(value = "/login")
+    @RequestMapping(value = "/login")
     public String goLogin(){
 
         return "login";

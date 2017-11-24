@@ -29,8 +29,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
-
 /**
  * @author Thais Camacho
  */
@@ -43,6 +41,7 @@ public class PragaControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+
     @MockBean
     private PragaService pragaServiceMock;
 
@@ -54,6 +53,7 @@ public class PragaControllerTest {
     private Praga praga1;
     private Praga praga2;
     private Praga praga3;
+
     @Before
     public void setUpProduct() throws Exception{
         praga1 = new Praga();
