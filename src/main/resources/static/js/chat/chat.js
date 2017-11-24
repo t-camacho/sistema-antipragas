@@ -11,20 +11,20 @@ jQuery(function(){
     //envia msg p/ bd
     jQuery('body').on('keyup', '.msg', function(evento){
         if(evento.which == 13){
-           var texto = jQuery(this).val();
-           var id_proposta = jQuery('.id_proposta').val();
-           var id = jQuery('.msg').attr('id');
-           jQuery.ajax({
-               url: 'http://localhost:8080/chat/enviar',
-               data: {mensagem: texto, id: id, id_proposta: id_proposta},
-               success: function () {
-                   jQuery('.msg').val('');
-               },
-               error: function () {
-                   alert("Não foi possivel enviar a mensagem. Tente novamente.");
-               }
-           });
-       }
+            var texto = jQuery(this).val();
+            var id_proposta = jQuery('.id_proposta').val();
+            var id = jQuery('.msg').attr('id');
+            jQuery.ajax({
+                url: 'http://localhost:8080/chat/enviar',
+                data: {mensagem: texto, id: id, id_proposta: id_proposta},
+                success: function () {
+                    jQuery('.msg').val('');
+                },
+                error: function () {
+                    alert("Não foi possivel enviar a mensagem. Tente novamente.");
+                }
+            });
+        }
     });
 
     //recupera historico da conversa

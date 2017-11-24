@@ -34,44 +34,44 @@
                     <form method="post" th:action="@{/proposta/cpreservico}" >
                         <div class="card-body" th:inline="text">
 
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="exampleInputOrcamento"><span style="font-weight: bold" >Orçamento</span></label>
-                                            <input type="number" step="any" class="form-control" th:value="${servico.orcamento}" id="exampleInputOrcamento" aria-describedby="emailHelp" placeholder="0.0" name="orcamento" />
-                                        </div>
-                                    </div>
-
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <label for="exampleSelect1"><span style="font-weight: bold">Funcionário Técnico</span></label>
-                                            <select class="form-control" id="exampleSelect1" name="funcionario">
-                                                <option th:each="funcionarioTecnico : ${funcionariosTecnicos}" th:value="${funcionarioTecnico.id}" th:inline="text">[[${funcionarioTecnico.nome}]]</option>
-                                            </select>
-                                        </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputOrcamento"><span style="font-weight: bold" >Orçamento</span></label>
+                                        <input type="number" step="any" class="form-control" th:value="${servico.orcamento}" id="exampleInputOrcamento" aria-describedby="emailHelp" placeholder="0.0" name="orcamento" />
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="form-group col-6">
-                                        <label for="example-date-input" class="col-12 col-form-label"><span style="font-weight: bold">Dia</span></label>
-                                        <div class="col-12">
-                                            <input class="form-control" type="date" value="2017-08-19" id="example-date-input" name="data" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group col-6">
-                                        <label for="example-time-input" class="col-12 col-form-label"><span style="font-weight: bold">Horário</span></label>
-                                        <div class="col-12">
-                                            <input class="form-control" type="time" value="13:45:00" id="example-time-input" name="horario" />
-                                        </div>
+                                <div class="col-6">
+                                    <div class="form-group">
+                                        <label for="exampleSelect1"><span style="font-weight: bold">Funcionário Técnico</span></label>
+                                        <select class="form-control" id="exampleSelect1" name="funcionario">
+                                            <option th:each="funcionarioTecnico : ${funcionariosTecnicos}" th:value="${funcionarioTecnico.id}" th:inline="text">[[${funcionarioTecnico.nome}]]</option>
+                                        </select>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label for="exampleTextarea"><span style="font-weight: bold" >Descrição</span></label>
-                                    <textarea class="form-control" id="exampleTextarea" th:text="${servico.descricao}" name="descricao" rows="3"></textarea>
-                                    <small id="emailHelp" class="form-text text-muted">Apenas 255 caracteres são permitidos.</small>
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="example-date-input" class="col-12 col-form-label"><span style="font-weight: bold">Dia</span></label>
+                                    <div class="col-12">
+                                        <input class="form-control" type="date" value="2017-08-19" id="example-date-input" name="data" />
+                                    </div>
                                 </div>
+                                <div class="form-group col-6">
+                                    <label for="example-time-input" class="col-12 col-form-label"><span style="font-weight: bold">Horário</span></label>
+                                    <div class="col-12">
+                                        <input class="form-control" type="time" value="13:45:00" id="example-time-input" name="horario" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleTextarea"><span style="font-weight: bold" >Descrição</span></label>
+                                <textarea class="form-control" id="exampleTextarea" th:text="${servico.descricao}" name="descricao" rows="3"></textarea>
+                                <small id="emailHelp" class="form-text text-muted">Apenas 255 caracteres são permitidos.</small>
+                            </div>
                         </div>
                         <input type="hidden" name="id" th:value="${servico.id}" />
                         <div class="card-footer small text-muted">

@@ -40,17 +40,17 @@
                 <a href="#0">Proposta</a>
                 <ul>
                     <li><a th:href="@{/proposta/visualizar}">Minhas</a></li>
-                    <li><a th:href="@{/proposta/abertas}">Em Abertas</a></li>
+                    <li><a th:href="@{/proposta/abertas}">Em Aberto</a></li>
                     <!--<li><a href="#0">Finalizados</a></li>-->
                 </ul>
             </li>
             <li class="has-children overview">
-                <a th:href="@{/servicos/listar/Pendente}">Serviços Pendentes</a>
-                <a th:href="@{/servicos/listar/Cancelado}">Serviços Cancelados</a>
-                <a th:href="@{/servicos/listar/Concluido}">Serviços Concluídos</a>
-                <a href="#0">Serviço</a>
+                <a href="#0">Serviços</a>
                 <ul>
-                    <li><a th:href="@{/renegociando/listar}">Renegociação</a></li>
+                    <li><a th:href="@{/renegociando/listar}">Em Renegociação</a></li>
+                    <li><a th:href="@{/servicos/listar/Pendente}">Pendentes</a></li>
+                    <li><a th:href="@{/servicos/listar/Pendente}">Cancelados</a></li>
+                    <li><a th:href="@{/servicos/listar/Pendente}">Concluídos</a></li>
                 </ul>
             </li>
             <!--<li class="has-children notifications active">-->

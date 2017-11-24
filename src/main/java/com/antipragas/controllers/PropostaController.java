@@ -12,7 +12,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,7 +51,8 @@ public class PropostaController {
 
     private Usuario getUsuarioSession(){
         SecurityContext context = SecurityContextHolder.getContext();
-        if(context != null){
+        if(context != null)
+        {
             Authentication authentication = context.getAuthentication();
             if(authentication != null)
             {
@@ -74,6 +74,7 @@ public class PropostaController {
         usuario = getUsuarioSession();
         if(usuario != null){
             enderecos = usuario.getEnderecos();
+
             model.put("pragas", pragas);
             model.put("enderecos", enderecos);
         }
@@ -142,10 +143,7 @@ public class PropostaController {
 
     //cliente e funcionario
     @RequestMapping("/visualizar")
-    public String goProposta(Model model){
-        Usuario usuario = getUsuarioSession();
-        model.addAttribute("nivel", usuario.getNivel().getNivel());
-        LOGGER.info(String.valueOf("Exibindo propostas para: " + usuario.getNivel().getNivel()));
+    public String goProposta(){
         return "/proposta/proposta";
     }
 
