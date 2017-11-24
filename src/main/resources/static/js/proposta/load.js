@@ -32,7 +32,7 @@ $(document).ready(function () {
         }
     }
 
-    function carregar(inicio, qtd, category) {
+    function carregar(inicio, qtd, category, tipo_user) {
         jQuery.ajax({
             url: 'http://localhost:8080/proposta/carregar',
             type: 'GET',
@@ -66,24 +66,46 @@ $(document).ready(function () {
                     }else{
                         tipo = 'Prevenção';
                     }
-                    jQuery('.todas_propostas').append(
-                        '<div class="item" category="'+ status +'">' +
-                        '   <div class="title-item" >' +
-                        '      <span class="status '+ status+'"></span>' +
-                        '      <p>Orçamento: 0,00</p>' +
-                        '   </div>' +
-                        '   <p class="subtitulo">Endereço de Realização</p>' +
-                        '   <p class="informacao">'+ proposta.endereco.rua +' '+ proposta.endereco.numero +' '+ proposta.endereco.bairro +' - '+ proposta.endereco.cidade +'/'+ proposta.endereco.uf +'</p>\n' +
-                        '   <p class="subtitulo">Tipo</p>' +
-                        '   <p class="informacao">'+ tipo +'</p>' +
-                        '   <p class="subtitulo">Descrição</p>' +
-                        '   <p class="informacao">'+ proposta.descricao +'</p>' +
-                        '   <form method="get" action="/proposta/negociacao">' +
-                        '      <input type="hidden" value="'+ proposta.id +'" name="id" />' +
-                                            btn +
-                        '   </form>' +
-                        '</div>'
-                    );
+                    if(tipo_user.localeCompare("Cliente")){
+                        jQuery('.todas_propostas').append(
+                            '<div class="item" category="'+ status +'">' +
+                            '   <div class="title-item" >' +
+                            '      <span class="status '+ status+'"></span>' +
+                            '      <p>Orçamento: 0,00</p>' +
+                            '   </div>' +
+                            '   <p class="subtitulo">Endereço de Realização</p>' +
+                            '   <p class="informacao">'+ proposta.endereco.rua +' '+ proposta.endereco.numero +' '+ proposta.endereco.bairro +' - '+ proposta.endereco.cidade +'/'+ proposta.endereco.uf +'</p>\n' +
+                            '   <p class="subtitulo">Tipo</p>' +
+                            '   <p class="informacao">'+ tipo +'</p>' +
+                            '   <p class="subtitulo">Descrição</p>' +
+                            '   <p class="informacao">'+ proposta.descricao +'</p>' +
+                            '   <form method="get" action="/proposta/negociacao">' +
+                            '      <input type="hidden" value="'+ proposta.id +'" name="id" />' +
+                            btn +
+                            '   </form>' +
+                            '</div>'
+                        );
+                    }else{
+                        jQuery('.todas_propostas').append(
+                            '<div class="item" category="'+ status +'">' +
+                            '   <p class="cliente">'+ proposta.usuario.nome +'</p>' +
+                            '   <div class="title-item" >' +
+                            '      <span class="status '+ status+'"></span>' +
+                            '      <p>Orçamento: 0,00</p>' +
+                            '   </div>' +
+                            '   <p class="subtitulo">Endereço de Realização</p>' +
+                            '   <p class="informacao">'+ proposta.endereco.rua +' '+ proposta.endereco.numero +' '+ proposta.endereco.bairro +' - '+ proposta.endereco.cidade +'/'+ proposta.endereco.uf +'</p>\n' +
+                            '   <p class="subtitulo">Tipo</p>' +
+                            '   <p class="informacao">'+ tipo +'</p>' +
+                            '   <p class="subtitulo">Descrição</p>' +
+                            '   <p class="informacao">'+ proposta.descricao +'</p>' +
+                            '   <form method="get" action="/proposta/negociacao">' +
+                            '      <input type="hidden" value="'+ proposta.id +'" name="id" />' +
+                            btn +
+                            '   </form>' +
+                            '</div>'
+                        );
+                    }
                 });
                 semProposta();
             },
