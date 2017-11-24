@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -33,7 +34,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario= usuarioRepository.findByEmail(username);
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(username);
+
+        Usuario usuario = usuarioOptional.orElseThrow(() -> new UsernameNotFoundException("Usuario ou senha incorretos"));
 
         if(usuario == null){
             throw new UsernameNotFoundException("Usuário " + username + " não encontrado");

@@ -45,11 +45,17 @@
                 </ul>
             </li>
             <li class="has-children overview">
+                <a th:href="@{/servicos/listar/Pendente}">Serviços Pendentes</a>
+                <a th:href="@{/servicos/listar/Cancelado}">Serviços Cancelados</a>
+                <a th:href="@{/servicos/listar/Concluido}">Serviços Concluídos</a>
                 <a href="#0">Serviço</a>
                 <ul>
                     <li><a th:href="@{/renegociando/listar}">Renegociação</a></li>
                 </ul>
             </li>
+            <!--<li class="has-children notifications active">-->
+                <!--<a href="#0">Propostas<span class="count">3</span></a>-->
+            <!--</li>-->
             <li sec:authorize="hasAuthority('NIVEL_CLIENTE')" class="has-children notifications">
                 <a th:href="@{/proposta/visualizar}">Propostas<span class="count">3</span></a>
             </li>
