@@ -5,8 +5,6 @@
 <body>
 <header th:fragment="header1" class="cd-main-header">
     <a href="#0" class="cd-logo"><img src="../img/cd-logo.svg" alt="Logo" /></a>
-
-
     <a href="#0" class="cd-nav-trigger">Menu<span></span></a>
 
     <nav class="cd-nav">
@@ -76,12 +74,11 @@
             </li>
         </ul>
 
-        <ul>
+        <ul sec:authorize="hasAuthority('NIVEL_CLIENTE')">
             <li class="cd-label">Ações</li>
-            <li class="action-btn"><a th:href="@{/proposta/visualizar}">+ Nova Proposta</a></li>
+            <li class="action-btn"><a th:href="@{/proposta/nova/proposta}">+ Nova Proposta</a></li>
         </ul>
     </nav>
 </main>
-
 </body>
 </html>

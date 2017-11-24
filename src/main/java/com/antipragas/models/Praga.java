@@ -1,5 +1,7 @@
 package com.antipragas.models;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -15,6 +17,7 @@ public class Praga {
     private Long id;
 
     @Column(length = 60)
+    @Expose
     private String nome;
 
     @ManyToMany(mappedBy = "pragas")

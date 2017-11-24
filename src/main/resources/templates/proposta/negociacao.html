@@ -3,6 +3,8 @@
 <head>
     <title>Antipragas - Negociação</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+
     <link rel="stylesheet" th:href="@{/../css/style_negociacao.css}" />
 </head>
 <body>
@@ -15,7 +17,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" th:href="@{/usuario/painel}" id="item-menu">Voltar</a>
+                <a class="nav-link" th:href="@{/proposta/visualizar}" id="item-menu">Voltar</a>
             </li>
         </ul>
     </div>
@@ -24,12 +26,12 @@
 <div class="content-wrapper">
     <div class="container-fluid">
         <div class="row">
-            <div class="conteudo-servico col-12 col-md-4">
+            <div sec:authorize="hasAuthority('NIVEL_CLIENTE')" class="conteudo-servico col-12 col-md-4">
                 <div class="card mb-3">
                     <div class="card-header" th:inline="text" >
                         Proposta
                     </div>
-                    <input type="hidden" id="id_proposta" th:value="${proposta.id}" />
+                    <input type="hidden" th:value="${proposta.id}" class="id_proposta" />
                     <div class="card-body">
                         <div class="row" th:switch="${proposta.tipo.toString()}">
                             <div class="col-md-12" th:case="TIPO_EXTERMINIO">
@@ -67,32 +69,183 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12" th:inline="text">
+                                <span style="font-weight: bold">Praga(s):</span> [[${pragas}]]
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" th:inline="text">
                                 <span style="font-weight: bold">Descricão:</span> [[${proposta.descricao}]]
                             </div>
                         </div>
                     </div>
                     <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                 </div>
+                <div class="row">
+                    <!--<div class="col-1"></div>-->
+                    <form class="col-12" method="post" th:action="@{/proposta/aceitarc}">
+                        <div class="col-12">
+                            <input type="hidden" th:value="${proposta.id}" name="id" />
+                            <input class="button-negociando aceitar" type="submit" value="Aceitar" />
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <form class="col-12" method="post" th:action="@{/proposta/cancelarc}">
+                        <div class="col-12">
+                            <input type="hidden" th:value="${proposta.id}" name="id" />
+                            <input class="button-negociando cancelar" type="submit" value="Cancelar" />
+                        </div>
+                    </form>
+                </div>
+                    <!--<div class="col-1"></div>-->
             </div>
 
-            <div class="conteudo-servico col-12 col-md-8">
-                <div class="card mb-3" th:each="servico : ${preServicos}">
-                    <div class="card-header">
-                        <i class="fa fa-area-chart"></i> Servico</div>
+            <div sec:authorize="hasAuthority('NIVEL_FUNCIONARIO')" class="conteudo-servico col-12 col-md-4">
+                <div class="card mb-3">
+                    <div class="card-header" th:inline="text" >
+                        Proposta
+                    </div>
+                    <input type="hidden" th:value="${proposta.id}" class="id_proposta" />
                     <div class="card-body">
-                        <div th:inline="text">[[${servico.id}]]</div>
+                        <div class="row" th:switch="${proposta.tipo.toString()}">
+                            <div class="col-md-12" th:case="TIPO_EXTERMINIO">
+                                <span style="font-weight: bold">Tipo:</span>
+                                Extermínio
+                            </div>
+                            <div class="col-md-12" th:case="TIPO_PREVENCAO">
+                                <span style="font-weight: bold">Tipo:</span>
+                                Prevenção
+                            </div>
+                        </div>
+                        <div class="row" th:if="${proposta.frequencia.toString() != 'FREQUENCIA_NULA'}" th:switch="${proposta.frequencia.toString()}">
+                            <div class="col-md-12" th:case="FREQUENCIA_DIARIAMENTE">
+                                <span style="font-weight: bold">Frequencia:</span>
+                                Diariamente
+                            </div>
+                            <div class="col-md-12" th:case="FREQUENCIA_SEMANALMENTE">
+                                <span style="font-weight: bold">Frequencia:</span>
+                                Semanalmente
+                            </div>
+                            <div class="col-md-12" th:case="FREQUENCIA_MENSALMENTE">
+                                <span style="font-weight: bold">Frequencia:</span>
+                                Mensalmente
+                            </div>
+                            <div class="col-md-12" th:case="FREQUENCIA_ANUALMENTE">
+                                <span style="font-weight: bold">Frequencia:</span>
+                                Anualmente
+                            </div>
+                        </div>
+                        <div class="row" th:if="${proposta.frequencia.toString() != 'FREQUENCIA_NULA'}">
+                            <div class="col-md-12" th:inline="text">
+                                <span style="font-weight: bold">Quantidade:</span>
+                                [[${proposta.quantidade}]]
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" th:inline="text">
+                                <span style="font-weight: bold">Praga(s):</span> [[${pragas}]]
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" th:inline="text">
+                                <span style="font-weight: bold">Descricão:</span> [[${proposta.descricao}]]
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                 </div>
-                <div class="row">
-                    <div class="col-1"></div>
-                    <div class="col-10">
-                        <input class="button-negociando aceitar" type="button" value="Aceitar" />
-                        <input class="button-negociando cancelar" type="button" value="Cancelar" />
-                    </div>
-                    <div class="col-1"></div>
-                </div>
 
+                <div class="row">
+                    <!--<div class="col-1"></div>-->
+                    <form class="col-12" method="post" th:action="@{/proposta/aceitarf}">
+                        <div class="col-12" th:if="${proposta.status.toString() == 'STATUS_PROPOSTA_PENDENTE'}">
+                            <input type="hidden" th:value="${proposta.id}" name="id" />
+                            <input class="button-negociando aceitar bloqueado" type="submit" value="Aceitar" th:disabled="disabled" />
+                        </div>
+                        <div class="col-12" th:if="${proposta.status.toString() == 'STATUS_PROPOSTA_APROVADA'}">
+                            <input type="hidden" th:value="${proposta.id}" name="id" />
+                            <input class="button-negociando aceitar" type="submit" value="Aceitar" />
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
+                    <form class="col-12" method="post" th:action="@{/proposta/cancelarf}">
+                        <div class="col-12">
+                            <input type="hidden" th:value="${proposta.id}" name="id" />
+                            <input class="button-negociando cancelar" type="submit" value="Cancelar" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div sec:authorize="hasAuthority('NIVEL_CLIENTE')" class="conteudo-servico col-12 col-md-8">
+                <div class="card mb-3" th:each="servico : ${preServicos}">
+                    <div class="card-header" th:inline="text">
+                        <div class="row">
+                            <div class="col-4">Serviço [[${servico.id}]]</div>
+                            <div class="col-8 orcamento" th:if="${servico.orcamento} == null" th:inline="text">Orçamento: NÃO INFORMADO</div>
+                            <div class="col-8 orcamento" th:if="${servico.orcamento} != null" th:inline="text">Orçamento: [[${servico.orcamento}]]</div>
+                        </div>
+                    </div>
+                    <div class="card-body" th:inline="text">
+                        <div th:if="${servico.dataHorario} != null">
+                            <span style="font-weight: bold" >Data e Horário: </span><span th:text="${#dates.format(servico.dataHorario, 'dd/MM/YYYY HH:mm')}"></span> <br />
+                        </div>
+                        <div th:if="${servico.dataHorario} == null">
+                            <span style="font-weight: bold" >Data: </span>NÃO INFORMADO<br />
+                        </div>
+                        <div th:if="${servico.funcionarioTecnico} == null">
+                            <span style="font-weight: bold">Funcionário Técnico: </span> NÃO INFORMADO <br />
+                        </div>
+                        <div th:if="${servico.funcionarioTecnico} != null">
+                            <span style="font-weight: bold">Funcionário Técnico: </span> [[${servico.funcionarioTecnico.nome}]]<br />
+                        </div>
+                        <div>
+                            <span style="font-weight: bold">Endereço: </span> [[${servico.endereco.rua}]] [[${servico.endereco.numero}]] [[${servico.endereco.bairro}]] - [[${servico.endereco.cidade}]]/[[${servico.endereco.uf}]]<br />
+                        </div>
+                        <div>
+                            <span style="font-weight: bold">Descricão: </span>[[${servico.descricao}]]<br />
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                </div>
+            </div>
+            <div sec:authorize="hasAuthority('NIVEL_FUNCIONARIO')" class="conteudo-servico col-12 col-md-8">
+                <div class="card mb-3" th:each="servico : ${preServicos}">
+                    <div class="card-header" th:inline="text">
+                        <div class="row">
+                            <div class="col-4">Serviço [[${servico.id}]]</div>
+                            <div class="col-8 orcamento" th:if="${servico.orcamento} == null" th:inline="text">Orçamento: NÃO INFORMADO</div>
+                            <div class="col-8 orcamento" th:if="${servico.orcamento} != null" th:inline="text">Orçamento: [[${servico.orcamento}]]</div>
+                        </div>
+                    </div>
+                    <div class="card-body" th:inline="text">
+                        <div th:if="${servico.dataHorario} != null">
+                            <span style="font-weight: bold" >Data e Horário: </span><span th:text="${#dates.format(servico.dataHorario, 'dd/MM/YYYY HH:mm')}"></span> <br />
+                        </div>
+                        <div th:if="${servico.dataHorario} == null">
+                            <span style="font-weight: bold" >Data: </span>NÃO INFORMADO<br />
+                        </div>
+                        <div th:if="${servico.funcionarioTecnico} == null">
+                            <span style="font-weight: bold">Funcionário Técnico: </span> NÃO INFORMADO<br />
+                        </div>
+                        <div th:if="${servico.funcionarioTecnico} != null">
+                            <span style="font-weight: bold">Funcionário Técnico: </span> [[${servico.funcionarioTecnico.nome}]]<br />
+                        </div>
+                        <div>
+                            <span style="font-weight: bold">Endereço: </span> [[${servico.endereco.rua}]] [[${servico.endereco.numero}]] [[${servico.endereco.bairro}]] - [[${servico.endereco.cidade}]]/[[${servico.endereco.uf}]]<br />
+                        </div>
+                        <div>
+                            <span style="font-weight: bold">Descricão: </span>[[${servico.descricao}]]<br />
+                        </div>
+                    </div>
+                    <div class="card-footer small text-muted">
+                        <form method="get" th:action="@{/proposta/preservico}">
+                            <input type="hidden" th:value="${servico.id}" name="id" />
+                            <button type="submit" class="btn btn-primary botao-editar"><i class="fa fa-pencil" aria-hidden="true"></i> Editar</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -15,20 +15,32 @@ $(document).ready(function () {
 
     function carregar(inicio, qtd, category) {
         jQuery.ajax({
-            url: 'http://localhost:8080/proposta/carregar',
+            url: 'http://localhost:8080/proposta/pabertas',
             type: 'GET',
-            data: {inicio: inicio, qtd: qtd, categoria: 4},
+            data: {},
             success: function (resultado) {
                 var propostas = JSON.parse(resultado);
-                var status, btn, tipo;
-                ultimoId = propostas.ultimoId;
-                $.each(propostas.dados, function (i, proposta) {
-                    status = "pendente";
+                var status, btn, tipo, pragas = "";
+                $.each(propostas, function (i, proposta) {
+                    status = "aberta";
+                    pragas = "";
                     btn = '<button class="btn-detalhes" type="submit">Aceitar</button>\n';
                     if(proposta.tipo === 'TIPO_EXTERMINIO'){
                         tipo = 'Extermínio';
                     }else{
                         tipo = 'Prevenção';
+                    }
+                    var v = 0;
+                    $.each(proposta.pragas, function (i, praga) {
+                        if((v+1) < proposta.pragas.length){
+                            pragas += (praga.nome + ", ");
+                        }else{
+                            pragas += (praga.nome);
+                        }
+                        v++;
+                    });
+                    if(pragas == ""){
+                        pragas = "Não definido";
                     }
                     jQuery('.todas_propostas').append(
                         '<div class="item" category="'+ status +'">' +
@@ -50,6 +62,10 @@ $(document).ready(function () {
                     );
                 });
                 semProposta();
+
+
+
+
             },
             error: function () {
                 alert("Ocorreu um erro no carregamento. Tente novamente.");

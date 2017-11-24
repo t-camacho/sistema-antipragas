@@ -1,5 +1,6 @@
 package com.antipragas.repositories;
 
+import com.antipragas.models.Proposta;
 import com.antipragas.models.Servico;
 import com.antipragas.models.Usuario;
 import com.antipragas.models.enums.StatusServico;
@@ -17,5 +18,6 @@ import java.util.List;
 public interface ServicoRepository extends JpaRepository<Servico, Long> {
     List<Servico> findAllByStatus(StatusServico statusServico);
     List<Servico> findByCliente(Usuario cliente);
-
+    List<Servico> findByProposta(Proposta proposta);
+    Servico findById(Long id);
 }

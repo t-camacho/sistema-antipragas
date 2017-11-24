@@ -66,4 +66,9 @@ public class MensagemServiceImple implements MensagemService {
     public List<Mensagem> findByHorarioGreaterThanAndStatusAndProposta(Timestamp horario, StatusMensagem status, Proposta proposta) {
         return mensagemRepository.findByHorarioGreaterThanAndStatusAndProposta(horario, status, proposta);
     }
+
+    @Override
+    public List<Mensagem> findByHorarioGreaterThanEqualAndStatusAndProposta(Timestamp horario, StatusMensagem status, Proposta proposta) {
+        return mensagemRepository.findByHorarioGreaterThanEqualAndStatusAndProposta(horario, status, proposta);
+    }
 }

@@ -3,10 +3,7 @@ package com.antipragas.controllers;
 import com.antipragas.models.*;
 import com.antipragas.models.enums.*;
 import com.antipragas.models.json.PropostaJson;
-import com.antipragas.services.MensagemService;
-import com.antipragas.services.PragaService;
-import com.antipragas.services.PropostaService;
-import com.antipragas.services.UsuarioService;
+import com.antipragas.services.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.log4j.Logger;
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -46,7 +44,10 @@ public class PropostaController {
     private MensagemService mensagemService;
 
     @Autowired
-    private UsuarioService servicoService;
+    private FuncionarioTecnicoService funcionarioTecnicoService;
+
+    @Autowired
+    private ServicoService servicoService;
 
     private Usuario getUsuarioSession(){
         SecurityContext context = SecurityContextHolder.getContext();
@@ -109,6 +110,7 @@ public class PropostaController {
         proposta.setDescricao(descricao);
         proposta.setFrequencia(Frequencia.valueOf(freq));
         proposta.setStatus(StatusProposta.STATUS_PROPOSTA_EM_ABERTO);
+        proposta.setOrcamento(0.0);
 
         if(!tipo.equals("TIPO_PREVENCAO")){
             String array_pragas[] = praga.split(",");
@@ -145,8 +147,9 @@ public class PropostaController {
         return "/proposta/proposta";
     }
 
+    //aceitar prop
     @RequestMapping(value = "/aceitar", method = RequestMethod.GET)
-    public String aceitarProposta(@RequestParam String id){
+    public String aceitarPropostaEmAberto(@RequestParam String id){
         Proposta proposta = propostaService.findById(Long.parseLong(id));
         proposta.setFuncionario(getUsuarioSession());
         proposta.setStatus(StatusProposta.STATUS_PROPOSTA_PENDENTE);
@@ -154,17 +157,69 @@ public class PropostaController {
         return "redirect:/proposta/abertas";
     }
 
+    private void gerarServico(){
+
+    }
+
+    @RequestMapping(value = "/aceitarc", method = RequestMethod.POST)
+    public String aceitarPropostaCliente(@RequestParam String id){
+
+        Proposta proposta = propostaService.findById(Long.parseLong(id));
+
+        proposta.setStatus(StatusProposta.STATUS_PROPOSTA_APROVADA);
+        propostaService.edit(proposta);
+
+        return "redirect:/proposta/negociacao?id="+id;
+    }
+
+    @RequestMapping(value = "/aceitarf", method = RequestMethod.POST)
+    public String aceitarPropostaFuncionario(@RequestParam String id){
+        Proposta proposta = propostaService.findById(Long.parseLong(id));
+
+        proposta.setStatus(StatusProposta.STATUS_PROPOSTA_DELIBERADA);
+        propostaService.edit(proposta);
+
+        return "redirect:/proposta/visualizar";
+    }
+
+    @RequestMapping(value = "/cancelarc", method = RequestMethod.POST)
+    public String cancelarPropostaCliente(@RequestParam String id){
+        Proposta proposta = propostaService.findById(Long.parseLong(id));
+
+        proposta.setStatus(StatusProposta.STATUS_PROPOSTA_CANCELADA);
+
+
+        propostaService.edit(proposta);
+
+        return "redirect:/proposta/visualizar";
+    }
+
+    @RequestMapping(value = "/cancelarf", method = RequestMethod.POST)
+    public String cancelarPropostaFuncionario(@RequestParam String id){
+        Proposta proposta = propostaService.findById(Long.parseLong(id));
+
+        proposta.setStatus(StatusProposta.STATUS_PROPOSTA_CANCELADA);
+
+        propostaService.edit(proposta);
+
+        return "redirect:/proposta/visualizar";
+    }
+
     //funcionario
     @RequestMapping("/abertas")
-    public ModelAndView goPropostasAbertas(){
-        Usuario usuario = getUsuarioSession();
-        List propostas = null;
+    public String goPropostasAbertas(){
 
-        if(usuario != null){
-            propostas = propostaService.findByUsuario(usuario);
-        }
+        return ("/proposta/em_aberto");
+    }
 
-        return new ModelAndView("/proposta/em_aberto", "propostas", propostas);
+    //funcionario
+    @RequestMapping("/pabertas")
+    public @ResponseBody String propostasAbertas(){
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+
+        List<Proposta> propostas = propostaService.findByStatus(StatusProposta.STATUS_PROPOSTA_EM_ABERTO);
+
+        return gson.toJson(propostas);
     }
 
     //cliente e funcionario
@@ -189,7 +244,7 @@ public class PropostaController {
                             StatusProposta.STATUS_PROPOSTA_DELIBERADA);
                     break;
                 case 4://category = em_aberto
-                    propostas = propostaService.findByIdGreaterThanAndStatus(inicio,
+                    propostas = propostaService.findByUsuarioAndIdGreaterThanAndStatus(usuario, inicio,
                             StatusProposta.STATUS_PROPOSTA_EM_ABERTO);
                     break;
                 default://category = todas
@@ -215,7 +270,7 @@ public class PropostaController {
                             StatusProposta.STATUS_PROPOSTA_DELIBERADA);
                     break;
                 case 4://category = em_aberto
-                    propostas = propostaService.findByIdGreaterThanAndStatus(inicio,
+                    propostas = propostaService.findByFuncionarioAndIdGreaterThanAndStatus(usuario, inicio,
                             StatusProposta.STATUS_PROPOSTA_EM_ABERTO);
                     break;
                 default://category = todas
@@ -253,27 +308,93 @@ public class PropostaController {
         return gson.toJson(resultado);
     }
 
-    //cliente e funcionario
+    //cliente e funcionário
     @RequestMapping(value = "/negociacao", method = RequestMethod.GET)
     public ModelAndView goNegociacao(@RequestParam String id){
         int quantidade;
         Map<String, Object> model = new HashMap<String, Object>();
-
+        Set<Praga> pragas = new HashSet<Praga>();
         Proposta proposta = propostaService.findById(Long.parseLong(id));
-        List<Servico> preServicos = new ArrayList<Servico>();
+        List<Servico> preServicos;
 
         quantidade = proposta.getQuantidade();
+        preServicos = servicoService.findByProposta(proposta);
+        if(preServicos.isEmpty()){
+            for(Praga praga: proposta.getPragas()){
+                pragas.add(pragaService.findById(praga.getId()));
+            }
 
-        while(quantidade > 0){
-            Servico s = new Servico(proposta, proposta.getUsuario(), proposta.getDescricao(), StatusServico.PRE_SERVICO, proposta.getEndereco(), proposta.getPragas());
-            //servicoService.create(s);
-            preServicos.add(s);
-            quantidade--;
+            while(quantidade > 0){
+                Servico s;
+                if(pragas.isEmpty()){
+                    s = new Servico(proposta, proposta.getUsuario(), proposta.getDescricao(), StatusServico.PRE_SERVICO, proposta.getEndereco(), 0.0);
+                }else{
+                    s = new Servico(proposta, proposta.getUsuario(), proposta.getDescricao(), StatusServico.PRE_SERVICO, proposta.getEndereco(), pragas, 0.0);
+                }
+                servicoService.create(s);
+                quantidade--;
+            }
+            preServicos = servicoService.findByProposta(proposta);
         }
-
+        StringBuilder pragasS = new StringBuilder();
+        int i = 0;
+        for(Praga p : proposta.getPragas()){
+            if(i+1 < proposta.getPragas().size()){
+                pragasS.append(p.getNome()).append(", ");
+            }else{
+                pragasS.append(p.getNome());
+            }
+            i++;
+        }
+        if(pragasS.equals("")){
+            pragasS.append("Não definido");
+        }
         model.put("proposta", proposta);
         model.put("preServicos", preServicos);
-
+        model.put("pragas", pragasS);
         return new ModelAndView("/proposta/negociacao", model);
+    }
+
+    //editar um pré-servico, apenas funcionário
+    @RequestMapping(value = "/preservico", method = RequestMethod.GET)
+    public ModelAndView goEditarPreServico(@RequestParam String id){
+        Map<String, Object> model = new HashMap<String, Object>();
+        List<FuncionarioTecnico> funcionariosTecnicos = funcionarioTecnicoService.findAll();
+        Servico servico = servicoService.findById(Long.parseLong(id));
+
+        model.put("servico", servico);
+        model.put("funcionariosTecnicos", funcionariosTecnicos);
+        return new ModelAndView("/proposta/editar_pre_servico", model);
+    }
+
+    @RequestMapping(value = "/cpreservico", method = RequestMethod.POST)
+    public String alterarPreServico(@RequestParam Double orcamento,
+                                    @RequestParam Long funcionario,
+                                    @RequestParam String data,
+                                    @RequestParam String horario,
+                                    @RequestParam String descricao,
+                                    @RequestParam Long id){
+        Timestamp h;
+        FuncionarioTecnico funcionarioTecnico = funcionarioTecnicoService.findById(funcionario);
+        Servico servico = servicoService.findById(id);
+        System.out.println(horario);
+        try{
+            h = Timestamp.valueOf(data+" "+horario+":00");
+        }catch (Exception e){
+            h = Timestamp.valueOf(data+" "+horario);
+        }
+        double orcamentoAntigo = servico.getOrcamento();
+        servico.setOrcamento(orcamento);
+        servico.setFuncionarioTecnico(funcionarioTecnico);
+        servico.setDescricao(descricao);
+        servico.setDataHorario(h);
+
+        Proposta p = servico.getProposta();
+        p.setOrcamento(p.getOrcamento()+orcamento-orcamentoAntigo);
+
+        propostaService.edit(p);
+        servicoService.edit(servico);
+
+        return "redirect:/proposta/abertas";
     }
 }

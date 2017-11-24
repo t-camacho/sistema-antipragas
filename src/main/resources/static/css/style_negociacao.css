@@ -213,39 +213,59 @@
     text-align: center;
 }
 
-.button-negociando {
+.conteudo-servico form div .button-negociando {
     background-color: white;
     border-radius: 5px;
     width: 100%;
     padding: 12px 0 0 10px;
-    margin: 5px;
 }
 
-.button-negociando {
+.conteudo-servico form div .button-negociando {
     background: rgba(4, 99, 201, 0.9);
     color: white;
     text-transform: uppercase;
     font-weight: bold;
     padding: 12px 0;
     float: left;
-    margin-right: 5%;
+    margin-bottom: 5px;
 }
 
-.button-negociando:hover {
+.conteudo-servico form div .button-negociando:hover {
     background-color: #329fd9;
     border: solid 1px rgba(9, 79, 157, 0.9);
 }
 
-.aceitar {
+.conteudo-servico form div .aceitar {
     background-color: #38b879;
     border: 1px solid rgba(50, 184, 138, 0.9);
 }
 
-.cancelar {
+.conteudo-servico form div .cancelar {
     background-color: tomato;
     border: 1px solid rgba(201, 57, 57, 0.9);
 }
 
+.conteudo-servico form div .bloqueado {
+    background: #6f827d;
+    border: 1px solid rgba(104, 122, 117, 0.9);
+}
+
+.conteudo-servico form div .bloqueado:hover {
+    background: #7f958f;
+    border: 1px solid rgba(104, 122, 117, 0.9);
+}
+
+.orcamento {
+    text-align: right;
+}
+
+.botao-editar {
+    float: right;
+}
+
+/*******************
+    NAV
+ ******************/
 nav {
     margin-bottom: 10px;
 }

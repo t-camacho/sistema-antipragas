@@ -105,6 +105,9 @@
 .status.deliberada{
   background-color: #6b6fbe;
 }
+.status.aberta {
+  background: #6f827d;
+}
 
 .item form {
   margin-top: 50px;

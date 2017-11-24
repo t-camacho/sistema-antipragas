@@ -20,4 +20,5 @@ public interface PropostaRepository extends JpaRepository<Proposta, Long> {
     List<Proposta> findByIdGreaterThanAndStatus(Long id, StatusProposta status);
     List<Proposta> findByFuncionarioAndIdGreaterThanAndStatus(Usuario funcionario, Long id, StatusProposta status);
     List<Proposta> findByFuncionarioAndIdGreaterThan(Usuario usuario, Long id);
+    List<Proposta> findByStatus(StatusProposta status);
 }

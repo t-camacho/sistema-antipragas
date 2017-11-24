@@ -20,7 +20,7 @@ import java.util.*;
  * @author Thais Camacho
  */
 
-@Controller
+@RestController
 @RequestMapping("/chat")
 public class ChatController {
 
@@ -88,14 +88,13 @@ public class ChatController {
                     resultado = new ResultadoChat("vazio", horario.toString(), ultimoId, idProposta);
                     return gson.toJson(resultado);
                 }
-
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                 }
 
                 if (!timestamp.equals("0")) {
-                    mensagens = mensagemService.findByHorarioGreaterThanAndStatusAndProposta(h,
+                    mensagens = mensagemService.findByHorarioGreaterThanEqualAndStatusAndProposta(h,
                             StatusMensagem.STATUS_MENSAGEM_NAO_LIDA, propostaService.findById(Long.parseLong(idProposta)));
                 }
                 tempoGasto++;

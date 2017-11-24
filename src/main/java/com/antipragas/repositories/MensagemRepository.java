@@ -16,4 +16,5 @@ public interface MensagemRepository extends JpaRepository<Mensagem, Long> {
     List<Mensagem> findByProposta(Proposta proposta);
     List<Mensagem> findByStatusAndProposta(StatusMensagem status, Proposta proposta);
     List<Mensagem> findByHorarioGreaterThanAndStatusAndProposta(Timestamp horario, StatusMensagem status, Proposta proposta);
+    List<Mensagem> findByHorarioGreaterThanEqualAndStatusAndProposta(Timestamp horario, StatusMensagem status, Proposta proposta);
 }

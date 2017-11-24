@@ -1,0 +1,29 @@
+/*******************
+    HEADER
+ ******************/
+.titulo {
+    text-align: center;
+}
+/*******************
+    NAV
+ ******************/
+nav {
+    margin-bottom: 10px;
+}
+/*******************
+    FORM
+ ******************/
+.botoes-acao {
+    float: right;
+    margin: 0 5px 5px 5px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
+    text-decoration: none;
+}

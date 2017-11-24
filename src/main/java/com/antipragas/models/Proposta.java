@@ -52,6 +52,7 @@ public class Proposta {
     private Endereco endereco;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @Expose
     @JoinTable(name = "praga_proposta", joinColumns = @JoinColumn(name = "proposta_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "praga_id", referencedColumnName = "id"))
     private Set<Praga> pragas;
 

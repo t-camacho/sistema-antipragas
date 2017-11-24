@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var ultimoId = 0;
     var selecionado = 'todas';
-
+    var desativaScroll = false;
     //inicia com o filtro todas
     $('.categoria_lista .categoria_item[category="todas"]').addClass('selecionada');
 
@@ -15,8 +15,10 @@ $(document).ready(function () {
                 return 2;
             case 'deliberada':
                 return 3;
+            case 'aberta':
+                return 4;
             default://todas
-                return 5;
+                return 6;
         }
     }
 
@@ -39,9 +41,10 @@ $(document).ready(function () {
             data: {inicio: inicio, qtd: qtd, categoria: getCategoryInteger(category)},
             success: function (resultado) {
                 var propostas = JSON.parse(resultado);
-                var status, btn, tipo;
+                var status, btn, tipo, pragas = "";
                 ultimoId = propostas.ultimoId;
                 $.each(propostas.dados, function (i, proposta) {
+                    pragas = "";
                     switch (proposta.status){
                         case 'STATUS_PROPOSTA_PENDENTE':
                             status = 'pendente';
@@ -55,8 +58,23 @@ $(document).ready(function () {
                         case 'STATUS_PROPOSTA_DELIBERADA':
                             status = 'deliberada';
                             break;
+                        case 'STATUS_PROPOSTA_EM_ABERTO':
+                            status = 'aberta';
+                            break;
                     }
-                    if(proposta.funcionario === undefined){
+                    var v = 0;
+                    $.each(proposta.pragas, function (i, praga) {
+                        if((v+1) < proposta.pragas.length){
+                            pragas += (praga.nome + ", ");
+                        }else{
+                            pragas += (praga.nome);
+                        }
+                        v++;
+                    });
+                    if(pragas == ""){
+                        pragas = "Não definido";
+                    }
+                    if(proposta.funcionario === undefined || status == 'cancelada' || status == 'deliberada'){
                         btn = '<button class="btn-detalhes bloqueada" type="submit" disabled="true">Detalhes</button>\n';
                     }else{
                         btn = '<button class="btn-detalhes" type="submit" >Detalhes</button>\n';
@@ -70,12 +88,14 @@ $(document).ready(function () {
                         '<div class="item" category="'+ status +'">' +
                         '   <div class="title-item" >' +
                         '      <span class="status '+ status+'"></span>' +
-                        '      <p>Orçamento: 0,00</p>' +
+                        '      <p>Orçamento: R$ '+proposta.orcamento+'</p>' +
                         '   </div>' +
                         '   <p class="subtitulo">Endereço de Realização</p>' +
                         '   <p class="informacao">'+ proposta.endereco.rua +' '+ proposta.endereco.numero +' '+ proposta.endereco.bairro +' - '+ proposta.endereco.cidade +'/'+ proposta.endereco.uf +'</p>\n' +
                         '   <p class="subtitulo">Tipo</p>' +
                         '   <p class="informacao">'+ tipo +'</p>' +
+                        '   <p class="subtitulo">Praga(s)</p>' +
+                        '   <p class="informacao">'+ pragas +'</p>' +
                         '   <p class="subtitulo">Descrição</p>' +
                         '   <p class="informacao">'+ proposta.descricao +'</p>' +
                         '   <form method="get" action="/proposta/negociacao">' +
@@ -86,6 +106,7 @@ $(document).ready(function () {
                     );
                 });
                 semProposta();
+                desativaScroll = false;
             },
             error: function () {
                 alert("Ocorreu um erro no carregamento. Tente novamente.");
@@ -96,8 +117,7 @@ $(document).ready(function () {
     //carregamento por demanda (rolagem do scroll)
     $(window).scroll(function() {
         if($(window).scrollTop() + $(window).height() == $(document).height()) {
-            if(selecionado === 'todas'){
-                var item = $('.item');
+            if(!desativaScroll){
                 carregar(ultimoId,6, selecionado);
             }
         }
@@ -105,6 +125,7 @@ $(document).ready(function () {
 
     //atualiza o filtro quando clicado em um item da categoria
     $('.categoria_item').click(function (evento) {
+        desativaScroll = true;
         evento.preventDefault();
         selecionado = $(this).attr('category');
         ultimoId = 0;

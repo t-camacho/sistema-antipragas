@@ -76,4 +76,9 @@ public class PropostaServiceImple implements PropostaService {
     public List<Proposta> findByFuncionarioAndIdGreaterThan(Usuario usuario, Long id) {
         return propostaRepository.findByFuncionarioAndIdGreaterThan(usuario, id);
     }
+
+    @Override
+    public List<Proposta> findByStatus(StatusProposta status) {
+        return propostaRepository.findByStatus(status);
+    }
 }

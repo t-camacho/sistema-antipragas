@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="">
+<head>
+    <title>Antipragas - Editar Pré-Serviço</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" th:href="@{/../css/style_pre_servico.css}" />
+</head>
+<body>
+<!-- PÁGINA -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary navbar-full " id="nav-main">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="javascript:history.back()" id="item-menu">Voltar</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="content-wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="conteudo-servico col-12 col-md-2"></div>
+            <div class="conteudo-servico col-12 col-md-8">
+                <div class="card mb-3">
+                    <div class="card-header titulo" th:inline="text">
+                        <i class="fa fa-pencil" aria-hidden="true"></i> Editar Servico [[${servico.id}]]
+                    </div>
+                    <form method="post" th:action="@{/proposta/cpreservico}" >
+                        <div class="card-body" th:inline="text">
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="exampleInputOrcamento"><span style="font-weight: bold" >Orçamento</span></label>
+                                            <input type="number" step="any" class="form-control" th:value="${servico.orcamento}" id="exampleInputOrcamento" aria-describedby="emailHelp" placeholder="0.0" name="orcamento" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="exampleSelect1"><span style="font-weight: bold">Funcionário Técnico</span></label>
+                                            <select class="form-control" id="exampleSelect1" name="funcionario">
+                                                <option th:each="funcionarioTecnico : ${funcionariosTecnicos}" th:value="${funcionarioTecnico.id}" th:inline="text">[[${funcionarioTecnico.nome}]]</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group col-6">
+                                        <label for="example-date-input" class="col-12 col-form-label"><span style="font-weight: bold">Dia</span></label>
+                                        <div class="col-12">
+                                            <input class="form-control" type="date" value="2017-08-19" id="example-date-input" name="data" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-6">
+                                        <label for="example-time-input" class="col-12 col-form-label"><span style="font-weight: bold">Horário</span></label>
+                                        <div class="col-12">
+                                            <input class="form-control" type="time" value="13:45:00" id="example-time-input" name="horario" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleTextarea"><span style="font-weight: bold" >Descrição</span></label>
+                                    <textarea class="form-control" id="exampleTextarea" th:text="${servico.descricao}" name="descricao" rows="3"></textarea>
+                                    <small id="emailHelp" class="form-text text-muted">Apenas 255 caracteres são permitidos.</small>
+                                </div>
+                        </div>
+                        <input type="hidden" name="id" th:value="${servico.id}" />
+                        <div class="card-footer small text-muted">
+                            <a href="javascript:history.back()" ><button type="button" class="btn btn-danger botoes-acao">Cancelar</button></a>
+                            <button type="submit" class="btn btn-success botoes-acao">Confirmar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MENU -->
+<script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
+<script th:src="@{../js/menu/main.js}"></script>
+<script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
+<script th:src="@{../js/menu/modernizr.js}"></script>
+
+</body>
+</html>

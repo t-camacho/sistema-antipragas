@@ -7,6 +7,7 @@ package com.antipragas.models;
 import com.antipragas.models.enums.StatusServico;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -44,8 +45,7 @@ public class Servico {
     private FuncionarioTecnico funcionarioTecnico;
 
     @Column(name = "data_horario")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataHorario;
+    private Timestamp dataHorario;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -55,7 +55,10 @@ public class Servico {
     )
     private Set<Praga> pragas;
 
-    public Servico(Proposta proposta, Usuario cliente, String descricao, StatusServico status, Endereco endereco, Set<Praga> pragas) {
+    public Servico() {
+    }
+
+    public Servico(Proposta proposta, Usuario cliente, String descricao, StatusServico status, Endereco endereco, Set<Praga> pragas, double orcamento) {
         this.proposta = proposta;
         this.cliente = cliente;
         this.orcamento = orcamento;
@@ -64,6 +67,17 @@ public class Servico {
         this.endereco = endereco;
         this.pragas = pragas;
     }
+
+    public Servico(Proposta proposta, Usuario cliente, String descricao, StatusServico status, Endereco endereco, double orcamento) {
+        this.proposta = proposta;
+        this.cliente = cliente;
+        this.orcamento = orcamento;
+        this.descricao = descricao;
+        this.status = status;
+        this.endereco = endereco;
+    }
+
+
 
     public Long getId() {
         return id;
@@ -129,11 +143,11 @@ public class Servico {
         this.funcionarioTecnico = funcionarioTecnico;
     }
 
-    public Date getDataHorario() {
+    public Timestamp getDataHorario() {
         return dataHorario;
     }
 
-    public void setDataHorario(Date dataHorario) {
+    public void setDataHorario(Timestamp dataHorario) {
         this.dataHorario = dataHorario;
     }
 

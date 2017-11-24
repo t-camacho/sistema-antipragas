@@ -1,6 +1,6 @@
 jQuery(function(){
     var usuarioOnline = jQuery(".status").attr('id');
-    var propostaNeg = jQuery('#id_proposta').val();
+    var propostaNeg = jQuery('.id_proposta').val();
 
     //minimiza janela
     jQuery('body').on('click', '.cabecalho_janela', function(){
@@ -12,7 +12,7 @@ jQuery(function(){
     jQuery('body').on('keyup', '.msg', function(evento){
         if(evento.which == 13){
            var texto = jQuery(this).val();
-           var id_proposta = jQuery('#id_proposta').val();
+           var id_proposta = jQuery('.id_proposta').val();
            var id = jQuery('.msg').attr('id');
            jQuery.ajax({
                url: 'http://localhost:8080/chat/enviar',
@@ -85,7 +85,7 @@ jQuery(function(){
         })
     }
     //carrega o histórico da conversa quando a pagina negociação é solicitada
-    retorna_historico(propostaNeg);
+    //retorna_historico(propostaNeg);
     //inicia longpolling
-    verifica(0,0,propostaNeg);
+    verifica("2016-11-24 10:02:54",0,propostaNeg);
 });

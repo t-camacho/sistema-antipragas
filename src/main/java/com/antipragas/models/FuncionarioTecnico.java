@@ -12,6 +12,13 @@ public class FuncionarioTecnico {
     @Column(length = 60)
     private String nome;
 
+    public FuncionarioTecnico() {
+    }
+
+    public FuncionarioTecnico(String nome) {
+        this.nome = nome;
+    }
+
     public Long getId() {
         return id;
     }
