@@ -105,8 +105,7 @@ public class PragaControllerTest {
         assertThat(this.pragaServiceMock).isNotNull();
         mockMvc.perform(post("/praga/adicionar")
                 .param("nome", "Aranha"))
-                .andExpect(view().name("redirect:/praga/visualizar"))
-                .andExpect(model().attribute("ok", "add"))
+                .andExpect(redirectedUrl("/praga/visualizar?sucesso"))
                 .andDo(print());
     }
 
@@ -116,8 +115,7 @@ public class PragaControllerTest {
         when(pragaServiceMock.findById((long)1)).thenReturn(praga1);
         mockMvc.perform(post("/praga/deletar")
                 .param("id", "ab"))
-                .andExpect(redirectedUrl("/praga/visualizar?error_excluir=deletar"))
-                .andExpect(model().attribute("error_excluir", "deletar"))
+                .andExpect(redirectedUrl("/praga/visualizar?error_excluir"))
                 .andDo(print());
     }
 
@@ -127,8 +125,7 @@ public class PragaControllerTest {
         when(pragaServiceMock.findById((long)1)).thenReturn(praga1);
         mockMvc.perform(post("/praga/deletar")
                 .param("id", "1"))
-                .andExpect(redirectedUrl("/praga/visualizar?ok=deletar"))
-                .andExpect(model().attribute("ok", "deletar"))
+                .andExpect(redirectedUrl("/praga/visualizar?sucesso"))
                 .andDo(print());
     }
 
@@ -139,8 +136,7 @@ public class PragaControllerTest {
         mockMvc.perform(post("/praga/alterar")
                 .param("idAltPraga", "1")
                 .param("nomePraga", "Rato"))
-                .andExpect(redirectedUrl("/praga/visualizar?ok=alterar"))
-                .andExpect(model().attribute("ok", "alterar"))
+                .andExpect(redirectedUrl("/praga/visualizar?sucesso"))
                 .andDo(print());
     }
 
@@ -151,8 +147,7 @@ public class PragaControllerTest {
         mockMvc.perform(post("/praga/alterar")
                 .param("idAltPraga", "ab")
                 .param("nomePraga", "Rato"))
-                .andExpect(redirectedUrl("/praga/visualizar?error=alterar"))
-                .andExpect(model().attribute("error", "alterar"))
+                .andExpect(redirectedUrl("/praga/visualizar?error"))
                 .andDo(print());
     }
 }

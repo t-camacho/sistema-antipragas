@@ -20,7 +20,7 @@ import java.util.Set;
  * @author Thais Camacho
  */
 
-@RestController
+@Controller
 @RequestMapping("/praga")
 public class PragaController {
 
@@ -36,43 +36,37 @@ public class PragaController {
     }
 
     @RequestMapping(value = "/adicionar", method = RequestMethod.POST)
-    public ModelAndView adicionarPraga(@RequestParam String nome){
-        String resp = "ok";
-
+    public String adicionarPraga(@RequestParam String nome){
         try {
             Praga praga = new Praga(nome);
             pragaService.create(praga);
         }catch (Exception e){
-            resp = "error";
+            return "redirect:/praga/visualizar?error";
         }
 
-        return new ModelAndView("redirect:/praga/visualizar", resp, "add");
+        return "redirect:/praga/visualizar?sucesso";
     }
 
     @RequestMapping(value = "/deletar", method = RequestMethod.POST)
-    public  ModelAndView deletarPraga(@RequestParam String id){
-        String resp = "ok";
+    public String deletarPraga(@RequestParam String id){
         try {
             pragaService.deleteById(Long.parseLong(id));
         }catch (Exception e){
-            resp = "error_excluir";
+            return "redirect:/praga/visualizar?error_excluir";
         }
 
-        return new ModelAndView("redirect:/praga/visualizar", resp, "deletar");
+        return "redirect:/praga/visualizar?sucesso";
     }
 
     @RequestMapping(value = "/alterar", method = RequestMethod.POST)
-    public ModelAndView alterarPraga(@RequestParam String idAltPraga, @RequestParam String nomePraga){
-        String resp = "ok";
-
+    public String alterarPraga(@RequestParam String idAltPraga, @RequestParam String nomePraga){
         try{
             Praga praga = pragaService.findById(Long.parseLong(idAltPraga));
             praga.setNome(nomePraga);
             pragaService.edit(praga);
         }catch (Exception e){
-            resp = "error";
+            return "redirect:/praga/visualizar?error";
         }
-
-        return new ModelAndView("redirect:/praga/visualizar", resp, "alterar");
+        return "redirect:/praga/visualizar?sucesso";
     }
 }

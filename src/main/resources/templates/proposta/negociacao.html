@@ -29,7 +29,7 @@
             <div sec:authorize="hasAuthority('NIVEL_CLIENTE')" class="conteudo-servico col-12 col-md-4">
                 <div class="card mb-3">
                     <div class="card-header" th:inline="text" >
-                        Proposta
+                        Proposta [[${proposta.id}]]
                     </div>
                     <input type="hidden" th:value="${proposta.id}" class="id_proposta" />
                     <div class="card-body">
@@ -81,7 +81,6 @@
                     <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                 </div>
                 <div class="row">
-                    <!--<div class="col-1"></div>-->
                     <form class="col-12" method="post" th:action="@{/proposta/aceitarc}">
                         <div class="col-12">
                             <input type="hidden" th:value="${proposta.id}" name="id" />
@@ -97,7 +96,6 @@
                         </div>
                     </form>
                 </div>
-                <!--<div class="col-1"></div>-->
             </div>
 
             <div sec:authorize="hasAuthority('NIVEL_FUNCIONARIO')" class="conteudo-servico col-12 col-md-4">
@@ -290,10 +288,47 @@
     </div>
 </aside>
 
+<!-- MODALS -->
+<div class="modal fade" id="modal_alterada" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel1">Alteração com Sucesso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Atributo(s) da proposta alterado(s) com sucesso.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_error" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">Alteração Falhou</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Não foi possível realizar a alteração. Por favor, tente novamente.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- JQUERY -->
 <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js}"></script>
-<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
-
 <!-- SCRIPT CHAT -->
 <script th:src="@{../../js/chat/chat.js}"></script>
 <!-- MENU -->
@@ -302,5 +337,24 @@
 <script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
 <script th:src="@{../js/menu/modernizr.js}"></script>
 
+<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
+
+<!--MODAL-->
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js}" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js}" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<!-- SCRIPTS -->
+<script th:if="${param.alterada}" >
+    $(function(){
+        $('#modal_alterada').modal('show');
+    });
+    $(function () {
+        $('#modal_alterada').modal('toggle');
+    });
+</script>
+<script th:if="${param.error}" >
+    $(function(){
+        $('#modal_error').modal('show');
+    });
+</script>
 </body>
 </html>

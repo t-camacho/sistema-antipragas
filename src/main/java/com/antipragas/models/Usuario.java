@@ -21,6 +21,7 @@ public class Usuario {
     private Long id;
 
     @Column(length = 60)
+    @Expose
     private String nome;
 
     @Column(nullable = false, length = 30, unique = true)

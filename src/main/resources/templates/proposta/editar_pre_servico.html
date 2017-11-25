@@ -9,14 +9,17 @@
 <body>
 <!-- PÁGINA -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary navbar-full " id="nav-main">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler voltar" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="javascript:history.back()" id="item-menu">Voltar</a>
+                <form method="post" th:action="@{/proposta/cpreservico}">
+                    <input type="hidden" name="id" th:value="${servico.id}" />
+                    <button type="submit" class="btn btn-primary" name="acao" value="cancelar" id="item-menu">Voltar</button>
+                </form>
             </li>
         </ul>
     </div>
@@ -33,7 +36,6 @@
                     </div>
                     <form method="post" th:action="@{/proposta/cpreservico}" >
                         <div class="card-body" th:inline="text">
-
                             <div class="row">
                                 <div class="col-6">
                                     <div class="form-group">
@@ -54,7 +56,7 @@
 
                             <div class="row">
                                 <div class="form-group col-6">
-                                    <label for="example-date-input" class="col-12 col-form-label"><span style="font-weight: bold">Dia</span></label>
+                                    <label for="example-date-input" class="col-12 col-form-label"><span style="font-weight: bold">Dia(mm/dd/yyyy)</span></label>
                                     <div class="col-12">
                                         <input class="form-control" type="date" value="2017-08-19" id="example-date-input" name="data" />
                                     </div>
@@ -69,14 +71,14 @@
 
                             <div class="form-group">
                                 <label for="exampleTextarea"><span style="font-weight: bold" >Descrição</span></label>
-                                <textarea class="form-control" id="exampleTextarea" th:text="${servico.descricao}" name="descricao" rows="3"></textarea>
-                                <small id="emailHelp" class="form-text text-muted">Apenas 255 caracteres são permitidos.</small>
+                                <textarea class="form-control" id="exampleTextarea" th:text="${servico.descricao}" name="descricao" th:maxlength="250"></textarea>
+                                <small id="emailHelp" class="form-text text-muted">Apenas 250 caracteres são permitidos.</small>
                             </div>
                         </div>
                         <input type="hidden" name="id" th:value="${servico.id}" />
                         <div class="card-footer small text-muted">
-                            <a href="javascript:history.back()" ><button type="button" class="btn btn-danger botoes-acao">Cancelar</button></a>
-                            <button type="submit" class="btn btn-success botoes-acao">Confirmar</button>
+                            <button name="acao" value="cancelar" type="submit" class="btn btn-danger botoes-acao">Cancelar</button>
+                            <button name="acao" value="confirmar" type="submit" class="btn btn-success botoes-acao">Confirmar</button>
                         </div>
                     </form>
                 </div>

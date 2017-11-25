@@ -48,6 +48,7 @@ $(document).ready(function () {
                         '      <span class="status '+ status+'"></span>' +
                         '      <p>Orçamento: 0,00</p>' +
                         '   </div>' +
+                        '   <p class="informacao" style="text-align: center; font-weight: bold">Proposta '+ proposta.id + " - " + proposta.usuario.nome +'</p>' +
                         '   <p class="subtitulo">Endereço de Realização</p>' +
                         '   <p class="informacao">'+ proposta.endereco.rua +' '+ proposta.endereco.numero +' '+ proposta.endereco.bairro +' - '+ proposta.endereco.cidade +'/'+ proposta.endereco.uf +'</p>\n' +
                         '   <p class="subtitulo">Tipo</p>' +

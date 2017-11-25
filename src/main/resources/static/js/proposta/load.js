@@ -100,8 +100,8 @@ $(document).ready(function () {
                         '   <p class="informacao">'+ proposta.endereco.rua +' '+ proposta.endereco.numero +' '+ proposta.endereco.bairro +' - '+ proposta.endereco.cidade +'/'+ proposta.endereco.uf +'</p>\n' +
                         '   <p class="subtitulo">Tipo</p>' +
                         '   <p class="informacao">'+ tipo +'</p>' +
-                        '   <p class="subtitulo">Praga(s)</p>' +
-                        '   <p class="informacao">'+ pragas +'</p>' +
+                        /*'   <p class="subtitulo">Praga(s)</p>' +
+                        '   <p class="informacao">'+ pragas +'</p>' +*/
                         '   <p class="subtitulo">Descrição</p>' +
                         '   <p class="informacao">'+ proposta.descricao +'</p>' +
                         '   <p class="informacao" style="text-align: center">'+ canceladaPor +'</p>' +

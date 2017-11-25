@@ -48,6 +48,7 @@ public class Proposta {
     private Cancelado canceladoPor;
 
     @ManyToOne
+    @Expose
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
@@ -66,8 +67,8 @@ public class Proposta {
     @Expose
     private Usuario funcionario;
 
-//    @OneToMany(mappedBy = "proposta", cascade = CascadeType.ALL)
-//    private Set<Mensagem> mensagens;
+    @OneToMany(mappedBy = "proposta", cascade = CascadeType.ALL)
+    private Set<Mensagem> mensagens;
 
     public Proposta() {
     }

@@ -27,3 +27,7 @@ a:hover {
     color: white;
     text-decoration: none;
 }
+
+.voltar:hover {
+    background-color: rgba(10, 133, 255, 0);
+}

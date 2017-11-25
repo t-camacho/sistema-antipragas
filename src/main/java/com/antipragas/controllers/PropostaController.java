@@ -143,10 +143,14 @@ public class PropostaController {
     //aceitar prop
     @RequestMapping(value = "/aceitar", method = RequestMethod.GET)
     public String aceitarPropostaEmAberto(@RequestParam String id){
-        Proposta proposta = propostaService.findById(Long.parseLong(id));
-        proposta.setFuncionario(getUsuarioSession());
-        proposta.setStatus(StatusProposta.STATUS_PROPOSTA_PENDENTE);
-        propostaService.edit(proposta);
+        try{
+            Proposta proposta = propostaService.findById(Long.parseLong(id));
+            proposta.setFuncionario(getUsuarioSession());
+            proposta.setStatus(StatusProposta.STATUS_PROPOSTA_PENDENTE);
+            propostaService.edit(proposta);
+        }catch (Exception e){
+            return "redirect:/proposta/abertas?error";
+        }
         return "redirect:/proposta/abertas?aceita";
     }
 
@@ -365,7 +369,7 @@ public class PropostaController {
             }
             i++;
         }
-        if(pragasS.equals("")){
+        if(pragasS.length() == 0){
             pragasS.append("Não definido");
         }
         model.put("proposta", proposta);
@@ -386,34 +390,44 @@ public class PropostaController {
         return new ModelAndView("/proposta/editar_pre_servico", model);
     }
 
+    //confirmar alteração
     @RequestMapping(value = "/cpreservico", method = RequestMethod.POST)
-    public String alterarPreServico(@RequestParam Double orcamento,
-                                    @RequestParam Long funcionario,
-                                    @RequestParam String data,
-                                    @RequestParam String horario,
-                                    @RequestParam String descricao,
-                                    @RequestParam Long id){
-        Timestamp h;
+    public String alterarPreServico(@RequestParam( required=false ) Double orcamento,
+                                    @RequestParam( required=false ) Long funcionario,
+                                    @RequestParam( required=false ) String data,
+                                    @RequestParam( required=false ) String horario,
+                                    @RequestParam( required=false ) String descricao,
+                                    @RequestParam Long id,
+                                    @RequestParam( required=false ) String acao){
         FuncionarioTecnico funcionarioTecnico = funcionarioTecnicoService.findById(funcionario);
         Servico servico = servicoService.findById(id);
-        System.out.println(horario);
-        try{
-            h = Timestamp.valueOf(data+" "+horario+":00");
-        }catch (Exception e){
-            h = Timestamp.valueOf(data+" "+horario);
+        if(acao.equals("confirmar")){
+            try{
+                Timestamp h;
+
+                try{
+                    h = Timestamp.valueOf(data+" "+horario+":00");
+                }catch (Exception e){
+                    h = Timestamp.valueOf(data+" "+horario);
+                }
+                double orcamentoAntigo = servico.getOrcamento();
+                servico.setOrcamento(orcamento);
+                servico.setFuncionarioTecnico(funcionarioTecnico);
+                servico.setDescricao(descricao);
+                servico.setDataHorario(h);
+
+                Proposta p = servico.getProposta();
+                p.setOrcamento(p.getOrcamento()+orcamento-orcamentoAntigo);
+
+                propostaService.edit(p);
+                servicoService.edit(servico);
+
+                return "redirect:/proposta/negociacao?alterada&id="+servico.getProposta().getId();
+            }catch (Exception e){
+                return "redirect:/proposta/negociacao?error";
+            }
+        }else{
+            return "redirect:/proposta/negociacao?id="+servico.getProposta().getId();
         }
-        double orcamentoAntigo = servico.getOrcamento();
-        servico.setOrcamento(orcamento);
-        servico.setFuncionarioTecnico(funcionarioTecnico);
-        servico.setDescricao(descricao);
-        servico.setDataHorario(h);
-
-        Proposta p = servico.getProposta();
-        p.setOrcamento(p.getOrcamento()+orcamento-orcamentoAntigo);
-
-        propostaService.edit(p);
-        servicoService.edit(servico);
-
-        return "redirect:/proposta/abertas";
     }
 }
