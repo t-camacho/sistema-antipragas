@@ -97,6 +97,7 @@ $(document).ready(function () {
                         '      <p>Orçamento: R$ '+proposta.orcamento+'</p>' +
                         '   </div>' +
                         '   <p class="informacao" style="text-align: center; font-weight: bold">Proposta '+ proposta.id +'</p>' +
+                        '   <p class="cliente">' + proposta.usuario.nome + '</p>' +
                         '   <p class="subtitulo">Endereço de Realização</p>' +
                         '   <p class="informacao">'+ proposta.endereco.rua +' '+ proposta.endereco.numero +' '+ proposta.endereco.bairro +' - '+ proposta.endereco.cidade +'/'+ proposta.endereco.uf +'</p>\n' +
                         '   <p class="subtitulo">Tipo</p>' +
@@ -126,7 +127,7 @@ $(document).ready(function () {
     $(window).scroll(function() {
         if($(window).scrollTop() + $(window).height() == $(document).height()) {
             if(!desativaScroll){
-                carregar(ultimoId,6, selecionado);
+                carregar(ultimoId, 0, selecionado);
             }
         }
     });
@@ -140,8 +141,8 @@ $(document).ready(function () {
         $('.categoria_item').removeClass('selecionada');
         $(this).addClass('selecionada');
         $('.todas_propostas').empty();
-        carregar(ultimoId, 6, selecionado);
+        carregar(ultimoId, 0, selecionado);
     });
 
-    carregar(ultimoId, 6, 'todas');
+    carregar(ultimoId, 0, 'todas');
 });
