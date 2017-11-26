@@ -1,6 +1,7 @@
 package com.antipragas.controllers;
 
 import com.antipragas.models.Servico;
+import com.antipragas.models.ServicoPrototype;
 import com.antipragas.models.Usuario;
 import com.antipragas.repositories.ServicoRepository;
 import com.antipragas.repositories.UsuarioRepository;
@@ -110,12 +111,10 @@ public class ClienteController {
     }
 
     public void ordenarServicosPorData(List<Servico> servicos) {
-        Collections.sort(servicos, new Comparator<Servico>() {
-            public int compare(Servico s1, Servico s2) {
-                Date data1 = s1.getDataHorario();
-                Date data2 = s2.getDataHorario();
-                return data1.compareTo(data2);
-            }
+        Collections.sort(servicos, (s1, s2) -> {
+            Date data1 = s1.getDataHorario();
+            Date data2 = s2.getDataHorario();
+            return data1.compareTo(data2);
         });
     }
 /*

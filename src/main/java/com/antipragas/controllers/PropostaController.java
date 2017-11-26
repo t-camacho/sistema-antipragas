@@ -2,6 +2,7 @@ package com.antipragas.controllers;
 
 import com.antipragas.models.*;
 import com.antipragas.models.enums.*;
+import com.antipragas.models.json.PropostaAlteradaJson;
 import com.antipragas.models.json.PropostaJson;
 import com.antipragas.services.*;
 import com.google.gson.Gson;
@@ -46,6 +47,9 @@ public class PropostaController {
     @Autowired
     private ServicoService servicoService;
 
+    @Autowired
+    private ServicoPrototypeService servicoPrototypeService;
+
     private Usuario getUsuarioSession(){
         SecurityContext context = SecurityContextHolder.getContext();
         if(context != null)
@@ -86,52 +90,52 @@ public class PropostaController {
                                     @RequestParam String tipo,
                                     @RequestParam String praga,
                                     @RequestParam String descricao){
-        Usuario usuario = null;
+        Usuario usuario;
         Set<Endereco> enderecos = null;
         Set<Praga> pragas = new HashSet<Praga>();
-        Proposta proposta = new Proposta();
-
-        usuario = getUsuarioSession();
-        if(usuario != null){
-            enderecos = usuario.getEnderecos();
-
-            if(LOGGER.isInfoEnabled()){
-                LOGGER.info(String.format("Nova proposta pelo usuário: [%s]", usuario.getEmail()));
-            }
-        }
-
-        proposta.setQuantidade(Integer.parseInt(qtd));
-        proposta.setTipo(Tipo.valueOf(tipo));
-        proposta.setDescricao(descricao);
-        proposta.setFrequencia(Frequencia.valueOf(freq));
-        proposta.setStatus(StatusProposta.STATUS_PROPOSTA_EM_ABERTO);
-        proposta.setOrcamento(0.0);
-        proposta.setCanceladoPor(Cancelado.CANCELADO_NINGUEM);
-
-        if(!tipo.equals("TIPO_PREVENCAO")){
-            String array_pragas[] = praga.split(",");
-            for(int i = 0; i < array_pragas.length; i++){
-                if(!array_pragas[i].equals("0")){
-                    pragas.add(pragaService.findById(Long.parseLong(array_pragas[i])));
-                }
-            }
-            proposta.setPragas(pragas);
-        }
-
-        for(Endereco end : enderecos){
-            if(end.getId() == Long.parseLong(endereco)){
-                proposta.setEndereco(end);
-            }
-        }
-
-        proposta.setUsuario(usuario);
 
         try{
+            Proposta proposta = new Proposta();
+            usuario = getUsuarioSession();
+            if(LOGGER.isInfoEnabled()){
+                assert usuario != null;
+                LOGGER.info(String.format("Nova proposta pelo usuário: [%s]", usuario.getEmail()));
+            }
+            enderecos = usuario.getEnderecos();
+
+            proposta.setQuantidade(Integer.parseInt(qtd));
+            proposta.setTipo(Tipo.valueOf(tipo));
+            proposta.setDescricao(descricao);
+            proposta.setFrequencia(Frequencia.valueOf(freq));
+            proposta.setStatus(StatusProposta.STATUS_PROPOSTA_EM_ABERTO);
+            proposta.setOrcamento(0.0);
+            proposta.setCanceladoPor(Cancelado.CANCELADO_NINGUEM);
+            proposta.setAlterada(Alterada.ALTERADA_FALSE);
+            if(!tipo.equals("TIPO_PREVENCAO")){
+                String array_pragas[] = praga.split(",");
+                for(int i = 0; i < array_pragas.length; i++){
+                    if(!array_pragas[i].equals("0")){
+                        pragas.add(pragaService.findById(Long.parseLong(array_pragas[i])));
+                    }
+                }
+                proposta.setPragas(pragas);
+            }
+            for(Endereco end : enderecos){
+                if(end.getId() == Long.parseLong(endereco)){
+                    proposta.setEndereco(end);
+                }
+            }
+            System.out.println("aquiii1");
+
+            proposta.setUsuario(usuario);
+            System.out.println("anteste");
             propostaService.create(proposta);
+
+            return "redirect:/usuario/painel?nova_proposta";
         }catch (Exception e){
+            System.out.println(e);
             return "redirect:/usuario/painel?nova_error";
         }
-        return "redirect:/usuario/painel?nova_proposta";
     }
 
     //cliente e funcionario
@@ -317,6 +321,7 @@ public class PropostaController {
         PropostaJson resultado;
         int conta = 0;
         Long ultimoId = inicio;
+
         propostas = selecionarPropostas(usuario, inicio, categoria);
 
         for(Proposta proposta : propostas){
@@ -331,35 +336,9 @@ public class PropostaController {
         return gson.toJson(resultado);
     }
 
-    //cliente e funcionário
-    @RequestMapping(value = "/negociacao", method = RequestMethod.GET)
-    public ModelAndView goNegociacao(@RequestParam String id){
-        int quantidade;
-        Map<String, Object> model = new HashMap<String, Object>();
-        Set<Praga> pragas = new HashSet<Praga>();
-        Proposta proposta = propostaService.findById(Long.parseLong(id));
-        List<Servico> preServicos;
-
-        quantidade = proposta.getQuantidade();
-        preServicos = servicoService.findByProposta(proposta);
-        if(preServicos.isEmpty()){
-            for(Praga praga: proposta.getPragas()){
-                pragas.add(pragaService.findById(praga.getId()));
-            }
-
-            while(quantidade > 0){
-                Servico s;
-                if(pragas.isEmpty()){
-                    s = new Servico(proposta, proposta.getUsuario(), proposta.getDescricao(), StatusServico.PRE_SERVICO, proposta.getEndereco(), 0.0);
-                }else{
-                    s = new Servico(proposta, proposta.getUsuario(), proposta.getDescricao(), StatusServico.PRE_SERVICO, proposta.getEndereco(), pragas, 0.0);
-                }
-                servicoService.create(s);
-                quantidade--;
-            }
-            preServicos = servicoService.findByProposta(proposta);
-        }
+    private StringBuilder preparaPraga(Proposta proposta){
         StringBuilder pragasS = new StringBuilder();
+
         int i = 0;
         for(Praga p : proposta.getPragas()){
             if(i+1 < proposta.getPragas().size()){
@@ -372,9 +351,56 @@ public class PropostaController {
         if(pragasS.length() == 0){
             pragasS.append("Não definido");
         }
+        return pragasS;
+    }
+
+    //cliente e funcionário
+    @RequestMapping(value = "/negociacao", method = RequestMethod.GET)
+    public ModelAndView goNegociacao(@RequestParam String id){
+        int quantidade;
+        Map<String, Object> model = new HashMap<String, Object>();
+        Set<Praga> pragas = new HashSet<Praga>();
+        List<ServicoPrototype> preServicos;
+
+        Proposta proposta = propostaService.findById(Long.parseLong(id));
+        quantidade = proposta.getQuantidade();
+        preServicos = servicoPrototypeService.findByProposta(proposta);
+
+        if(preServicos.isEmpty()){
+            for(Praga praga: proposta.getPragas()){
+                pragas.add(pragaService.findById(praga.getId()));
+            }
+            Servico s;
+            s = new Servico(proposta, proposta.getUsuario(), proposta.getDescricao(), StatusServico.PRE_SERVICO, proposta.getEndereco());
+            while(quantidade > 0){
+                ServicoPrototype servicoN = s.clonar();
+                servicoPrototypeService.create(servicoN);
+                quantidade--;
+            }
+
+            preServicos = servicoPrototypeService.findByProposta(proposta);
+        }
+
+        StringBuilder pragasS = preparaPraga(proposta);
+
+        /*int i = 0;
+        for(Praga p : proposta.getPragas()){
+            if(i+1 < proposta.getPragas().size()){
+                pragasS.append(p.getNome()).append(", ");
+            }else{
+                pragasS.append(p.getNome());
+            }
+            i++;
+        }
+
+        if(pragasS.length() == 0){
+            pragasS.append("Não definido");
+        }*/
+
         model.put("proposta", proposta);
         model.put("preServicos", preServicos);
         model.put("pragas", pragasS);
+
         return new ModelAndView("/proposta/negociacao", model);
     }
 
@@ -387,12 +413,13 @@ public class PropostaController {
 
         model.put("servico", servico);
         model.put("funcionariosTecnicos", funcionariosTecnicos);
+
         return new ModelAndView("/proposta/editar_pre_servico", model);
     }
 
     //confirmar alteração
     @RequestMapping(value = "/cpreservico", method = RequestMethod.POST)
-    public String alterarPreServico(@RequestParam( required=false ) Double orcamento,
+    public String editarPreServico(@RequestParam( required=false ) Double orcamento,
                                     @RequestParam( required=false ) Long funcionario,
                                     @RequestParam( required=false ) String data,
                                     @RequestParam( required=false ) String horario,
@@ -418,6 +445,7 @@ public class PropostaController {
 
                 Proposta p = servico.getProposta();
                 p.setOrcamento(p.getOrcamento()+orcamento-orcamentoAntigo);
+                p.setAlterada(Alterada.ALTERADA_TRUE);
 
                 propostaService.edit(p);
                 servicoService.edit(servico);
@@ -429,5 +457,51 @@ public class PropostaController {
         }else{
             return "redirect:/proposta/negociacao?id="+servico.getProposta().getId();
         }
+    }
+
+    @RequestMapping(value = "/stream", method = RequestMethod.GET)
+    private @ResponseBody String stream(@RequestParam(value = "idProposta", required=true)
+                                                    Long idProposta){
+        PropostaAlteradaJson resultado;
+        List<ServicoPrototype> servicos;
+        int tempoGasto = 0;
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        Proposta proposta = propostaService.findById(idProposta);
+
+        if(getUsuarioSession().getNivel() != Nivel.NIVEL_CLIENTE){
+
+            resultado = new PropostaAlteradaJson("stop");
+            return gson.toJson(resultado);
+        }
+
+        if(proposta.getAlterada() == Alterada.ALTERADA_TRUE){
+            servicos = servicoPrototypeService.findByProposta(proposta);
+            resultado = new PropostaAlteradaJson("alterada", proposta, servicos);
+            proposta.setAlterada(Alterada.ALTERADA_FALSE);
+            propostaService.edit(proposta);
+            return gson.toJson(resultado);
+        }else{
+            Proposta p = propostaService.findById(idProposta);
+            while(p.getAlterada() == Alterada.ALTERADA_FALSE){
+                if(tempoGasto >= 5){
+                    resultado = new PropostaAlteradaJson("nao_alterada");
+                    return gson.toJson(resultado);
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                }
+                System.out.println(proposta.getAlterada());
+                System.out.println(tempoGasto);
+                tempoGasto++;
+                p = propostaService.findById(idProposta);
+            }
+        }
+
+        servicos = servicoPrototypeService.findByProposta(proposta);
+        resultado = new PropostaAlteradaJson("alterada", proposta, servicos);
+        proposta.setAlterada(Alterada.ALTERADA_FALSE);
+        propostaService.edit(proposta);
+        return gson.toJson(resultado);
     }
 }

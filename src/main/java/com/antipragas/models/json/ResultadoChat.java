@@ -1,5 +1,7 @@
-package com.antipragas.models;
+package com.antipragas.models.json;
 
+import com.antipragas.models.Mensagem;
+import com.antipragas.models.Proposta;
 import com.google.gson.annotations.Expose;
 
 import java.util.List;

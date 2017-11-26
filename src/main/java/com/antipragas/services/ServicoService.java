@@ -2,6 +2,7 @@ package com.antipragas.services;
 
 import com.antipragas.models.Proposta;
 import com.antipragas.models.Servico;
+import com.antipragas.models.ServicoPrototype;
 import com.antipragas.models.Usuario;
 import com.antipragas.models.enums.StatusServico;
 

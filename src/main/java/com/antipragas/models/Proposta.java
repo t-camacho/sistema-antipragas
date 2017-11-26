@@ -4,10 +4,7 @@ package com.antipragas.models;
  * @author Thais Camacho
  */
 
-import com.antipragas.models.enums.Cancelado;
-import com.antipragas.models.enums.Frequencia;
-import com.antipragas.models.enums.StatusProposta;
-import com.antipragas.models.enums.Tipo;
+import com.antipragas.models.enums.*;
 import com.google.gson.annotations.Expose;
 
 import javax.persistence.*;
@@ -23,6 +20,9 @@ public class Proposta {
 
     @Column
     private Integer quantidade;
+
+    @Enumerated(EnumType.STRING)
+    private Alterada alterada;
 
     @Column
     @Expose
@@ -97,6 +97,22 @@ public class Proposta {
         this.endereco = endereco;
         this.pragas = pragas;
         this.funcionario = funcionario;
+    }
+
+    public Proposta(Integer quantidade, Alterada alterada, Double orcamento, String descricao, Tipo tipo, Frequencia frequencia, StatusProposta status, Cancelado canceladoPor, Usuario usuario, Endereco endereco, Set<Praga> pragas, Usuario funcionario, Set<Mensagem> mensagens) {
+        this.quantidade = quantidade;
+        this.alterada = alterada;
+        this.orcamento = orcamento;
+        this.descricao = descricao;
+        this.tipo = tipo;
+        this.frequencia = frequencia;
+        this.status = status;
+        this.canceladoPor = canceladoPor;
+        this.usuario = usuario;
+        this.endereco = endereco;
+        this.pragas = pragas;
+        this.funcionario = funcionario;
+        this.mensagens = mensagens;
     }
 
     public Proposta(Frequencia frequencia) {
@@ -197,5 +213,13 @@ public class Proposta {
 
     public void setCanceladoPor(Cancelado canceladoPor) {
         this.canceladoPor = canceladoPor;
+    }
+
+    public Alterada getAlterada() {
+        return alterada;
+    }
+
+    public void setAlterada(Alterada alterada) {
+        this.alterada = alterada;
     }
 }

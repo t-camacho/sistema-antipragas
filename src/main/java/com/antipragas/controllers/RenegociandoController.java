@@ -2,6 +2,7 @@ package com.antipragas.controllers;
 
 
 import com.antipragas.models.Servico;
+import com.antipragas.models.ServicoPrototype;
 import com.antipragas.models.enums.StatusServico;
 import com.antipragas.services.ServicoServiceImple;
 import org.springframework.beans.factory.annotation.Autowired;

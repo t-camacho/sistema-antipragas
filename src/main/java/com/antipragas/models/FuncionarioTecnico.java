@@ -1,5 +1,7 @@
 package com.antipragas.models;
 
+import com.google.gson.annotations.Expose;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +12,7 @@ public class FuncionarioTecnico {
     private Long id;
 
     @Column(length = 60)
+    @Expose
     private String nome;
 
     public FuncionarioTecnico() {

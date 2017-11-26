@@ -43,6 +43,7 @@ $(document).ready(function () {
                 var propostas = JSON.parse(resultado);
                 var status, btn, tipo, pragas = "", canceladaPor = "";
                 ultimoId = propostas.ultimoId;
+                propostas.dados.reverse();
                 $.each(propostas.dados, function (i, proposta) {
                     pragas = "";canceladaPor = "";
                     switch (proposta.status){

@@ -78,7 +78,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                    <div class="card-footer small text-muted">Empresa Antipragas</div>
                 </div>
                 <div class="row">
                     <form class="col-12" method="post" th:action="@{/proposta/aceitarc}">
@@ -101,7 +101,7 @@
             <div sec:authorize="hasAuthority('NIVEL_FUNCIONARIO')" class="conteudo-servico col-12 col-md-4">
                 <div class="card mb-3">
                     <div class="card-header" th:inline="text" >
-                        Proposta
+                        Proposta [[${proposta.id}]]
                     </div>
                     <input type="hidden" th:value="${proposta.id}" class="id_proposta" />
                     <div class="card-body">
@@ -150,7 +150,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                    <div class="card-footer small text-muted">Empresa Antipragas</div>
                 </div>
 
                 <div class="row">
@@ -181,31 +181,31 @@
                     <div class="card-header" th:inline="text">
                         <div class="row">
                             <div class="col-4">Serviço [[${servico.id}]]</div>
-                            <div class="col-8 orcamento" th:if="${servico.orcamento} == null" th:inline="text">Orçamento: NÃO INFORMADO</div>
-                            <div class="col-8 orcamento" th:if="${servico.orcamento} != null" th:inline="text">Orçamento: [[${servico.orcamento}]]</div>
+                            <div th:class="'orcamento'+ ${servico.id} + ' col-8'" th:if="${servico.orcamento} == null" th:inline="text">Orçamento: NÃO INFORMADO</div>
+                            <div th:class="'orcamento'+ ${servico.id} + ' col-8'" th:if="${servico.orcamento} != null" th:inline="text">Orçamento: R$ [[${servico.orcamento}]]</div>
                         </div>
                     </div>
                     <div class="card-body" th:inline="text">
-                        <div th:if="${servico.dataHorario} != null">
+                        <div th:if="${servico.dataHorario} != null" th:class="'data' + ${servico.id}">
                             <span style="font-weight: bold" >Data e Horário: </span><span th:text="${#dates.format(servico.dataHorario, 'dd/MM/YYYY HH:mm')}"></span> <br />
                         </div>
-                        <div th:if="${servico.dataHorario} == null">
+                        <div th:if="${servico.dataHorario} == null" th:class="'data' + ${servico.id}">
                             <span style="font-weight: bold" >Data: </span>NÃO INFORMADO<br />
                         </div>
-                        <div th:if="${servico.funcionarioTecnico} == null">
+                        <div th:if="${servico.funcionarioTecnico} == null" th:class="'funcionario'+${servico.id}">
                             <span style="font-weight: bold">Funcionário Técnico: </span> NÃO INFORMADO <br />
                         </div>
-                        <div th:if="${servico.funcionarioTecnico} != null">
+                        <div th:if="${servico.funcionarioTecnico} != null" th:class="'funcionario'+${servico.id}">
                             <span style="font-weight: bold">Funcionário Técnico: </span> [[${servico.funcionarioTecnico.nome}]]<br />
                         </div>
                         <div>
                             <span style="font-weight: bold">Endereço: </span> [[${servico.endereco.rua}]] [[${servico.endereco.numero}]] [[${servico.endereco.bairro}]] - [[${servico.endereco.cidade}]]/[[${servico.endereco.uf}]]<br />
                         </div>
-                        <div>
+                        <div th:class="'descricao'+${servico.id}">
                             <span style="font-weight: bold">Descricão: </span>[[${servico.descricao}]]<br />
                         </div>
                     </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+                    <div class="card-footer small text-muted">Empresa Antipragas</div>
                 </div>
             </div>
             <div sec:authorize="hasAuthority('NIVEL_FUNCIONARIO')" class="conteudo-servico col-12 col-md-8">
@@ -331,6 +331,8 @@
 <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js}"></script>
 <!-- SCRIPT CHAT -->
 <script th:src="@{../../js/chat/chat.js}"></script>
+<script th:src="@{../../js/proposta/verifica_alteracao.js}"></script>
+
 <!-- MENU -->
 <script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
 <script th:src="@{../js/menu/main.js}"></script>

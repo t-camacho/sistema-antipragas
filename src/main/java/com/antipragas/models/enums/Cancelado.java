@@ -6,7 +6,7 @@ package com.antipragas.models.enums;
 public enum Cancelado {
     CANCELADO_PELO_CLIENTE("Cancelado pelo cliente"),
     CANCELADO_PELA_EMPRESA("Cancelado pela empresa"),
-    CANCELADO_NINGUEM("Proposta nãoainda cancelada");
+    CANCELADO_NINGUEM("Proposta não cancelada");
 
     String cancelado;
 

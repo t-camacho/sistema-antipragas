@@ -2,7 +2,7 @@ package com.antipragas.controllers;
 
 import com.antipragas.models.Mensagem;
 import com.antipragas.models.Proposta;
-import com.antipragas.models.ResultadoChat;
+import com.antipragas.models.json.ResultadoChat;
 import com.antipragas.models.enums.StatusMensagem;
 import com.antipragas.services.MensagemService;
 import com.antipragas.services.PropostaService;
@@ -10,7 +10,6 @@ import com.antipragas.services.UsuarioService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
@@ -38,7 +37,6 @@ public class ChatController {
                                              @RequestParam(value = "id", required=true) String id,
                                              @RequestParam(value = "id_proposta", required=true) String id_proposta/*,
                                              @RequestParam(value = "data", required=true) String data*/){
-        System.out.println("olar");
         Calendar calendar = Calendar.getInstance();
         java.sql.Timestamp horario = new java.sql.Timestamp(calendar.getTime().getTime());
 
@@ -82,7 +80,7 @@ public class ChatController {
 
         if(mensagens.size() <= 0){
             while(mensagens.size() <= 0) {
-                System.out.println(tempoGasto);
+                //System.out.println(tempoGasto);
                 if(tempoGasto >= 30){
                     horario = new Timestamp(calendar.getTime().getTime());
                     resultado = new ResultadoChat("vazio", horario.toString(), ultimoId, idProposta);
