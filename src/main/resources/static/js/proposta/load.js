@@ -127,7 +127,7 @@ $(document).ready(function () {
     $(window).scroll(function() {
         if($(window).scrollTop() + $(window).height() == $(document).height()) {
             if(!desativaScroll){
-                carregar(ultimoId, 0, selecionado);
+                carregar(ultimoId, 6, selecionado);
             }
         }
     });
@@ -141,8 +141,8 @@ $(document).ready(function () {
         $('.categoria_item').removeClass('selecionada');
         $(this).addClass('selecionada');
         $('.todas_propostas').empty();
-        carregar(ultimoId, 0, selecionado);
+        carregar(ultimoId, 6, selecionado);
     });
 
-    carregar(ultimoId, 0, 'todas');
+    carregar(ultimoId, 6, 'todas');
 });

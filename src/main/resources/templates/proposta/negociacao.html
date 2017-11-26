@@ -181,8 +181,8 @@
                     <div class="card-header" th:inline="text">
                         <div class="row">
                             <div class="col-4">Serviço [[${servico.id}]]</div>
-                            <div th:class="'orcamento'+ ${servico.id} + ' col-8'" th:if="${servico.orcamento} == null" th:inline="text">Orçamento: NÃO INFORMADO</div>
-                            <div th:class="'orcamento'+ ${servico.id} + ' col-8'" th:if="${servico.orcamento} != null" th:inline="text">Orçamento: R$ [[${servico.orcamento}]]</div>
+                            <div style="text-align: right" th:class="'orcamento'+ ${servico.id} + ' col-8'" th:if="${servico.orcamento} == null" th:inline="text">Orçamento: NÃO INFORMADO</div>
+                            <div style="text-align: right" th:class="'orcamento'+ ${servico.id} + ' col-8'" th:if="${servico.orcamento} != null" th:inline="text">Orçamento: R$ [[${servico.orcamento}]]</div>
                         </div>
                     </div>
                     <div class="card-body" th:inline="text">
