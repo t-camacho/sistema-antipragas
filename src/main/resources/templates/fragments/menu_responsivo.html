@@ -81,11 +81,18 @@
                 <a href="#0">Clientes</a>
             </li>
             </li>-->
-            <li sec:authorize="hasAuthority('NIVEL_FUNCIONARIO')" class="has-children overview">
+            <li sec:authorize="hasAuthority('NIVEL_FUNCIONARIO') or hasAuthority('NIVEL_ADMINISTRADOR')" class="has-children overview">
                 <a href="#">Outros</a>
                 <ul>
                     <!--<li><a href="#">Funcionário Técnico</a></li> -->
                     <li><a th:href="@{/praga/visualizar}">Pragas</a></li>
+                    <li class="has-children overview">
+                        <a href="#1">Fornecedores</a>
+                        <ui>
+                            <li><a th:href="@{/fornecedor/listar}">Listar</a></li>
+                            <li><a th:href="@{/fornecedor/cadastrar}">Cadastrar</a></li>
+                        </ui>
+                    </li>
                 </ul>
             </li>
         </ul>
