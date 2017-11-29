@@ -145,7 +145,6 @@ $(function(){
                 $('.error-csenha').html('<p class="error-csenha"></p>');
             }
         }else{
-
             $('.error-senha').html('<p class="error-senha"></p>');
 
             if(!validaEmail(array[6])){

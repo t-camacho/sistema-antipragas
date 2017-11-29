@@ -228,7 +228,7 @@ public class PropostaController {
         return gson.toJson(propostas);
     }
 
-    //cliente e funcionario
+    //cliente, funcionario e administrador
     private List<Proposta> selecionarPropostas(Usuario usuario, Long inicio, int categoria){
         List<Proposta> propostas;
         if(usuario.getNivel() == Nivel.NIVEL_CLIENTE){
@@ -313,7 +313,9 @@ public class PropostaController {
     public @ResponseBody
     String carregarDemanda(@RequestParam(value = "inicio", required=true) Long inicio,
                            @RequestParam(value = "qtd", required=true) Long qtd,
-                           @RequestParam(value = "categoria", required=true) Integer categoria){
+                           @RequestParam(value = "categoria", required=true) Integer categoria,
+                           @RequestParam(value = "cpf", required = false) String searchCPF,
+                           @RequestParam(value = "funcionario", required = false) String searchFuncionario){
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         Usuario usuario = getUsuarioSession();
         List<Proposta> propostasPaginada = new ArrayList<Proposta>();
@@ -322,12 +324,17 @@ public class PropostaController {
         int conta = 0;
         Long ultimoId = inicio;
 
-        propostas = selecionarPropostas(usuario, inicio, categoria);
+        Filtro filtro = new Filtro(searchCPF, searchFuncionario);
+        LOGGER.info("FILTRO: " + searchCPF + " | " + searchFuncionario);
+        propostas = filtro.aplicarFiltro(selecionarPropostas(usuario, inicio, categoria));
 
         for(Proposta proposta : propostas){
             if(conta >= qtd){
                 break;
             }
+//            for(Proposta p : propostas){
+                LOGGER.info("PROPOSTA CARREGADA: " + proposta.getId());
+//            }
             propostasPaginada.add(proposta);
             ultimoId = proposta.getId();
             conta++;

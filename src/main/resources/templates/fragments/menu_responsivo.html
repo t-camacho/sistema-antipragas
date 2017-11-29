@@ -44,14 +44,6 @@
                     <!--<li><a href="#0">Finalizados</a></li>-->
                 </ul>
             </li>
-            <li sec:authorize="hasAuthority('NIVEL_ADMINISTRADOR')" class="has-children overview">
-                <a href="#0">Proposta</a>
-                <ul>
-                    <li><a th:href="@{/proposta/visualizar}">Minhas</a></li>
-                    <li><a th:href="@{/proposta/abertas}">Em Aberto</a></li>
-                    <!--<li><a href="#0">Finalizados</a></li>-->
-                </ul>
-            </li>
             <li class="has-children overview">
                 <a href="#0">Serviços</a>
                 <ul>
@@ -67,10 +59,7 @@
             <li sec:authorize="hasAuthority('NIVEL_CLIENTE') or hasAuthority('NIVEL_ADMINISTRADOR')" class="has-children notifications">
                 <a th:href="@{/proposta/visualizar}">Propostas</a>
             </li>
-
-
         </ul>
-
         <ul>
 
             <li class="cd-label">Empresa</li>

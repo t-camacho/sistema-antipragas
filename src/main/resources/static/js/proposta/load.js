@@ -1,6 +1,8 @@
 $(document).ready(function () {
     var ultimoId = 0;
     var selecionado = 'todas';
+    var cpf = "";
+    var nomeFuncionario = "";
     var desativaScroll = false;
     //inicia com o filtro todas
     $('.categoria_lista .categoria_item[category="todas"]').addClass('selecionada');
@@ -34,11 +36,11 @@ $(document).ready(function () {
         }
     }
 
-    function carregar(inicio, qtd, category) {
+    function carregar(inicio, qtd, category, searchcpf, searchfuncionario) {
         jQuery.ajax({
             url: 'http://localhost:8080/proposta/carregar',
             type: 'GET',
-            data: {inicio: inicio, qtd: qtd, categoria: getCategoryInteger(category)},
+            data: {inicio: inicio, qtd: qtd, categoria: getCategoryInteger(category), cpf: searchcpf, funcionario: searchfuncionario},
             success: function (resultado) {
                 var propostas = JSON.parse(resultado);
                 var status, btn, tipo, pragas = "", canceladaPor = "";
@@ -97,7 +99,8 @@ $(document).ready(function () {
                         '      <p>Orçamento: R$ '+proposta.orcamento+'</p>' +
                         '   </div>' +
                         '   <p class="informacao" style="text-align: center; font-weight: bold">Proposta '+ proposta.id +'</p>' +
-                        '   <p class="cliente">' + proposta.usuario.nome + '</p>' +
+                        '   <p class="subtitulo">Cliente</p>' +
+                        '   <p class="informacao">' + proposta.usuario.nome + '</p>' +
                         '   <p class="subtitulo">Endereço de Realização</p>' +
                         '   <p class="informacao">'+ proposta.endereco.rua +' '+ proposta.endereco.numero +' '+ proposta.endereco.bairro +' - '+ proposta.endereco.cidade +'/'+ proposta.endereco.uf +'</p>\n' +
                         '   <p class="subtitulo">Tipo</p>' +
@@ -127,9 +130,19 @@ $(document).ready(function () {
     $(window).scroll(function() {
         if($(window).scrollTop() + $(window).height() == $(document).height()) {
             if(!desativaScroll){
-                carregar(ultimoId, 6, selecionado);
+                carregar(ultimoId, 6, selecionado, cpf, nomeFuncionario);
             }
         }
+    });
+
+    //Faz a busca com os parametros atualizados
+    $('.btn-search').click(function (evento) {
+        evento.preventDefault();
+        cpf = document.getElementById('fieldcpf').value;
+        nomeFuncionario = document.getElementById('fieldfuncionario').value;
+        console.log("THIS: " + document.getElementById('fieldcpf').value);
+        document.querySelector('[category='+selecionado+']').click();
+        //eventFire(document.querySelector('category='+selecionado), 'click');
     });
 
     //atualiza o filtro quando clicado em um item da categoria
@@ -141,8 +154,10 @@ $(document).ready(function () {
         $('.categoria_item').removeClass('selecionada');
         $(this).addClass('selecionada');
         $('.todas_propostas').empty();
-        carregar(ultimoId, 6, selecionado);
+        carregar(ultimoId, 6, selecionado, cpf, nomeFuncionario);
+        console.log(cpf + " | " + nomeFuncionario);
     });
 
-    carregar(ultimoId, 6, 'todas');
+    carregar(ultimoId, 6, 'todas', cpf, nomeFuncionario);
+
 });

@@ -8,6 +8,19 @@
   width: 100%;
 }
 
+h2 {
+  font-family: 'Anton', sans-serif;
+  text-transform: uppercase;
+}
+
+.form-ct{
+  margin: 0 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
 .categoria_lista .categoria_item {
   margin: 0 5px;
   background-color: #6f827d;

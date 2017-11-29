@@ -2,6 +2,7 @@
 <html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="">
 <head th:replace="fragments/head::head"></head>
 <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <!-- STYLE DOS ITEM -->
     <link th:href="@{/../css/style_proposta_item.css}" rel="stylesheet" />
     <link th:href="@{/../css/style_pragas.css}" rel="stylesheet" />
@@ -11,6 +12,33 @@
 <main th:replace="fragments/menu_responsivo::header2"></main>
 <main class="cd-main-content">
     <div class="content-wrapper">
+        <div sec:authorize="hasAuthority('NIVEL_ADMINISTRADOR') or hasAuthority('NIVEL_FUNCIONARIO')">
+            <div class="form-ct">
+                <form class="form-horizontal">
+                    <legend>Filtros</legend>
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="fieldcpf">Filtrar por Cliente</label>
+                            <div class="col-md-5">
+                                <input name="fieldcpf" class="form-control input-md" id="fieldcpf" type="text" placeholder="CPF do Cliente"/>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="fieldfuncionario">Filtrar por Funcionario</label>
+                            <div class="col-md-5">
+                                <input name="fieldfuncionario" class="form-control input-md" id="fieldfuncionario" type="text" placeholder="Nome do Funcionário"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="btn-search"></label>
+                            <div class="col-md-5">
+                                <a href="#" name="btn-search" class="btn btn-success btn-search" id="btn-search">Filtrar</a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
         <h1>Propostas</h1>
         <div class="categoria_lista">
             <a href="#" class="categoria_item" category="todas">Todas</a>
@@ -96,6 +124,7 @@
 <script th:src="@{../js/menu/modernizr.js}"></script>
 <!-- SCRIPT -->
 <script th:src="@{../js/proposta/load.js}"></script>   <!--carrega proposta por demanda-->
+<!--<script th:src="@{../js/proposta/search.js}"></script> &lt;!&ndash;filtra as propostas&ndash;&gt;-->
 
 <!--MODAL-->
 <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js}" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
