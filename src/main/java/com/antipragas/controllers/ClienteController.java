@@ -1,19 +1,19 @@
 package com.antipragas.controllers;
 
+import com.antipragas.models.Praga;
 import com.antipragas.models.Servico;
 import com.antipragas.models.ServicoPrototype;
 import com.antipragas.models.Usuario;
 import com.antipragas.repositories.ServicoRepository;
 import com.antipragas.repositories.UsuarioRepository;
+import com.antipragas.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -25,6 +25,10 @@ import java.util.*;
 @Controller
 @RequestMapping("/usuario")
 public class ClienteController {
+
+    @Autowired
+    private UsuarioService usuarioService;
+
     @Autowired
     private UsuarioRepository usuarioRepository;
 
@@ -127,7 +131,17 @@ public class ClienteController {
     @GetMapping("/cliente/edit")
     public String goPaginaEdit(Model model) {
         Usuario clienteLogado = getUsuarioLogado();
-        model.addAttribute("cliente", clienteLogado);
+        model.addAttribute("clienteOriginal", clienteLogado);
         return "/usuario/cliente/edit";
+    }
+
+    @RequestMapping(value = "/cliente/atualizar", method = RequestMethod.POST)
+    public String atualizarCliente(@ModelAttribute("clienteOriginal")Usuario clienteAlterado){
+        try{
+            usuarioService.edit(clienteAlterado);
+        }catch (Exception e){
+            return "redirect:/usuario/ciente/edit?error";
+        }
+        return "redirect:/usuario/cliente/edit?sucesso";
     }
 }
