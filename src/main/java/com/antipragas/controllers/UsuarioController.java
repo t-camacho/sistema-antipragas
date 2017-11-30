@@ -50,56 +50,52 @@ public class UsuarioController {
                                          @RequestParam String cpf, @RequestParam String sexo, @RequestParam String senha,
                                          @RequestParam String telefone, @RequestParam String cell,
                                          @RequestParam String endereco, @RequestParam String nivel){
-
-        if(LOGGER.isInfoEnabled()){
+        if(LOGGER.isInfoEnabled())
             LOGGER.info(String.format("Criando um novo cadastro com email: [%s]", email));
-        }
-
         String resp = "register";
-
         Usuario usuario = new Usuario(nome, email, new BCryptPasswordEncoder().encode(senha), dnascimento, Nivel.valueOf(nivel), Status.STATUS_DESATIVADA, cpf, new Telefone(telefone, cell));
-
         if(usuario.getNivel() == Nivel.NIVEL_FUNCIONARIO)
             usuario.setStatus(Status.STATUS_ATIVADA);
-
-        if(sexo.equals("fem")){
+        if(sexo.equals("fem"))
             usuario.setSexo(Sexo.F);
-        }else{
+        else
             usuario.setSexo(Sexo.M);
-        }
-
         Set enderecos = new HashSet<Endereco>();
-
         String addresses_send[] = endereco.split(",");
-
         for(int i = 0; i < addresses_send.length; i++){
             String campos[] = addresses_send[i].split("/");
-            if(campos.length == 7){
+            if(campos.length == 7)
                 enderecos.add(new Endereco(campos[0], campos[1], campos[3], campos[4], Integer.parseInt(campos[2]), campos[6], campos[5], usuario));
-            }else{
+            else
                 enderecos.add(new Endereco(campos[0], campos[1], campos[3], campos[4], Integer.parseInt(campos[2]), "", campos[5], usuario));
-            }
             usuario.setEnderecos(enderecos);
         }
 
-        //Caso o usuário não seja funcionario
+        LOGGER.info(String.format("resp: %s", resp));
+        LOGGER.info(String.format("addresses_send: %s", addresses_send.toString()));
+
         if(usuarioService.findByEmail(email) == null){
             usuarioService.create(usuario);
             if(usuario.getNivel() == Nivel.NIVEL_CLIENTE) {
                 ChaveDeConfirmacao chaveCrip = new ChaveDeConfirmacao(usuario.getId(), new BCryptPasswordEncoder().encode(usuario.getId().toString()), Acao.ACAO_CONFIRMAR);
+                LOGGER.info(String.format("chaveCrip: %s", chaveCrip.getIdCriptografado()));
                 chaveDeConfirmacaoService.create(chaveCrip);
                 try {
                     notificacaoService.enviarNotificacaoDeCadastro(usuario, chaveCrip);
                 } catch (MailException e) {
+                    e.printStackTrace();
                 }
+            }else{
+                LOGGER.info(String.format("chaveCrip: %s", "-"));
             }
-        }else{
+        }else
             resp = "exists";
-        }
 
-        if((usuario.getNivel() == Nivel.NIVEL_CLIENTE)){
+        if((usuario.getNivel() == Nivel.NIVEL_CLIENTE)) {
+            LOGGER.info(String.format("viewName: %s", "redirect:/registrar"));
             return new ModelAndView("redirect:/registrar", "resp", resp);
-        }else{
+        }else {
+            LOGGER.info(String.format("viewName: %s", "redirect:/usuario/painel"));
             return new ModelAndView("redirect:/usuario/painel", "resp", resp);
         }
     }

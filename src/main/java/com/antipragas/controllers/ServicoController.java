@@ -35,8 +35,6 @@ import java.util.Set;
 @RequestMapping("/servicos")
 public class ServicoController {
 
-    private Logger LOGGER = Logger.getLogger(ServicoController.class);
-
     @Autowired
     private ServicoRepository servicoRepository;
     @Autowired

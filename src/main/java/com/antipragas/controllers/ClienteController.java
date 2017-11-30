@@ -137,6 +137,7 @@ public class ClienteController {
 
     @RequestMapping(value = "/cliente/atualizar", method = RequestMethod.POST)
     public String atualizarCliente(@ModelAttribute("clienteOriginal")Usuario clienteAlterado){
+        //Espera obter um objeto do tipo Usuario com as informações do cliente alteradas
         try{
             usuarioService.edit(clienteAlterado);
         }catch (Exception e){
