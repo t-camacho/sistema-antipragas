@@ -1,62 +1,186 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="">
+<head th:replace="fragments/head::head"></head>
 <head>
-    <meta charset="UTF-8"/>
-    <title>Cadastrar Fornecedores</title>
-    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+    <!-- STYLE DOS ITEM -->
+    <link th:href="@{/../css/style_proposta_item.css}" rel="stylesheet" />
+    <link th:href="@{/../css/style_pragas.css}" rel="stylesheet" />
+
+    <!-- Adicionando Javascript -->
+
+    <!-- script de: https://www.vivaolinux.com.br/script/Mascara-JavaScript-para-Campos-de-Telefone-Celular-e-CEP/ -->
+    <script>
+        function mascara(t, mask){
+            var i = t.value.length;
+            var saida = mask.substring(1,0);
+            var texto = mask.substring(i)
+            if (texto.substring(0,1) != saida){
+                t.value += texto.substring(0,1);
+            }
+        }
+    </script>
+
+    <!-- script adaptado de: https://viacep.com.br/exemplo/javascript/ -->
+    <script type="text/javascript" >
+        var id = 0;
+
+        function limpa_formulário_cep() {
+            //Limpa valores do formulário de cep.
+            document.getElementById('rua' + id).value=("");
+            document.getElementById('bairro' + id).value=("");
+            document.getElementById('cidade' + id).value=("");
+            document.getElementById('uf' + id).value=("");
+        }
+
+        function meu_callback(conteudo) {
+            if (!("erro" in conteudo)) {
+                //Atualiza os campos com os valores.
+                document.getElementById('rua' + id).value=(conteudo.logradouro);
+                document.getElementById('bairro' + id).value=(conteudo.bairro);
+                document.getElementById('cidade' + id).value=(conteudo.localidade);
+                document.getElementById('uf' + id).value=(conteudo.uf);
+            } //end if.
+            else {
+                //CEP não Encontrado.
+                limpa_formulário_cep();
+                alert("CEP não encontrado.");
+            }
+        }
+
+        function pesquisacep(campo) {
+            id = campo.getId();
+            id = id.substring(3);
+            var valor = campo.value;
+
+            //Nova variável "cep" somente com dígitos.
+            var cep = valor.replace(/\D/g, '');
+            alert(id);
+            alert(cep);
+            //Verifica se campo cep possui valor informado.
+            if (cep != "") {
+
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+
+                //Valida o formato do CEP.
+                if(validacep.test(cep)) {
+
+                    //Preenche os campos com "..." enquanto consulta webservice.
+                    document.getElementById('rua' + id).value="...";
+                    document.getElementById('bairro' + id).value="...";
+                    document.getElementById('cidade' + id).value="...";
+                    document.getElementById('uf' + id).value="...";
+
+                    //Cria um elemento javascript.
+                    var script = document.createElement('script');
+
+                    //Sincroniza com o callback.
+                    script.src = '//viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+
+                    //Insere script no documento e carrega o conteúdo.
+                    document.body.appendChild(script);
+
+                } //end if.
+                else {
+                    //cep é inválido.
+                    limpa_formulário_cep();
+                    alert("Formato de CEP inválido.");
+                }
+            } //end if.
+            else {
+                //cep sem valor, limpa formulário.
+                limpa_formulário_cep();
+            }
+        };
+    </script>
 </head>
+
 <body>
-    <h1>Cadastrar Fornecedor</h1>
-    <br/>
+<header th:replace="fragments/menu_responsivo::header1"></header>
+<main th:replace="fragments/menu_responsivo::header2"></main>
+<main class="cd-main-content">
+    <div class="content-wrapper">
+        <h1>Cadastrar Fornecedor</h1>
+        <br/>
 
-    <form th:object="${fornecedor}" th:action="@{/fornecedor/cadastrar}" method="POST">
-        <input type="hidden" th:field="*{id}"/>
-        <label>Nome: </label>
-        <input type="text" th:field="*{nome}"/><br/>
-        <label>Telefone: </label>
-        <input type="text" th:field="*{telefone}"/><br/>
+        <form th:object="${fornecedor}" th:action="@{/fornecedor/cadastrar}" method="POST">
+            <input type="hidden" th:field="*{id}"/>
+            <label>Nome: </label>
+            <input type="text" th:field="*{nome}"/><br/>
+            <label>Telefone: </label>
+            <input type="text" th:field="*{telefone}"/><br/>
 
-        <br/><br/>
-        <h3>Endereços</h3>
-        <br/><br/>
+            <br/><br/>
+            <h3>Endereços</h3>
+            <br/><br/>
 
-        <table>
-            <thead>
-            <th>CEP</th>
-            <th>Rua</th>
-            <th>Número</th>
-            <th>Bairro</th>
-            <th>Complemento</th>
-            <th>Cidade</th>
-            <th>UF</th>
-            <th>
-                <button type="submit" name="adicionarEndereco">Novo endereço</button>
-            </th>
-            </thead>
-            <tbody>
-            <tr th:each="endereco, i : *{enderecos}">
-                <input type="hidden" th:field="*{enderecos[__${i.index}__].id}"/>
-                <td><input type="text" th:field="*{enderecos[__${i.index}__].cep}"/></td>
-                <td><input type="text" th:field="*{enderecos[__${i.index}__].rua}"/></td>
-                <td><input type="text" th:field="*{enderecos[__${i.index}__].numero}"/></td>
-                <td><input type="text" th:field="*{enderecos[__${i.index}__].bairro}"/></td>
-                <td><input type="text" th:field="*{enderecos[__${i.index}__].complemento}"/></td>
-                <td><input type="text" th:field="*{enderecos[__${i.index}__].cidade}"/></td>
-                <td><input type="text" th:field="*{enderecos[__${i.index}__].uf}"/></td>
-                <td><button type="submit" name="removerEndereco" th:value="${i.index}"
-                            th:if="${#lists.size(fornecedor.enderecos) gt 1}">
-                    Remover</button></td>
-            </tr>
-            </tbody>
-        </table>
+            <div th:each="endereco, i : *{enderecos}">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <p th:text="'Endereço ' + ${i.index + 1}">Endereço 1</p>
+                        <input type="hidden" th:field="*{enderecos[__${i.index}__].id}"/>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <button type="submit" name="removerEndereco" th:value="${i.index}"
+                                th:if="${#lists.size(fornecedor.enderecos) gt 1}">
+                            Remover</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        CEP<span style="color: red;">*</span>
+                        <input type="text" th:field="*{enderecos[__${i.index}__].cep}" th:id="'cep' + ${i.index}" maxlength="9" placeholder="CEP" onkeypress="mascara(this, '#####-###')" onblur="pesquisacep(this)" />
+                        <p class="error-cep"></p>
+                    </div>
+                </div>
 
-        <br/><br/>
-        <button type="submit" name="salvar">Cadastrar fornecedor</button>
-    </form>
-    <br/>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        Rua<span style="color: red;">*</span>
+                        <input type="text" th:field="*{enderecos[__${i.index}__].rua}" th:id="'rua' + ${i.index}" size="60" placeholder="Rua" readonly="readonly" />
+                    </div>
+                    <div class="col-12 col-md-6">
+                        Número<span style="color: red;">*</span>
+                        <input type="number" th:field="*{enderecos[__${i.index}__].numero}" th:id="'numero' + ${i.index}" size="40" placeholder="Número" value="0" min="0" />
+                    </div>
+                </div>
 
-    <a th:href="@{/usuario/painel}">Voltar para o painel</a>
+                <div class="row">
+                    <div class="col-12 col-md-5">
+                        Bairro<span style="color: red;">*</span>
+                        <input type="text" th:field="*{enderecos[__${i.index}__].bairro}" th:id="'bairro' + ${i.index}" size="60" placeholder="Bairro" readonly="readonly" />
+                    </div>
+                    <div class="col-12 col-md-5">
+                        Cidade<span style="color: red;">*</span>
+                        <input type="text" th:field="*{enderecos[__${i.index}__].cidade}" th:id="'cidade' + ${i.index}" size="40" placeholder="Cidade" value="Maringá" readonly="readonly" />
+                    </div>
 
+                    <div class="col-12 col-md-2">
+                        UF<span style="color: red;">*</span>
+                        <input type="text" th:field="*{enderecos[__${i.index}__].uf}" th:id="'uf' + ${i.index}" size="40" placeholder="UF" value="PR" readonly="readonly" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        Complemento
+                        <input type="text" th:field="*{enderecos[__${i.index}__].complemento}" th:id="'complemento' + ${i.index}" size="40" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <button type="submit" name="adicionarEndereco">Novo endereço</button>
+                </div>
+            </div>
+
+            <br/><br/>
+            <button type="submit" name="salvar">Cadastrar fornecedor</button>
+        </form>
+        <br/>
+
+        <a th:href="@{/usuario/painel}">Voltar para o painel</a>
+    </div>
+</main>
 
     <!-- JQUERY -->
     <script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
@@ -66,38 +190,5 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
-    <script th:if="${resp == 'exists'}" >
-        $(function(){
-            $('#myModal').modal('show');
-        });
-    </script>
-
-    <script th:if="${resp == 'register'}" >
-        $(function(){
-            $('#myModal2').modal('show');
-        });
-    </script>
-
-    <script th:if="${resp == 'confirm'}" >
-        $(function(){
-            $('#myModal3').modal('show');
-        });
-    </script>
-
-    <script th:if="${resp == 'reset'}" >
-        $(function(){
-            $('#myModal4').modal('show');
-        });
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            $('input').keypress(function (e) {
-                var code = null;
-                code = (e.keyCode ? e.keyCode : e.which);
-                return (code == 13) ? false : true;
-            });
-        });
-    </script>
 </body>
 </html>

@@ -1,43 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="">
+<head th:replace="fragments/head::head"></head>
 <head>
-    <meta charset="UTF-8"/>
-    <title>Fornecedores cadastrados</title>
-    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+    <!-- STYLE DOS ITEM -->
+    <link th:href="@{/../css/style_proposta_item.css}" rel="stylesheet" />
+    <link th:href="@{/../css/style_pragas.css}" rel="stylesheet" />
 </head>
 <body>
-    <h1>Lista de Fornecedores!</h1>
+<header th:replace="fragments/menu_responsivo::header1"></header>
+<main th:replace="fragments/menu_responsivo::header2"></main>
+<main class="cd-main-content">
+    <div class="content-wrapper">
+        <h1>Lista de Fornecedores!</h1>
 
-    <div class="default-panel">
-        <div th:if="${#lists.isEmpty(fornecedores)}">
-            <h5>Nenhum fornecedor cadastrado</h5>
-        </div>
-        <div th:unless="${#lists.isEmpty(fornecedores)}">
-            <table>
-                <thead>
-                    <th>Nome</th>
-                    <th>Telefone</th>
-                    <th>Endereços</th>
-                </thead>
-                <tbody>
-                    <tr th:each="fornecedor : ${fornecedores}">
-                        <td th:text="${fornecedor.nome}">Nome</td>
-                        <td th:text="${fornecedor.telefone}">Telefone</td>
-                        <td>
-                            <ul th:each="endereco : ${fornecedor.enderecos}">
-                                <li th:text="${endereco.rua} + ', ' + ${endereco.numero} +
-                                        ', ' + ${endereco.complemento} + ', ' + ${endereco.bairro} +
-                                        ', ' + ${endereco.cep} + ', ' + ${endereco.cidade} + ', ' + ${endereco.uf}">Endereço</li>
-                            </ul>
-                        </td>
-                        <td>
-                            <a th:href="${'/fornecedor/remover/' + fornecedor.id}">Remover</a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="default-panel">
+            <div th:if="${#lists.isEmpty(fornecedores)}">
+                <h5>Nenhum fornecedor cadastrado</h5>
+            </div>
+            <div th:unless="${#lists.isEmpty(fornecedores)}">
+                <table>
+                    <thead>
+                        <th>Nome</th>
+                        <th>Telefone</th>
+                        <th>Endereços</th>
+                    </thead>
+                    <tbody>
+                        <tr th:each="fornecedor : ${fornecedores}">
+                            <td th:text="${fornecedor.nome}">Nome</td>
+                            <td th:text="${fornecedor.telefone}">Telefone</td>
+                            <td>
+                                <ul th:each="endereco : ${fornecedor.enderecos}">
+                                    <li th:text="${endereco.rua} + ', ' + ${endereco.numero} +
+                                            ', ' + ${endereco.complemento} + ', ' + ${endereco.bairro} +
+                                            ', ' + ${endereco.cep} + ', ' + ${endereco.cidade} + ', ' + ${endereco.uf}">Endereço</li>
+                                </ul>
+                            </td>
+                            <td>
+                                <a th:href="${'/fornecedor/remover/' + fornecedor.id}">Remover</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+</main>
 </body>
 <br/>
 <a th:href="@{/fornecedor/cadastrar}">Cadastrar novo fornecedor</a><br/><br/>

@@ -18,7 +18,7 @@
                 </a>
                 <ul>
                     <li><a href="#0">Sua Conta</a></li>
-                    <li><a href="#0">Editar Conta</a></li>
+                    <li><a href="#0" th:href="@{/usuario/cliente/edit}">Editar Conta</a></li>
                     <li><a href="#0" th:href="@{/logout}">Sair</a>
                         <form th:action="@{/logout}" method="post" ></form>
                     </li>
@@ -69,7 +69,7 @@
             </li>
         </ul>
 
-        <ul sec:authorize="hasAuthority('NIVEL_FUNCIONARIO')">
+        <ul sec:authorize="hasAuthority('NIVEL_FUNCIONARIO') or hasAuthority('NIVEL_ADMINISTRADOR')">
             <li class="cd-label">Empresa</li>
             <!--
             <li class="has-children bookmarks">
@@ -83,6 +83,13 @@
                 <ul>
                     <!--<li><a href="#">Funcionário Técnico</a></li> -->
                     <li><a th:href="@{/praga/visualizar}">Pragas</a></li>
+                    <li class="has-children overview">
+                        <a href="#1">Fornecedores</a>
+                        <ui>
+                            <li><a th:href="@{/fornecedor/listar}">Listar</a></li>
+                            <li><a th:href="@{/fornecedor/cadastrar}">Cadastrar</a></li>
+                        </ui>
+                    </li>
                 </ul>
             </li>
         </ul>

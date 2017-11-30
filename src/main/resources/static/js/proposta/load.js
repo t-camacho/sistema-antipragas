@@ -1,6 +1,8 @@
 $(document).ready(function () {
     var ultimoId = 0;
     var selecionado = 'todas';
+    var cpf = "";
+    var nomeFuncionario = "";
     var desativaScroll = false;
     //inicia com o filtro todas
     $('.categoria_lista .categoria_item[category="todas"]').addClass('selecionada');

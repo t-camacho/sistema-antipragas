@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="">
+<head th:replace="fragments/head::head"></head>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <!-- STYLES-->
+    <!-- Adicionando Javascript -->
+    <!-- script de: https://www.vivaolinux.com.br/script/Mascara-JavaScript-para-Campos-de-Telefone-Celular-e-CEP/ -->
+    <link th:href="@{/css/style_home.css}" rel="stylesheet"/>
+    <script>
+        function mascara(t, mask){
+            var i = t.value.length;
+            var saida = mask.substring(1,0);
+            var texto = mask.substring(i)
+            if (texto.substring(0,1) != saida){
+                t.value += texto.substring(0,1);
+            }
+        }
+    </script>
+    <!-- script adaptado de: https://viacep.com.br/exemplo/javascript/ -->
+    <script type="text/javascript" >
+        var id = 0;
+
+        function limpa_formulário_cep() {
+            //Limpa valores do formulário de cep.
+            document.getElementById('rua' + id).value=("");
+            document.getElementById('bairro' + id).value=("");
+            document.getElementById('cidade' + id).value=("");
+            document.getElementById('uf' + id).value=("");
+        }
+
+        function meu_callback(conteudo) {
+            if (!("erro" in conteudo)) {
+                //Atualiza os campos com os valores.
+                document.getElementById('rua' + id).value=(conteudo.logradouro);
+                document.getElementById('bairro' + id).value=(conteudo.bairro);
+                document.getElementById('cidade' + id).value=(conteudo.localidade);
+                document.getElementById('uf' + id).value=(conteudo.uf);
+            } //end if.
+            else {
+                //CEP não Encontrado.
+                limpa_formulário_cep();
+                alert("CEP não encontrado.");
+            }
+        }
+
+        function pesquisacep(campo) {
+            id = campo.getId();
+            id = id.substring(3);
+            var valor = campo.value;
+
+            //Nova variável "cep" somente com dígitos.
+            var cep = valor.replace(/\D/g, '');
+            alert(id);
+            alert(cep);
+            //Verifica se campo cep possui valor informado.
+            if (cep != "") {
+
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+
+                //Valida o formato do CEP.
+                if(validacep.test(cep)) {
+
+                    //Preenche os campos com "..." enquanto consulta webservice.
+                    document.getElementById('rua' + id).value="...";
+                    document.getElementById('bairro' + id).value="...";
+                    document.getElementById('cidade' + id).value="...";
+                    document.getElementById('uf' + id).value="...";
+
+                    //Cria um elemento javascript.
+                    var script = document.createElement('script');
+
+                    //Sincroniza com o callback.
+                    script.src = '//viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+
+                    //Insere script no documento e carrega o conteúdo.
+                    document.body.appendChild(script);
+
+                } //end if.
+                else {
+                    //cep é inválido.
+                    limpa_formulário_cep();
+                    alert("Formato de CEP inválido.");
+                }
+            } //end if.
+            else {
+                //cep sem valor, limpa formulário.
+                limpa_formulário_cep();
+            }
+        };
+    </script>
+
+</head>
+<body>
+<header th:replace="fragments/menu_responsivo::header1"></header>
+<main th:replace="fragments/menu_responsivo::header2"></main>
+<main class="cd-main-content">
+   <!-- <div class="content-wrapper">
+
+        <div class="content-wrapper">
+            <h1>Editar Conta</h1>
+            <br/>
+
+            <form th:object="${clienteOriginal}" th:action="@{/usuario/ciente/atualizar}" method="POST">
+                <input type="hidden" th:field="*{id}" value="$(clienteOriginal.id)"/>
+                <label>Nome: </label>
+                <input type="text" th:field="*{nome}" value="$(clienteOriginal.nome)"/><br/>
+                <label>Telefone: </label>
+                <input type="text" th:field="*{telefone}" value="$(clienteOriginal.telefone)"/><br/>
+
+                <br/><br/>
+                <h3>Endereços</h3>
+                <br/><br/>
+
+                <div th:each="endereco, i : *{enderecos}">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p th:text="'Endereço ' + ${i.index + 1}">Endereço 1</p>
+                            <input type="hidden" th:field="*{enderecos[__${i.index}__].id}"/>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <button type="submit" name="removerEndereco" th:value="${i.index}"
+                                    th:if="${#lists.size(clienteOriginal.enderecos) gt 1}">
+                                Remover</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-12">
+                            CEP<span style="color: red;">*</span>
+                            <input type="text" th:field="*{enderecos[__${i.index}__].cep}" th:id="'cep' + ${i.index}" maxlength="9" placeholder="CEP" onkeypress="mascara(this, '#####-###')" onblur="pesquisacep(this)" value="$(clienteOriginal.cep)" />
+                            <p class="error-cep"></p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            Rua<span style="color: red;">*</span>
+                            <input type="text" th:field="*{enderecos[__${i.index}__].rua}" th:id="'rua' + ${i.index}" size="60" placeholder="Rua" readonly="readonly" />
+                        </div>
+                        <div class="col-12 col-md-6">
+                            Número<span style="color: red;">*</span>
+                            <input type="number" th:field="*{enderecos[__${i.index}__].numero}" th:id="'numero' + ${i.index}" size="40" placeholder="Número" value="0" min="0" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-5">
+                            Bairro<span style="color: red;">*</span>
+                            <input type="text" th:field="*{enderecos[__${i.index}__].bairro}" th:id="'bairro' + ${i.index}" size="60" placeholder="Bairro" readonly="readonly" />
+                        </div>
+                        <div class="col-12 col-md-5">
+                            Cidade<span style="color: red;">*</span>
+                            <input type="text" th:field="*{enderecos[__${i.index}__].cidade}" th:id="'cidade' + ${i.index}" size="40" placeholder="Cidade" value="Maringá" readonly="readonly" />
+                        </div>
+
+                        <div class="col-12 col-md-2">
+                            UF<span style="color: red;">*</span>
+                            <input type="text" th:field="*{enderecos[__${i.index}__].uf}" th:id="'uf' + ${i.index}" size="40" placeholder="UF" value="PR" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-12">
+                            Complemento
+                            <input type="text" th:field="*{enderecos[__${i.index}__].complemento}" th:id="'complemento' + ${i.index}" size="40" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <button type="submit" name="adicionarEndereco">Novo endereço</button>
+                    </div>
+                </div>
+
+                <br/><br/>
+                <button type="submit" name="salvar">Salvar Alterações</button>
+            </form>
+            <br/>
+
+            <a th:href="@{/usuario/painel}">Voltar para o painel</a>
+        </div>
+
+</div> -->
+    <div class="container-fluid" id="register">
+        <br/>
+        <br/>
+        <h1>Editar Conta</h1>
+        <form id="form" th:action="@{/usuario/cliente/atualizar}" th:object="${clienteOriginal}" method="post" name="form-register">
+
+            <ul id="progress">
+                <li class="ativo">Informações</li>
+                <li>Configurações</li>
+                <li>Detalhes</li>
+            </ul>
+
+            <fieldset>
+                <h2>Informações Pessoais</h2>
+                Nome Completo<span style="color: red;">*</span>
+                <input type="text" name="nome" placeholder="João da Silva" th:maxlength="59" value="$(clienteOriginal.nome)" th:field="*{nome}"/>
+                <p class="error-name"></p>
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        Telefone
+                        <input type="text" name="telefone" placeholder="(XX)XXXX-XXXX" maxlength="13" onkeypress='mascaraMutuario(this,phone)' onblur='clearTimeout()' value="$(clienteOriginal.telefone.telefone)" th:field="*{telefone.telefone}"/>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        Celular
+                        <input type="text" name="cell" placeholder="(XX)XXXXX-XXXX" maxlength="14" onkeypress='mascaraMutuario(this,cel)' onblur='clearTimeout()' value="$(clienteOriginal.telefone.celular)" th:field="*{telefone.celular}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        Data de Nascimento<span style="color: red;">*</span>
+                        <input type="date" name="dnascimento" th:field="*{dataDeNascimento}" value="$(clienteOriginal.dataDeNascimento)"/>
+                        <p class="error-data"></p>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        CPF<span style="color: red;">*</span>
+                        <input type="text" name="cpf" placeholder="CPF" maxlength="14" onkeypress='mascaraMutuario(this,cpfCnpj)' onblur='clearTimeout()' th:field="*{CPF}" value="$(clienteOriginal.CPF)"/>
+                        <p class="error-cpf"></p>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        Sexo<span style="color: red;">*</span><br/>
+                        <div data-toggle="buttons" class="btn-group btn-sexo">
+                            <label class="btn btn-primary active" th:class="${#strings.toString(clienteOriginal.sexo)} == 'Feminino' ? 'btn btn-primary active' : 'btn btn-primary'">
+                                <!--<textarea value="$(clienteOriginal.sexo.sexo)"></textarea>-->
+                                <input type="radio" name="sexo" id="option2" autocomplete="off" value="fem" th:checked="${#strings.toString(clienteOriginal.sexo)} == 'Feminino'" th:field="*{sexo}"/> Feminino
+                            </label>
+                            <label class="btn btn-primary" th:class="${#strings.toString(clienteOriginal.sexo)} == 'Masculino' ? 'btn btn-primary active' : 'btn btn-primary'">
+                                <input type="radio" name="sexo" id="option3" autocomplete="off" value="masc" th:checked="${#strings.toString(clienteOriginal.sexo)} == 'Masculino'" th:field="*{sexo}" /> Masculino
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <input type="button" name="next1" class="next acao" value="Próximo" />
+            </fieldset>
+
+            <fieldset>
+                <h2>Configurações da Conta</h2>
+                Email<span style="color: red;">*</span>
+                <input type="text" name="email" placeholder="joao@gmail.com" value="$(clienteOriginal.email)" th:field="*{email}"/>
+                <p class="error-email"></p>
+                Senha<span style="color: red;">*</span>
+                <input type="password" name="senha" th:maxlength="59" />
+                <p class="error-senha"></p>
+                Confirmar Senha<span style="color: red;">*</span>
+                <input type="password" name="csenha" th:maxlength="59" />
+                <p class="error-csenha"></p>
+                <input type="button" name="next" class="prev acao" value="Anterior" />
+                <input type="button" name="next2" class="next acao"  value="Próximo" />
+            </fieldset>
+            <fieldset>
+                <h2>Endereço(s) de Visita</h2>
+                <h3>Informe-nos endereços que você possa precisar de serviços</h3>
+
+                <div th:each="endereco, i : *{enderecos}">
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            <p th:text="'Endereço ' + ${i.index + 1}">Endereço 1</p>
+                            <input type="hidden" th:field="*{enderecos[__${i.index}__].id}"/>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <button type="submit" name="removerEndereco" th:value="${i.index}"
+                                    th:if="${#lists.size(clienteOriginal.enderecos) gt 1}">
+                                Remover</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-12">
+                            CEP<span style="color: red;">*</span>
+                            <input type="text" th:field="*{enderecos[__${i.index}__].cep}" th:id="'cep' + ${i.index}" maxlength="9" placeholder="CEP" onkeypress="mascara(this, '#####-###')" onblur="pesquisacep(this)" />
+                            <p class="error-cep"></p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6">
+                            Rua<span style="color: red;">*</span>
+                            <input type="text" th:field="*{enderecos[__${i.index}__].rua}" th:id="'rua' + ${i.index}" size="60" placeholder="Rua" readonly="readonly" />
+                        </div>
+                        <div class="col-12 col-md-6">
+                            Número<span style="color: red;">*</span>
+                            <input type="number" th:field="*{enderecos[__${i.index}__].numero}" th:id="'numero' + ${i.index}" size="40" placeholder="Número" value="0" min="0" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 col-md-5">
+                            Bairro<span style="color: red;">*</span>
+                            <input type="text" th:field="*{enderecos[__${i.index}__].bairro}" th:id="'bairro' + ${i.index}" size="60" placeholder="Bairro" readonly="readonly" />
+                        </div>
+                        <div class="col-12 col-md-5">
+                            Cidade<span style="color: red;">*</span>
+                            <input type="text" th:field="*{enderecos[__${i.index}__].cidade}" th:id="'cidade' + ${i.index}" size="40" placeholder="Cidade" value="Maringá" readonly="readonly" />
+                        </div>
+
+                        <div class="col-12 col-md-2">
+                            UF<span style="color: red;">*</span>
+                            <input type="text" th:field="*{enderecos[__${i.index}__].uf}" th:id="'uf' + ${i.index}" size="40" placeholder="UF" value="PR" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-md-12">
+                            Complemento
+                            <input type="text" th:field="*{enderecos[__${i.index}__].complemento}" th:id="'complemento' + ${i.index}" size="40" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <button type="submit" name="adicionarEndereco">Novo endereço</button>
+                    </div>
+                </div>
+
+                <div id="list-of-address">
+                    <h1>Endereço(s) Adicionado(s)</h1>
+                    <div th:each="endereco, i : clienteOriginal.enderecos">
+                        <p><strong>CEP:</strong> <div th:text="${clienteOriginal.enderecos[__${i.index}__].cep}"/>
+                            <strong>Rua:</strong>  <div th:text="${clienteOriginal.enderecos[__${i.index}__].rua}"/>
+                            <strong>Número:</strong> <div th:text="${clienteOriginal.enderecos[__${i.index}__].numero}"/> </p>
+                        <p><strong>Bairro: </strong> <div th:text="${clienteOriginal.enderecos[__${i.index}__].bairro}"/>
+                            <strong> Cidade: </strong> <div th:text="${clienteOriginal.enderecos[__${i.index}__].cidade}"/>
+                            <strong> UF: </strong> <div th:text="${clienteOriginal.enderecos[__${i.index}__].uf}"/></p>
+                    </div>
+                </div>
+
+                <input type="button" name="next" class="prev acao" value="Anterior" />
+                <input type="submit" class="acao"  value="Enviar" />
+            </fieldset>
+            <input name="nivel" value="NIVEL_CLIENTE" hidden="hidden"/>
+        </form>
+
+    </div>
+
+    <div>
+        <form action="#" class="form-horizontal" method="POST">
+            <fieldset>
+                <legend>Deletar Conta</legend>
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="btn-deletar">Deletar Conta</label>
+                    <div class="col-md-4">
+                        <button name="btn-deletar" class="btn btn-danger" id="btn-deletar">Deletar</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</main>
+
+<div id="confirm" class="modal hide fade">
+    <div class="modal-body">
+        Tem certeza que deseja deletar sua conta?<br/>Esta ação é IRREVERSÍVEL!
+    </div>
+    <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-danger" id="delete">Sim, desejo deletar minha conta</button>
+        <button type="button" data-dismiss="modal" class="btn">Cancelar</button>
+    </div>
+</div>
+
+<script>
+    //Confirmar deleção da conta
+    $('button[name="btn-deletar"]').on('click', function(e) {
+        var $form = $(this).closest('form');
+        e.preventDefault();
+        $('#confirm').modal({
+            backdrop: 'static',
+            keyboard: false
+        })
+            .one('click', '#delete', function(e) {
+                $form.trigger('submit');
+            });
+    });
+</script>
+
+<!-- JQUERY -->
+<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
+<script type="text/javascript" th:src="@{/js/cadastro.js}" ></script>
+<!-- MENU -->
+<script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
+<script th:src="@{../js/menu/main.js}"></script>
+<script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
+<script th:src="@{../js/menu/modernizr.js}"></script>
+<!-- SCRIPT -->
+
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js}" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js}" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+</body>
+</html>
