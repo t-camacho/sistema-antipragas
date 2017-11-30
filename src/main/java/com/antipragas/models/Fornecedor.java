@@ -25,6 +25,9 @@ public class Fornecedor {
     @Column(length = 15)
     private String telefone;
 
+    @Column(length = 80)
+    private String email;
+
     @OneToMany(mappedBy = "fornecedor", cascade = CascadeType.ALL)
     private List<Endereco> enderecos;
 
@@ -50,6 +53,14 @@ public class Fornecedor {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Endereco> getEnderecos() {
