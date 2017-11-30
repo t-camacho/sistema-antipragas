@@ -1,376 +1,74 @@
 <!DOCTYPE html>
-<html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <title>Antipragas</title>
-    <!-- FONTS -->
-    <link href="https://fonts.googleapis.com/css?family=Catamaran|Varela+Round" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet"/>
-    <!-- BOOTSTRAP -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous" />
-    <!-- CSS HOME-->
-    <link th:href="@{/css/style_home.css}" rel="stylesheet" />
+<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="fragments/head:: head">
+    <meta charset="UTF-8"/>
+    <title>Bem-Página inicial do cliente</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-full " id="nav-main">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" th:href="@{/}">Home<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#sobre">Sobre Nós<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#info">Endereço<span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="#info">Contato<span class="sr-only">(current)</span></a>
-            </li>
-        </ul>
-        <ul class="form-inline my-2 my-lg-0" >
-            <a class="btn btn-primary" th:href="@{/login}" role="button">Entrar</a>
-        </ul>
-    </div>
-</nav>
+<h1 th:text="'Bem-vindo(a), ' + ${cliente.nome}">Bem-vindo</h1>
+<br/><br/>
 
-<header>
-    <div class="container-fluid">
-        <h1>Marque uma detetização totalmente online e livre-se das pragas</h1>
-        <br />
-        <a class="btn btn-primary" href="#register" role="button">Cadastrar-se</a>
-    </div>
-</header>
+<h3>Serviços de hoje</h3>
 
-<section id="sobre">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <h1>Sobre Nós</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <p>
-                    A Antipragas é uma empresa legalizada e especializada no controle de Pragas.
-                    Há quinze anos atendendo em toda cidade de Maringá, contamos com uma equipe qualificada e com larga experiência que está
-                    constantemente em treinamento, participando de cursos e Congressos para atualização tecnológica no controle de Pragas.
-                    A Antipragas atua nos seguintes seguimentos:
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-4">
-                <img th:src="@{img/hospitalar.png}" />
-                <h2>Hospitalar</h2>
-                <p>
-                    A ausência total de insetos e roedores em um ambiente Hospitalar é mais necessária que em qualquer outro lugar,
-                    no entanto em nenhum outro lugar é tão crítica e delicada a aplicação de biocidas.
-                </p>
-            </div>
-            <div class="col-12 col-md-4">
-                <img src="img/alimento.png" />
-                <h2>Setor Alimentício</h2>
-                <p>
-                    Este Programa é uma alternativa moderna, tecnicamente adequada, ecologicamente correta e segura desenvolvida com a
-                    finalidade de controle das pragas, diminuindo sensivelmente o risco para pessoas, produtos, equipamentos, utensílios
-                    e meio ambiente.
-                </p>
-            </div>
-            <div class="col-12 col-md-4">
-                <img src="img/condo.png" />
-                <h2>Condomínios</h2>
-                <p>
-                    A prática do autoserviço de controle de pragas com produtos químicos através de colaboradores de outras
-                    funções gera risco de intoxicações, danos ao meio ambiente, ações trabalhistas com onus de insalubridade e
-                    acúmulo de funções. A alternativa correta segura e eficaz é a contratação de empresa especializada e legalizada.
-                </p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-md-6">
-                <img src="img/casa.png" />
-                <h2>Residências</h2>
-                <p>
-                    Sua casa segura e protegida contra insetos e roedores.
-                </p>
-            </div>
-            <div class="col-12 col-md-6">
-                <img src="img/empresa.png" />
-                <h2>Empresas</h2>
-                <p>
-                    Ambiente higienizado e livre de pragas evita doenças, gera bem estar, simpatia pública e satisfação dos clientes.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-
-<div class="container-fluid" id="register">
-    <h1>Cadastre-se</h1>
-    <form id="form" th:action="@{/usuario/registrar}" method="post" name="form-register">
-
-        <ul id="progress">
-            <li class="ativo">Informações</li>
-            <li>Configurações</li>
-            <li>Detalhes</li>
-        </ul>
-
-        <fieldset>
-            <h2>Informações Pessoais</h2>
-            Nome Completo<span style="color: red;">*</span>
-            <input type="text" name="nome" placeholder="João da Silva" th:maxlength="59" />
-            <p class="error-name"></p>
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    Telefone
-                    <input type="text" name="telefone" placeholder="(XX)XXXX-XXXX" maxlength="13" onkeypress='mascaraMutuario(this,phone)' onblur='clearTimeout()' />
-                </div>
-                <div class="col-12 col-md-6">
-                    Celular
-                    <input type="text" name="cell" placeholder="(XX)XXXXX-XXXX" maxlength="14" onkeypress='mascaraMutuario(this,cel)' onblur='clearTimeout()' />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-4">
-                    Data de Nascimento<span style="color: red;">*</span>
-                    <input type="date" name="dnascimento" />
-                    <p class="error-data"></p>
-                </div>
-                <div class="col-12 col-md-4">
-                    CPF<span style="color: red;">*</span>
-                    <input type="text" name="cpf" placeholder="CPF" maxlength="14" onkeypress='mascaraMutuario(this,cpfCnpj)' onblur='clearTimeout()' />
-                    <p class="error-cpf"></p>
-                </div>
-                <div class="col-12 col-md-4">
-                    Sexo<span style="color: red;">*</span><br/>
-                    <div data-toggle="buttons" class="btn-group btn-sexo">
-                        <label class="btn btn-primary active">
-                            <input type="radio" name="sexo" id="option2" autocomplete="off" value="fem" checked="checked" /> Feminino
-                        </label>
-                        <label class="btn btn-primary">
-                            <input type="radio" name="sexo" id="option3" autocomplete="off" value="masc" /> Masculino
-                        </label>
-                    </div>
-                </div>
-            </div>
-            <input type="button" name="next1" class="next acao" value="Próximo" />
-        </fieldset>
-
-        <fieldset>
-            <h2>Configurações da Conta</h2>
-            Email<span style="color: red;">*</span>
-            <input type="text" name="email" placeholder="joao@gmail.com" />
-            <p class="error-email"></p>
-            Senha<span style="color: red;">*</span>
-            <input type="password" name="senha" th:maxlength="59" />
-            <p class="error-senha"></p>
-            Confirmar Senha<span style="color: red;">*</span>
-            <input type="password" name="csenha" th:maxlength="59" />
-            <p class="error-csenha"></p>
-            <input type="button" name="next" class="prev acao" value="Anterior" />
-            <input type="button" name="next2" class="next acao"  value="Próximo" />
-        </fieldset>
-        <fieldset>
-            <h2>Endereço(s) de Visita</h2>
-            <h3>Informe-nos endereços que você possa precisar de serviços</h3>
-
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    CEP<span style="color: red;">*</span>
-                    <input type="text" name="cep" id="cep" maxlength="9" placeholder="CEP" onkeypress='mascaraMutuario(this,cept)' onblur='clearTimeout()' />
-                    <p class="error-cep"></p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-md-6">
-                    Rua<span style="color: red;">*</span>
-                    <input name="rua" type="text" id="rua" size="60" placeholder="Rua" readonly="readonly" />
-                </div>
-                <div class="col-12 col-md-6">
-                    Número<span style="color: red;">*</span>
-                    <input name="numero" type="number" id="numero" size="40" placeholder="Número" value="0" min="0" />
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-md-5">
-                    Bairro<span style="color: red;">*</span>
-                    <input name="bairro" type="text" id="bairro" size="60" placeholder="Bairro" readonly="readonly" />
-                </div>
-                <div class="col-12 col-md-5">
-                    Cidade<span style="color: red;">*</span>
-                    <input name="cidade" type="text" id="cidade" size="40" placeholder="Cidade" value="Maringá" readonly="readonly" />
-                </div>
-
-                <div class="col-12 col-md-2">
-                    UF<span style="color: red;">*</span>
-                    <input name="uf" type="text" id="uf" size="40" placeholder="UF" value="PR" readonly="readonly" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    Complemento
-                    <input name="complemento" type="text" id="complemento" size="40" />
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12 col-md-12">
-                    <input type="button" class="acao add" value="Adicionar Endereço" />
-                </div>
-            </div>
-
-            <div id="list-of-address">
-                <h1>Endereço(s) Adicionado(s)</h1>
-            </div>
-
-            <input type="button" name="next" class="prev acao" value="Anterior" />
-            <input type="submit" class="acao"  value="Enviar" />
-        </fieldset>
-        <input name="nivel" value="NIVEL_CLIENTE" hidden="hidden"/>
-    </form>
-
+<div th:if="${#lists.isEmpty(servicosDoDia)}">
+    Nenhum serviço para hoje.
 </div>
 
-<footer class="container-fluid" id="info">
-    <div class="row">
-        <div class="col-12 col-md-4">
-            <img src="img/email.png" /><br/>
-            sistemaantipragas@gmail.com
-        </div>
-
-        <div class="col-12 col-md-4">
-            <img src="img/address.png" /><br/>
-            Avenida São Judas Tadeu, 1418 Parque das Palmeiras <br/> Maringá - PR
-        </div>
-
-        <div class="col-12 col-md-4">
-            <img src="img/phone.png" /><br/>
-            (44)3253-2563 <br/>(44)3253-2563
-        </div>
-    </div>
-</footer>
-
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel1">Falha ao realizar o cadastro</h5>
-                <a class="close" th:href="@{/}" role="button" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
-            </div>
-            <div class="modal-body">
-                Já existe uma conta cadastrada com esse e-mail.
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-secondary" th:href="@{/}" role="button">Fechar</a>
-            </div>
-        </div>
-    </div>
+<div th:unless="${#lists.isEmpty(servicosDoDia)}">
+    <table>
+        <thead>
+        <th>Horário</th>
+        <th>Responsável</th>
+        <th>Descrição</th>
+        <th>Valor</th>
+        <th>Endereço</th>
+        </thead>
+        <tbody>
+        <tr th:each="servico : ${servicosDoDia}">
+            <td th:text="${#dates.format(servico.dataHorario, 'HH:mm')}"></td>
+            <td th:text="${servico.funcionarioTecnico.nome}"></td>
+            <td th:text="${servico.descricao}"></td>
+            <td th:text="'R$ ' + ${servico.orcamento}"></td>
+            <td th:text="${servico.endereco.rua} + ', ' + ${servico.endereco.numero} + ', ' + ${servico.endereco.bairro} + ', ' + ${servico.endereco.complemento}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel2">Cadastro realizado com sucesso</h5>
-                <a class="close" th:href="@{/}" role="button" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
-            </div>
-            <div class="modal-body">
-                Enviamos um e-mail de confirmação de cadastro para você.
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-secondary" th:href="@{/}" role="button">Fechar</a>
-            </div>
-        </div>
-    </div>
+<br/><br/>
+<h3>Serviços nesta semana</h3>
+<br/>
+
+<div th:if="${#lists.isEmpty(servicosDaSemana)}">
+    Nenhum serviço nesta semana.
 </div>
 
-<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel3">Confirmação do cadastro realizada com sucesso</h5>
-                <a class="close" th:href="@{/}" role="button" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
-            </div>
-            <div class="modal-body">
-                Agradecemos por escolher nossos serviços. Para começar a negociação basta entrar no sistema.
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-primary" th:href="@{/login}" role="button">Entrar</a>
-                <a class="btn btn-secondary" th:href="@{/}" role="button">Fechar</a>
-            </div>
-        </div>
-    </div>
+<div th:unless="${#lists.isEmpty(servicosDaSemana)}">
+    <table>
+        <thead>
+        <th>Dia</th>
+        <th>Horário</th>
+        <th>Responsável</th>
+        <th>Descrição</th>
+        <th>Valor</th>
+        <th>Endereço</th>
+        </thead>
+        <tbody>
+        <tr th:each="servico : ${servicosDaSemana}">
+            <td th:text="${#dates.format(servico.dataHorario, 'dd/MM/yyyy')}"></td>
+            <td th:text="${#dates.format(servico.dataHorario, 'HH:mm')}"></td>
+            <td th:text="${servico.funcionarioTecnico.nome}"></td>
+            <td th:text="${servico.descricao}"></td>
+            <td th:text="'R$ ' + ${servico.orcamento}"></td>
+            <td th:text="${servico.endereco.rua} + ', ' + ${servico.endereco.numero} + ', ' + ${servico.endereco.bairro} + ', ' + ${servico.endereco.complemento}"></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
-<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel5">Redefinir Senha</h5>
-                <a class="close" th:href="@{/}" role="button" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </a>
-            </div>
-            <div class="modal-body">
-                Sua senha foi redefinida com sucesso.
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-secondary" th:href="@{/}" role="button">Fechar</a>
-            </div>
-        </div>
-    </div>
-</div>
+<li><a href="#0" th:href="@{/logout}">Sair</a>
+    <form th:action="@{/logout}" method="post" ></form>
+</li>
 
-<!-- JQUERY -->
-<script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
-<script type="text/javascript" th:src="@{/js/cadastro.js}" ></script>
-
-<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js}" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-<script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js}" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-
-<script th:if="${resp == 'exists'}" >
-    $(function(){
-        $('#myModal').modal('show');
-    });
-</script>
-
-<script th:if="${resp == 'register'}" >
-    $(function(){
-        $('#myModal2').modal('show');
-    });
-</script>
-
-<script th:if="${resp == 'confirm'}" >
-    $(function(){
-        $('#myModal3').modal('show');
-    });
-</script>
-
-<script th:if="${resp == 'reset'}" >
-    $(function(){
-        $('#myModal4').modal('show');
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        $('input').keypress(function (e) {
-            var code = null;
-            code = (e.keyCode ? e.keyCode : e.which);
-            return (code == 13) ? false : true;
-        });
-    });
-</script>
 </body>
 </html>
