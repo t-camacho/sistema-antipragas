@@ -55,7 +55,7 @@ public class PragaControllerTest {
     private Praga praga3;
 
     @Before
-    public void setUpProduct() throws Exception{
+    public void setUpPraga() throws Exception{
         praga1 = new Praga();
         praga1.setId((long)1);
         praga1.setNome("Barata");

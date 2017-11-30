@@ -359,49 +359,35 @@ public class PropostaController {
     public ModelAndView goNegociacao(@RequestParam String id){
         int quantidade;
         Map<String, Object> model = new HashMap<String, Object>();
-        Set<Praga> pragas = new HashSet<Praga>();
         List<ServicoPrototype> preServicos;
 
         Proposta proposta = propostaService.findById(Long.parseLong(id));
-        quantidade = proposta.getQuantidade();
-        preServicos = servicoPrototypeService.findByProposta(proposta);
 
-        if(preServicos.isEmpty()){
-            for(Praga praga: proposta.getPragas()){
-                pragas.add(pragaService.findById(praga.getId()));
-            }
-            Servico s;
-            s = new Servico(proposta, proposta.getUsuario(), proposta.getDescricao(), StatusServico.PRE_SERVICO, proposta.getEndereco());
-            while(quantidade > 0){
-                ServicoPrototype servicoN = s.clonar();
-                servicoPrototypeService.create(servicoN);
-                quantidade--;
-            }
-
+        if(proposta != null){
+            quantidade = proposta.getQuantidade();
             preServicos = servicoPrototypeService.findByProposta(proposta);
-        }
 
-        StringBuilder pragasS = preparaPraga(proposta);
+            if(preServicos.isEmpty()){
+                Servico s;
+                s = new Servico(proposta, proposta.getUsuario(), proposta.getDescricao(), StatusServico.PRE_SERVICO, proposta.getEndereco());
+                while(quantidade > 0){
+                    ServicoPrototype servicoN = s.clonar();
+                    servicoPrototypeService.create(servicoN);
+                    quantidade--;
+                }
 
-        /*int i = 0;
-        for(Praga p : proposta.getPragas()){
-            if(i+1 < proposta.getPragas().size()){
-                pragasS.append(p.getNome()).append(", ");
-            }else{
-                pragasS.append(p.getNome());
+                preServicos = servicoPrototypeService.findByProposta(proposta);
             }
-            i++;
+
+            StringBuilder pragasS = preparaPraga(proposta);
+
+            model.put("proposta", proposta);
+            model.put("preServicos", preServicos);
+            model.put("pragas", pragasS);
+
+            return new ModelAndView("/proposta/negociacao", model);
         }
-
-        if(pragasS.length() == 0){
-            pragasS.append("Não definido");
-        }*/
-
-        model.put("proposta", proposta);
-        model.put("preServicos", preServicos);
-        model.put("pragas", pragasS);
-
-        return new ModelAndView("/proposta/negociacao", model);
+        return new ModelAndView("redirect:/proposta/visualizar", model);
     }
 
     //editar um pré-servico, apenas funcionário
@@ -469,8 +455,12 @@ public class PropostaController {
         Proposta proposta = propostaService.findById(idProposta);
 
         if(getUsuarioSession().getNivel() != Nivel.NIVEL_CLIENTE){
-
             resultado = new PropostaAlteradaJson("stop");
+            return gson.toJson(resultado);
+        }
+
+        if(proposta.getStatus() == StatusProposta.STATUS_PROPOSTA_CANCELADA){
+            resultado = new PropostaAlteradaJson("cancelada");
             return gson.toJson(resultado);
         }
 
@@ -481,8 +471,8 @@ public class PropostaController {
             propostaService.edit(proposta);
             return gson.toJson(resultado);
         }else{
-            Proposta p = propostaService.findById(idProposta);
-            while(p.getAlterada() == Alterada.ALTERADA_FALSE){
+            proposta = propostaService.findById(idProposta);
+            while(proposta.getAlterada() == Alterada.ALTERADA_FALSE){
                 if(tempoGasto >= 5){
                     resultado = new PropostaAlteradaJson("nao_alterada");
                     return gson.toJson(resultado);
@@ -491,10 +481,8 @@ public class PropostaController {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                 }
-                System.out.println(proposta.getAlterada());
-                System.out.println(tempoGasto);
                 tempoGasto++;
-                p = propostaService.findById(idProposta);
+                proposta = propostaService.findById(idProposta);
             }
         }
 

@@ -97,7 +97,6 @@ $(document).ready(function () {
                         '      <p>Orçamento: R$ '+proposta.orcamento+'</p>' +
                         '   </div>' +
                         '   <p class="informacao" style="text-align: center; font-weight: bold">Proposta '+ proposta.id +'</p>' +
-                        '   <p class="cliente">' + proposta.usuario.nome + '</p>' +
                         '   <p class="subtitulo">Endereço de Realização</p>' +
                         '   <p class="informacao">'+ proposta.endereco.rua +' '+ proposta.endereco.numero +' '+ proposta.endereco.bairro +' - '+ proposta.endereco.cidade +'/'+ proposta.endereco.uf +'</p>\n' +
                         '   <p class="subtitulo">Tipo</p>' +

@@ -40,7 +40,7 @@
                                 <div class="col-6">
                                     <div class="form-group">
                                         <label for="exampleInputOrcamento"><span style="font-weight: bold" >Orçamento</span></label>
-                                        <input type="number" step="any" class="form-control" th:value="${servico.orcamento}" id="exampleInputOrcamento" aria-describedby="emailHelp" placeholder="0.0" name="orcamento" />
+                                        <input type="number" step="any" min="1" class="form-control" th:value="${servico.orcamento}" id="exampleInputOrcamento" aria-describedby="emailHelp" placeholder="100.0" name="orcamento" />
                                     </div>
                                 </div>
 
@@ -92,6 +92,8 @@
 <script th:src="@{../js/menu/main.js}"></script>
 <script th:src="@{../js/menu/jquery.menu-aim.js}"></script>
 <script th:src="@{../js/menu/modernizr.js}"></script>
+
+
 
 </body>
 </html>

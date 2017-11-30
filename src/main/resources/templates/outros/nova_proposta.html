@@ -35,6 +35,9 @@
 
         <fieldset>
             <h2>Informações Básicas</h2>
+            <div th:if="${#lists.size(enderecos)} == 0" style="text-align: center; color: red">
+                Antes de criar uma proposta, cadastre um endereço em sua conta
+            </div>
             Endereço que Deseja o Serviço<span style="color: red;">*</span>
             <select name="endereco" >
                 <option  th:each="endereco : ${enderecos}" th:value="${endereco.id}" th:inline="text">[[${endereco.rua}]] [[${endereco.numero}]] - [[${endereco.bairro}]] - [[${endereco.cidade}]]/[[${endereco.uf}]]</option>
@@ -79,7 +82,8 @@
                 </div>
                 <p class="error-frequencia"></p>
             </div>
-            <input type="button" name="next1" class="next acao" value="Próximo" />
+            <input th:if="${#lists.size(enderecos)} != 0" type="button" name="next1" class="next acao" value="Próximo" />
+            <input th:if="${#lists.size(enderecos)} == 0" type="button" name="next1" class="next acao" value="Próximo" th:disabled="disabled"/>
         </fieldset>
 
         <fieldset>
@@ -115,6 +119,11 @@
 <script type="text/javascript" th:src="@{https://code.jquery.com/jquery-3.2.1.min.js}" ></script>
 <!-- JAVASCRIPT REGISTER -->
 <script type="text/javascript" th:src="@{/../js/nova_proposta.js}" ></script>
+
+
+<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js}" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js}" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
 
 </body>
 </html>

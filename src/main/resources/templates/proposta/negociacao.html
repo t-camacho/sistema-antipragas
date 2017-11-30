@@ -30,6 +30,7 @@
                 <div class="card mb-3">
                     <div class="card-header" th:inline="text" >
                         Proposta [[${proposta.id}]]
+                        <div style="float: right" th:class="orcamentoProp">Orçamento: R$ [[${proposta.orcamento}]]</div>
                     </div>
                     <input type="hidden" th:value="${proposta.id}" class="id_proposta" />
                     <div class="card-body">
@@ -102,6 +103,7 @@
                 <div class="card mb-3">
                     <div class="card-header" th:inline="text" >
                         Proposta [[${proposta.id}]]
+                        <div style="float: right">Orçamento: R$ [[${proposta.orcamento}]]</div>
                     </div>
                     <input type="hidden" th:value="${proposta.id}" class="id_proposta" />
                     <div class="card-body">
@@ -240,7 +242,9 @@
                     <div class="card-footer small text-muted">
                         <form method="get" th:action="@{/proposta/preservico}">
                             <input type="hidden" th:value="${servico.id}" name="id" />
-                            <button type="submit" class="btn btn-primary botao-editar"><i class="fa fa-pencil" aria-hidden="true"></i> Editar</button>
+                            <button th:if="${proposta.status.toString() == 'STATUS_PROPOSTA_APROVADA'}" type="submit" class="btn btn-primary botao-editar"
+                                    th:disabled="disabled"><i class="fa fa-pencil" aria-hidden="true"></i> Editar</button>
+                            <button th:if="${proposta.status.toString() != 'STATUS_PROPOSTA_APROVADA'}" type="submit" class="btn btn-primary botao-editar"><i class="fa fa-pencil" aria-hidden="true"></i> Editar</button>
                         </form>
                     </div>
                 </div>

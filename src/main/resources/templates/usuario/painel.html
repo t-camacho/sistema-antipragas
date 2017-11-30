@@ -2,17 +2,16 @@
 <html lang="pt" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml" class="no-js">
 <head th:replace="fragments/head::head">
     <link th:href="@{/../css/style_pragas.css}" rel="stylesheet" />
+    <script th:src="@{../js/sb-admin-charts.js}"></script>
 </head>
 <body>
     <header th:replace="fragments/menu_responsivo :: header1"></header>
     <main th:replace="fragments/menu_responsivo :: header2"></main>
     <main class="cd-main-content">
         <div class="content-wrapper">
-Fornecedor:
+            Fornecedor:
             <a th:href="@{/fornecedor/listar}">aqui</a>
-
             <br/><br/>
-
             Página inicial do cliente:
             <a th:href="@{/usuario/cliente/home}"> aqui. </a>
         </div>
@@ -127,7 +126,6 @@ Fornecedor:
         $('#nova_proposta').modal('show');
     });
 </script>
-
 <script th:if="${param.nova_error}" >
     $(function(){
         $('#nova_error').modal('show');

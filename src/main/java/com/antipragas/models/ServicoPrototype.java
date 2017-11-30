@@ -57,28 +57,6 @@ public abstract class ServicoPrototype {
             inverseJoinColumns = @JoinColumn(name = "praga_id", referencedColumnName = "id")
     )
     protected Set<Praga> pragas;
-/*
-    public Servico() {}
-
-    public Servico(Proposta proposta, Usuario cliente, String descricao, StatusServico status, Endereco endereco, Set<Praga> pragas, double orcamento) {
-        this.proposta = proposta;
-        this.cliente = cliente;
-        this.orcamento = orcamento;
-        this.descricao = descricao;
-        this.status = status;
-        this.endereco = endereco;
-        this.pragas = pragas;
-    }
-
-    public Servico(Proposta proposta, Usuario cliente, String descricao, StatusServico status, Endereco endereco, double orcamento) {
-        this.proposta = proposta;
-        this.cliente = cliente;
-        this.orcamento = orcamento;
-        this.descricao = descricao;
-        this.status = status;
-        this.endereco = endereco;
-    }
-*/
 
     public Long getId() {
         return id;

@@ -49,6 +49,26 @@
     </div>
 </div>
 
+<!-- MODELS -->
+<div class="modal fade" id="modal_cancelada2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel4">Proposta Cancelada</h5>
+                <a class="close" th:href="@{/proposta/visualizar}" role="button" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                A proposta foi cancelada pelo funcionário.
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary" th:href="@{/proposta/visualizar}" role="button">Fechar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modal_aceita" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -116,6 +136,12 @@
 <script th:if="${param.aceitaf}" >
     $(function(){
         $('#modal_aceitaf').modal('show');
+    });
+</script>
+
+<script th:if="${param.cancelada2}" >
+    $(function(){
+        $('#modal_cancelada2').modal('show');
     });
 </script>
 

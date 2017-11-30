@@ -43,22 +43,22 @@
 }
 
 .status {
-    position: absolute;
+    /*position: absolute;
     right: 8px;
     top: 50%;
     margin-top: -6px;
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: #666;
+    background: #666;*/
 }
 
 .status.off {
-    background-color: #ccc;
+    /*background-color: #ccc;*/
 }
 
 .status.on {
-    background-color: #090;
+    /*background-color: #090;*/
 }
 
 .janela .corpo {

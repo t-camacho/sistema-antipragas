@@ -56,8 +56,12 @@ public class NavegacaoController {
 
     @RequestMapping(value = "/login")
     public String goLogin(){
-
         return "login";
+    }
+
+    @RequestMapping(value = "/teste")
+    public String teste(){
+        return "outros/chart";
     }
 
 }

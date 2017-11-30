@@ -65,7 +65,7 @@ public class ChatController {
         int tempoGasto = 0;
         Timestamp h = null, horario;
         ResultadoChat resultado;
-
+        Proposta proposta = propostaService.findById(Long.parseLong(idProposta));
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
         Calendar calendar = Calendar.getInstance();
 
@@ -80,7 +80,6 @@ public class ChatController {
 
         if(mensagens.size() <= 0){
             while(mensagens.size() <= 0) {
-                //System.out.println(tempoGasto);
                 if(tempoGasto >= 30){
                     horario = new Timestamp(calendar.getTime().getTime());
                     resultado = new ResultadoChat("vazio", horario.toString(), ultimoId, idProposta);
@@ -90,10 +89,9 @@ public class ChatController {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                 }
-
                 if (!timestamp.equals("0")) {
                     mensagens = mensagemService.findByHorarioGreaterThanEqualAndStatusAndProposta(h,
-                            StatusMensagem.STATUS_MENSAGEM_NAO_LIDA, propostaService.findById(Long.parseLong(idProposta)));
+                            StatusMensagem.STATUS_MENSAGEM_NAO_LIDA, proposta);
                 }
                 tempoGasto++;
             }
