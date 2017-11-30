@@ -123,4 +123,11 @@ public class ClienteController {
         String email = auth.getName();
         return (usuarioRepository.findByEmail(email));
     }
+
+    @GetMapping("/cliente/edit")
+    public String goPaginaEdit(Model model) {
+        Usuario clienteLogado = getUsuarioLogado();
+        model.addAttribute("cliente", clienteLogado);
+        return "/usuario/cliente/edit";
+    }
 }
